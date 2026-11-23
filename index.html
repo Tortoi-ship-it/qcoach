@@ -418,8 +418,7 @@
                 <span id="stageStrumPatternBadge" class="text-amber-300 font-bold truncate">🎸 Island Strum (D - D U - U D U)</span>
                 <div class="flex items-center gap-1 shrink-0">
                   <span id="stageLyricsBadge" class="px-1.5 py-0.5 rounded bg-zinc-900 text-qmuted border border-zinc-800 text-[9px]">4 Sections · 20 Bars</span>
-                  <button id="btnStageAutoFillLyrics" type="button" class="px-1.5 py-0.5 rounded bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 text-[9px] font-bold transition" title="Auto-fetch full synced lyrics from LRCLIB and align across Verse 1, Chorus, Verse 2 &amp; Bridge">✨ Auto-Fill Lyrics</button>
-                  <button id="btnStageGoogleLyrics" type="button" class="hidden px-1.5 py-0.5 rounded bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[9px] font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">🔎 Google Lyrics</button>
+
                 </div>
               </div>
               <div id="karaokeSyllableRow" class="flex flex-wrap items-center justify-center gap-1.5 min-h-[28px]"><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-cyan-500/25 border-cyan-400 text-cyan-200 scale-110 shadow-lg shadow-cyan-500/20">Where</span><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-zinc-900 border-zinc-800 text-qtext">can I</span><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-zinc-900 border-zinc-800 text-qtext">go</span><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-zinc-900 border-zinc-800 text-qtext">from Your</span></div>
@@ -497,6 +496,17 @@
         </div>
 
       </div>
+
+      <!-- Subtle Bottom Stage Dot: Auto-Fill Full Lyrics & Bars for Currently Playing Song Only -->
+      <div class="flex items-center justify-end gap-2 px-1 pt-0.5">
+        <button id="btnStageGoogleLyrics" type="button" class="hidden px-2 py-0.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">
+          🔎 Google Lyrics
+        </button>
+        <button id="btnStageAutoFillLyrics" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-amber-500/60 text-[10px] font-mono text-qmuted hover:text-qtext transition shadow-sm" title="Auto-fill full lyrics &amp; bars for the currently playing song only">
+          <span id="stageAutoFillDot" class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+          <span id="stageAutoFillLabel">Auto-Fill This Song</span>
+        </button>
+      </div>
     </div>
 
     <!-- TAB VIEW 2: MY SONGBOOK (IndexedDB Local Library + Preloaded Songs) -->
@@ -520,34 +530,6 @@
               </div>
             </div>
           </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <button id="btnSongbookAddNew" type="button" class="px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs">
-              ➕ Add / Search Song
-            </button>
-            <button id="btnAutoFillAllLyrics" type="button" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 font-bold text-xs transition" title="Batch-fetch complete synced lyrics from LRCLIB for all songs and cache permanently to IndexedDB + Google Drive">
-              ✨ Auto-Fill Full Song Lyrics &amp; Bars
-            </button>
-            <button id="btnSongbookDownloadPortableHtml" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs" title="Save standalone HTML with all your songs baked inside so it opens in ANY browser (Chrome, Edge, Safari, Firefox)">
-              🌐 Save App for Any Browser
-            </button>
-            <button id="btnExportJsonSongbook" type="button" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs">
-              ⬇ Export .qcoach.json
-            </button>
-            <label for="importJsonInput" class="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-qtext border border-zinc-700 font-semibold text-xs cursor-pointer">
-              ⬆ Import .qcoach.json
-            </label>
-            <input id="importJsonInput" type="file" accept=".json,.qcoach.json" class="hidden">
-          </div>
-        </div>
-
-                <div id="batchHydrationBanner" class="hidden rounded-xl bg-cyan-500/10 border border-cyan-500/40 p-3 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-          <div class="flex items-center gap-2 min-w-0">
-            <span id="batchHydrationStatus" class="text-cyan-300 font-bold truncate">✨ Syncing full lyrics from LRCLIB...</span>
-          </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <span id="batchHydrationCounter" class="text-amber-300 font-bold">0 / 0</span>
-            <button id="btnStopBatchHydration" type="button" class="px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 text-[11px] font-bold">⏹ Stop</button>
-          </div>
         </div>
 
         <div id="songbookGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
@@ -559,13 +541,19 @@
       <div class="q-card rounded-2xl p-5 max-w-3xl mx-auto space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#2C2C2E] pb-3">
           <div>
-            <span class="text-[11px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">
-              Concert Re-Entrant Tuning
-            </span>
-            <h2 class="text-xl font-extrabold text-qtext mt-1">Real-Time G4 · C4 · E4 · A4 Chromatic Ukulele Tuner</h2>
-            <p class="text-xs text-qmuted">Autocorrelation / McLeod Pitch Detection at 60fps · Locks Emerald Green within ±3 cents for 0.6s</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <span id="tunerModeBadge" class="text-[11px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">
+                High G · Concert Re-Entrant
+              </span>
+              <div class="inline-flex items-center gap-0.5 bg-[#121212] p-0.5 rounded-lg border border-[#2C2C2E]">
+                <button type="button" data-g-mode="high" class="tuner-g-mode-btn px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-amber-500 text-black transition">High G (G4)</button>
+                <button type="button" data-g-mode="low" class="tuner-g-mode-btn px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold text-qmuted hover:text-qtext transition">Low G (G3)</button>
+              </div>
+            </div>
+            <h2 id="tunerMainHeading" class="text-xl font-extrabold text-qtext mt-1">Ukulele Tuner · G4 · C4 · E4 · A4</h2>
+            <p class="text-xs text-qmuted">Pluck-Lock &amp; Decay-Free Hold · Skips initial pluck spike, captures true pitch &amp; freezes needle before string fade</p>
           </div>
-          <button id="btnToggleMicTuner" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition">
+          <button id="btnToggleMicTuner" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition shrink-0">
             🎙️ Start Microphone Tuner
           </button>
         </div>
@@ -620,7 +608,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             <div class="sm:col-span-5 flex items-center gap-1.5">
               <span class="text-[11px] font-mono text-qmuted shrink-0">Pluck String:</span>
-              <button type="button" data-sim-string="G4" class="btn-sim-string px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-mono font-bold text-qtext border border-zinc-700">G4</button>
+              <button id="btnSimStringG" type="button" data-sim-string="G4" class="btn-sim-string px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-mono font-bold text-qtext border border-zinc-700">G4</button>
               <button type="button" data-sim-string="C4" class="btn-sim-string px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-mono font-bold text-qtext border border-zinc-700">C4</button>
               <button type="button" data-sim-string="E4" class="btn-sim-string px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-mono font-bold text-qtext border border-zinc-700">E4</button>
               <button type="button" data-sim-string="A4" class="btn-sim-string px-2.5 py-1 rounded-lg bg-amber-500 text-black text-xs font-mono font-black border border-amber-300">A4</button>
@@ -635,11 +623,11 @@
 
         <!-- 4 Concert Ukulele String Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div data-string="G4" class="tuner-string-card rounded-xl bg-[#121212] border border-[#2C2C2E] p-3 text-center space-y-2">
-            <div class="text-xs font-mono text-qmuted">String 4 (Top)</div>
-            <div class="text-2xl font-black text-qtext font-mono">G4</div>
-            <div class="text-xs font-mono text-amber-400">392.00 Hz</div>
-            <button type="button" data-ref-string="G4" class="btn-ref-tone w-full py-1.5 rounded-lg bg-zinc-800 hover:bg-amber-500 hover:text-black text-xs font-bold transition">
+          <div id="tunerCardG" data-string="G4" class="tuner-string-card rounded-xl bg-[#121212] border border-[#2C2C2E] p-3 text-center space-y-2">
+            <div id="tunerCardGSub" class="text-xs font-mono text-qmuted">String 4 (High G)</div>
+            <div id="tunerCardGName" class="text-2xl font-black text-qtext font-mono">G4</div>
+            <div id="tunerCardGHz" class="text-xs font-mono text-amber-400">392.00 Hz</div>
+            <button id="tunerCardGBtn" type="button" data-ref-string="G4" class="btn-ref-tone w-full py-1.5 rounded-lg bg-zinc-800 hover:bg-amber-500 hover:text-black text-xs font-bold transition">
               🔊 Play G4 Tone
             </button>
           </div>
@@ -788,7 +776,7 @@
           <div class="space-y-2 text-xs text-zinc-300">
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-cyan-300 shrink-0 w-28">➕ Add &amp; Lyrics</span>
-              <p>Upload <span class="text-qtext font-semibold">PDF songsheets/songbooks</span> or <span class="text-qtext font-semibold">MP3/MP4/WAV</span> tracks for automatic BPM &amp; chord analysis, paste chords/lyrics in the <span class="text-qtext font-semibold">Manual Songsheet Form</span>, or tap <span class="font-mono text-cyan-300">✨ Auto-Fill Lyrics</span> on Stage.</p>
+              <p>Search and pick songs in <span class="text-qtext font-semibold">Songs</span>. Add new songs (PDF/MP3/MP4, YouTube, or Manual Form) or batch <span class="font-mono text-amber-400">✨ Auto-Fill</span> in <span class="font-mono">⋮ Settings → 2</span>. On Stage, tap the small <span class="font-mono text-amber-400">● Auto-Fill This Song</span> dot at the bottom to complete lyrics &amp; bars for the currently playing song.</p>
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-emerald-400 shrink-0 w-28">🎙️ Tuner Tab</span>
@@ -916,6 +904,22 @@
               📂 Upload PDF Songsheet / Songbook or MP3/MP4
             </label>
             <input id="audioFileInput" type="file" accept=".pdf,.mp3,.wma,.mp4,.wav,.m4a,.ogg,.webm,.mov,application/pdf,audio/*,video/*" class="hidden">
+          </div>
+
+          <!-- Batch Auto-Fill Full Song Lyrics & Bars (Moved from Songbook into Settings) -->
+          <div class="pt-2 border-t border-zinc-800 space-y-2">
+            <button id="btnAutoFillAllLyrics" type="button" class="w-full py-2 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 font-bold text-xs transition" title="Batch-fetch complete synced lyrics &amp; bars from LRCLIB for all songs in your Songbook">
+              ✨ Auto-Fill Full Song Lyrics &amp; Bars (All Songs)
+            </button>
+            <div id="batchHydrationBanner" class="hidden rounded-xl bg-cyan-500/10 border border-cyan-500/40 p-2.5 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+              <div class="flex items-center gap-2 min-w-0">
+                <span id="batchHydrationStatus" class="text-cyan-300 font-bold truncate">✨ Syncing full lyrics from LRCLIB...</span>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <span id="batchHydrationCounter" class="text-amber-300 font-bold">0 / 0</span>
+                <button id="btnStopBatchHydration" type="button" class="px-2 py-0.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 text-[11px] font-bold">⏹ Stop</button>
+              </div>
+            </div>
           </div>
 
           <!-- Multi-Song PDF Songbook Selector Drawer (Appears when an uploaded PDF contains multiple songs) -->
@@ -4955,7 +4959,19 @@
         }
       }
       if (autoBtn) {
-        autoBtn.textContent = song.lyricsHydrated ? '↻ Re-Sync Lyrics' : '✨ Auto-Fill Lyrics';
+        const dotEl = document.getElementById('stageAutoFillDot');
+        const lblEl = document.getElementById('stageAutoFillLabel');
+        if (dotEl) {
+          dotEl.className = song.lyricsHydrated
+            ? 'w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0'
+            : 'w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0';
+        }
+        if (lblEl) {
+          lblEl.textContent = song.lyricsHydrated ? 'Full Lyrics Synced' : 'Auto-Fill This Song';
+        }
+        autoBtn.title = song.lyricsHydrated
+          ? `Full lyrics synced for "${song.title}" — tap to re-sync this song only`
+          : `Tap to auto-fill full lyrics & bars for "${song.title}" only`;
       }
       if (googleBtn) {
         if (!song.lyricsHydrated && song.lyricsLookupAttempted) googleBtn.classList.remove('hidden');
@@ -5679,51 +5695,163 @@
       }
     }
 
-    function autoCorrelatePitch(buf, sampleRate) {
-      const size = buf.length;
-      let rms = 0;
-      for (let i = 0; i < size; i++) rms += buf[i] * buf[i];
-      rms = Math.sqrt(rms / size);
-      if (rms < 0.008) return -1;
+    // High-G / Low-G Ukulele Tuning Mode + Decay-Free Pluck-Capture Tuner Engine
+    const tunerPluckState = {
+      gMode: 'high', // 'high' (G4 392Hz) or 'low' (G3 196Hz)
+      prevRms: 0,
+      pluckPeakRms: 0,
+      pluckStartMs: 0,
+      capturing: false,
+      samples: [],
+      smoothedHz: 0,
+      isHolding: false,
+      holdHz: 0,
+      holdUntilMs: 0
+    };
 
-      let r1 = 0;
-      let r2 = size - 1;
-      const thres = 0.2;
-      for (let i = 0; i < size / 2; i++) {
-        if (Math.abs(buf[i]) < thres) { r1 = i; break; }
-      }
-      for (let i = 1; i < size / 2; i++) {
-        if (Math.abs(buf[size - i]) < thres) { r2 = size - i; break; }
+    function setUkuleleGTuningMode(mode) {
+      const isLow = mode === 'low';
+      tunerPluckState.gMode = isLow ? 'low' : 'high';
+      const gName = isLow ? 'G3' : 'G4';
+      const gHz = isLow ? 196.00 : 392.00;
+      TUNER_TARGETS[0].name = gName;
+      TUNER_TARGETS[0].hz = gHz;
+
+      if (state.tunerSimString === 'G4' || state.tunerSimString === 'G3') {
+        state.tunerSimString = gName;
+        updateTunerSimFrequency();
       }
 
-      const trimmed = buf.slice(r1, r2);
-      const newSize = trimmed.length;
-      const c = new Float32Array(newSize);
-      for (let i = 0; i < newSize; i++) {
-        for (let j = 0; j < newSize - i; j++) {
-          c[i] = c[i] + trimmed[j] * trimmed[j + i];
-        }
+      document.querySelectorAll('.tuner-g-mode-btn').forEach(btn => {
+        const active = btn.getAttribute('data-g-mode') === tunerPluckState.gMode;
+        btn.className = active
+          ? 'tuner-g-mode-btn px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-amber-500 text-black transition'
+          : 'tuner-g-mode-btn px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold text-qmuted hover:text-qtext transition';
+      });
+
+      const badge = document.getElementById('tunerModeBadge');
+      const heading = document.getElementById('tunerMainHeading');
+      const cardG = document.getElementById('tunerCardG');
+      const cardGSub = document.getElementById('tunerCardGSub');
+      const cardGName = document.getElementById('tunerCardGName');
+      const cardGHz = document.getElementById('tunerCardGHz');
+      const cardGBtn = document.getElementById('tunerCardGBtn');
+      const simG = document.getElementById('btnSimStringG');
+
+      if (badge) badge.textContent = isLow ? 'Low G · Linear Tuning' : 'High G · Concert Re-Entrant';
+      if (heading) heading.textContent = `Ukulele Tuner · ${gName} · C4 · E4 · A4`;
+      if (cardG) cardG.setAttribute('data-string', gName);
+      if (cardGSub) cardGSub.textContent = isLow ? 'String 4 (Low G)' : 'String 4 (High G)';
+      if (cardGName) cardGName.textContent = gName;
+      if (cardGHz) cardGHz.textContent = `${gHz.toFixed(2)} Hz`;
+      if (cardGBtn) {
+        cardGBtn.setAttribute('data-ref-string', gName);
+        cardGBtn.textContent = `🔊 Play ${gName} Tone`;
+      }
+      if (simG) {
+        simG.setAttribute('data-sim-string', gName);
+        simG.textContent = gName;
       }
 
-      let d = 0;
-      while (d < newSize - 1 && c[d] > c[d + 1]) d++;
-      let maxval = -1;
-      let maxpos = -1;
-      for (let i = d; i < newSize; i++) {
-        if (c[i] > maxval) { maxval = c[i]; maxpos = i; }
-      }
-      if (maxpos <= 0) return -1;
-      let T0 = maxpos;
-      const x1 = c[T0 - 1] || 0;
-      const x2 = c[T0];
-      const x3 = c[T0 + 1] || 0;
-      const a = (x1 + x3 - 2 * x2) / 2;
-      const b = (x3 - x1) / 2;
-      if (a) T0 = T0 - b / (2 * a);
-      return sampleRate / T0;
+      // Reset any active hold so user can test immediately
+      tunerPluckState.isHolding = false;
+      tunerPluckState.samples = [];
+      tunerPluckState.smoothedHz = 0;
+      showToast(`Tuner set to ${isLow ? 'Low G (G3 · 196 Hz)' : 'High G (G4 · 392 Hz)'}`, 'info');
     }
 
-    function updateTunerDisplayWithHz(detectedHz) {
+    function autoCorrelatePitch(buf, sampleRate) {
+      const size = buf.length;
+      let mean = 0;
+      for (let i = 0; i < size; i++) mean += buf[i];
+      mean /= size;
+
+      let rms = 0;
+      const centered = new Float32Array(size);
+      for (let i = 0; i < size; i++) {
+        const v = buf[i] - mean;
+        centered[i] = v;
+        rms += v * v;
+      }
+      rms = Math.sqrt(rms / size);
+      if (rms < 0.010) return { hz: -1, clarity: 0, rms };
+
+      // Restrict lag search strictly to Ukulele range: 145 Hz (flat Low G) to 620 Hz (sharp A4)
+      const minLag = Math.max(16, Math.floor(sampleRate / 620));
+      const maxLag = Math.min(Math.floor(size / 2), Math.ceil(sampleRate / 145));
+
+      const nsdf = new Float32Array(maxLag + 2);
+      let globalMax = -1;
+      for (let tau = minLag; tau <= maxLag; tau++) {
+        let acf = 0;
+        let energy = 0;
+        const limit = size - tau;
+        for (let i = 0; i < limit; i++) {
+          const a = centered[i];
+          const b = centered[i + tau];
+          acf += a * b;
+          energy += a * a + b * b;
+        }
+        const val = energy > 0 ? (2 * acf) / energy : 0;
+        nsdf[tau] = val;
+        if (val > globalMax) globalMax = val;
+      }
+
+      if (globalMax < 0.72) return { hz: -1, clarity: globalMax, rms };
+
+      // Pick the FIRST strong positive peak (>= 0.85 * globalMax) to prevent octave-down errors
+      const peakThresh = Math.max(0.72, globalMax * 0.85);
+      let bestTau = -1;
+      let inPeak = false;
+      let localBestVal = -1;
+      let localBestTau = -1;
+
+      for (let tau = minLag + 1; tau < maxLag; tau++) {
+        const v = nsdf[tau];
+        if (v > 0 && v >= nsdf[tau - 1] && v >= nsdf[tau + 1]) {
+          if (v >= peakThresh) {
+            bestTau = tau;
+            break;
+          }
+          if (v > localBestVal) {
+            localBestVal = v;
+            localBestTau = tau;
+          }
+        }
+      }
+      if (bestTau === -1) bestTau = localBestTau;
+      if (bestTau <= minLag || bestTau >= maxLag) return { hz: -1, clarity: globalMax, rms };
+
+      // Parabolic interpolation for sub-sample precision
+      const y1 = nsdf[bestTau - 1];
+      const y2 = nsdf[bestTau];
+      const y3 = nsdf[bestTau + 1];
+      const denom = (y1 - 2 * y2 + y3);
+      let refinedTau = bestTau;
+      if (Math.abs(denom) > 1e-6) {
+        const shift = 0.5 * (y1 - y3) / denom;
+        if (Math.abs(shift) < 1) refinedTau = bestTau + shift;
+      }
+
+      const hz = sampleRate / refinedTau;
+      return { hz, clarity: nsdf[bestTau], rms };
+    }
+
+    function computeMedianHz(arr) {
+      if (!arr || arr.length === 0) return -1;
+      const sorted = arr.slice().sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      const rawMed = sorted.length % 2 === 1 ? sorted[mid] : 0.5 * (sorted[mid - 1] + sorted[mid]);
+      // Discard harmonic/transient outliers more than 15 cents away from median
+      const filtered = sorted.filter(h => Math.abs(1200 * Math.log2(h / rawMed)) <= 15);
+      if (filtered.length === 0) return rawMed;
+      let sum = 0;
+      for (let i = 0; i < filtered.length; i++) sum += filtered[i];
+      return sum / filtered.length;
+    }
+
+    function updateTunerDisplayWithHz(detectedHz, opts = {}) {
+      const { isHeld = false } = opts;
       let closest = TUNER_TARGETS[0];
       let minCentsAbs = Infinity;
       let signedCents = 0;
@@ -5749,8 +5877,12 @@
       if (needleGroup) needleGroup.setAttribute('transform', `rotate(${angleDeg.toFixed(1)} 160 145)`);
       if (stringEl) stringEl.textContent = closest.name;
       const sign = signedCents >= 0 ? '+' : '';
+      const hzDiff = detectedHz - closest.hz;
+      const hzSign = hzDiff >= 0 ? '+' : '';
       if (centsEl) centsEl.textContent = `${sign}${signedCents.toFixed(1)} cents`;
-      if (hzEl) hzEl.textContent = `Target: ${closest.hz.toFixed(2)} Hz · Live: ${detectedHz.toFixed(2)} Hz`;
+      if (hzEl) {
+        hzEl.textContent = `Target: ${closest.hz.toFixed(2)} Hz · ${isHeld ? 'Captured' : 'Live'}: ${detectedHz.toFixed(2)} Hz (${hzSign}${hzDiff.toFixed(2)} Hz)`;
+      }
 
       document.querySelectorAll('.tuner-string-card').forEach(card => {
         const isMatch = card.getAttribute('data-string') === closest.name;
@@ -5760,25 +5892,38 @@
       });
 
       const now = performance.now();
-      if (Math.abs(signedCents) <= 3.0) {
+      const absCents = Math.abs(signedCents);
+      if (absCents <= 3.0) {
         if (!state.tunerInTuneHoldStart) state.tunerInTuneHoldStart = now;
         const heldSec = (now - state.tunerInTuneHoldStart) / 1000;
         if (needleLine) needleLine.setAttribute('stroke', '#10B981');
         if (centsEl) centsEl.className = 'text-xl font-mono font-bold text-emerald-400';
-        if (heldSec >= 0.6) {
-          statusPill.textContent = `✓ LOCKED IN TUNE (${closest.name} · ±3 cents)`;
+        if (isHeld || heldSec >= 0.45) {
+          statusPill.textContent = `✓ IN TUNE! ${closest.name} (${sign}${signedCents.toFixed(1)}c · within ±3c)`;
           statusPill.className = 'px-3 py-1 rounded-full text-xs font-mono font-black bg-emerald-500 text-black led-glow-green';
         } else {
-          statusPill.textContent = `Hold steady (${heldSec.toFixed(1)}s / 0.6s)...`;
+          statusPill.textContent = `✓ Almost locked (${closest.name} · ${sign}${signedCents.toFixed(1)}c)...`;
           statusPill.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
         }
       } else {
         state.tunerInTuneHoldStart = 0;
         const isSharp = signedCents > 3.0;
-        if (needleLine) needleLine.setAttribute('stroke', '#EF4444');
-        if (centsEl) centsEl.className = 'text-xl font-mono font-bold text-red-400';
-        statusPill.textContent = isSharp ? `▲ Too Sharp — Loosen ${closest.name}` : `▼ Too Flat — Tighten ${closest.name}`;
-        statusPill.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-red-500/20 text-red-300 border border-red-500/40';
+        const turnHint = absCents > 20 ? 'turn peg firmly' : (absCents > 8 ? 'turn peg slightly' : 'tiny peg nudge');
+        const arrowColor = absCents <= 10 ? '#F59E0B' : '#EF4444';
+        if (needleLine) needleLine.setAttribute('stroke', arrowColor);
+        if (centsEl) centsEl.className = absCents <= 10 ? 'text-xl font-mono font-bold text-amber-400' : 'text-xl font-mono font-bold text-red-400';
+
+        if (isHeld) {
+          statusPill.textContent = isSharp
+            ? `📌 Held ${closest.name}: +${signedCents.toFixed(1)}c Sharp — Loosen (${turnHint}) & pluck again`
+            : `📌 Held ${closest.name}: ${signedCents.toFixed(1)}c Flat — Tighten (${turnHint}) & pluck again`;
+          statusPill.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/50';
+        } else {
+          statusPill.textContent = isSharp
+            ? `▲ ${closest.name} Sharp (+${signedCents.toFixed(1)}c) — Loosen (${turnHint})`
+            : `▼ ${closest.name} Flat (${signedCents.toFixed(1)}c) — Tighten (${turnHint})`;
+          statusPill.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-red-500/20 text-red-300 border border-red-500/40';
+        }
       }
     }
 
@@ -5808,7 +5953,7 @@
           state.tunerSimOsc = null;
         }
         btn.textContent = '🎙️ Start Microphone Tuner';
-        btn.className = 'px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition';
+        btn.className = 'px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition shrink-0';
         if (modeDot) modeDot.className = 'w-2.5 h-2.5 rounded-full bg-zinc-600';
         if (modeLbl) modeLbl.textContent = 'Microphone Tuner Stopped — Click "🎙️ Start Microphone Tuner" to Resume';
         if (statusPill) {
@@ -5820,7 +5965,7 @@
 
       const ctx = ensureAudioContext();
       const analyser = ctx.createAnalyser();
-      analyser.fftSize = 2048;
+      analyser.fftSize = 4096;
       const inputBus = ctx.createGain();
       inputBus.gain.value = 1.0;
       inputBus.connect(analyser);
@@ -5863,25 +6008,97 @@
       state.tunerSimGain = simGain;
       state.tunerUsingHardwareMic = gotHardwareMic;
       state.tunerActive = true;
+      tunerPluckState.prevRms = 0;
+      tunerPluckState.pluckPeakRms = 0;
+      tunerPluckState.capturing = false;
+      tunerPluckState.samples = [];
+      tunerPluckState.smoothedHz = 0;
+      tunerPluckState.isHolding = false;
       updateTunerSimFrequency();
 
       btn.textContent = '⏹ Stop Microphone Tuner (Active)';
-      btn.className = 'px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white font-extrabold text-xs sm:text-sm shadow-lg transition';
+      btn.className = 'px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white font-extrabold text-xs sm:text-sm shadow-lg transition shrink-0';
 
       if (modeDot) modeDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
       if (modeLbl) {
         modeLbl.textContent = gotHardwareMic
-          ? '🎙️ Live Hardware Microphone + Preview Pickup Active (60fps Autocorrelation)'
-          : '🎙️ Live Preview Microphone Active (60fps Autocorrelation — Pluck Strings or Drag Peg Slider Below)';
+          ? '🎙️ Pluck-Lock Mic Active — Pluck one string at a time (auto-freezes before decay)'
+          : '🎙️ Live Preview Mode Active — Pluck Strings or Drag Peg Slider Below';
       }
-      showToast(gotHardwareMic ? 'Microphone Tuner Active!' : 'Microphone Tuner Active in Preview Mode!', 'success');
+      showToast(gotHardwareMic ? 'Pluck-Lock Microphone Tuner Active!' : 'Microphone Tuner Active in Preview Mode!', 'success');
 
       const buf = new Float32Array(analyser.fftSize);
       function loopTuner() {
         if (!state.tunerActive) return;
+        const now = performance.now();
         analyser.getFloatTimeDomainData(buf);
-        const hz = autoCorrelatePitch(buf, ctx.sampleRate);
-        if (hz > 180 && hz < 650) updateTunerDisplayWithHz(hz);
+        const res = autoCorrelatePitch(buf, ctx.sampleRate);
+
+        // Preview simulator (constant oscillator) updates continuously & smoothly
+        if (!state.tunerUsingHardwareMic) {
+          if (res.hz > 145 && res.hz < 620) {
+            tunerPluckState.smoothedHz = tunerPluckState.smoothedHz
+              ? (tunerPluckState.smoothedHz * 0.65 + res.hz * 0.35)
+              : res.hz;
+            updateTunerDisplayWithHz(tunerPluckState.smoothedHz, { isHeld: false });
+          }
+          state.tunerRafId = requestAnimationFrame(loopTuner);
+          return;
+        }
+
+        // Hardware Mic: Pluck-Window Capture & Decay-Free Hold
+        const ps = tunerPluckState;
+        const isFreshPluck = res.rms > 0.022 && (
+          res.rms > ps.prevRms * 1.65 ||
+          (!ps.capturing && (!ps.isHolding || res.rms > 0.032))
+        );
+
+        if (isFreshPluck) {
+          ps.capturing = true;
+          ps.isHolding = false;
+          ps.pluckStartMs = now;
+          ps.pluckPeakRms = res.rms;
+          ps.samples = [];
+          ps.smoothedHz = 0;
+        } else if (ps.capturing) {
+          if (res.rms > ps.pluckPeakRms) ps.pluckPeakRms = res.rms;
+          const elapsed = now - ps.pluckStartMs;
+          const decayedBelowFloor = res.rms < Math.max(0.014, ps.pluckPeakRms * 0.28);
+
+          // Skip initial 85ms nylon attack transient; measure clean sustain window (85ms - 950ms)
+          if (elapsed >= 85 && elapsed <= 950 && !decayedBelowFloor && res.hz > 145 && res.hz < 620 && res.clarity >= 0.78) {
+            ps.samples.push(res.hz);
+            if (ps.samples.length > 15) ps.samples.shift();
+            const medHz = computeMedianHz(ps.samples);
+            if (medHz > 0) {
+              ps.smoothedHz = ps.smoothedHz ? (ps.smoothedHz * 0.72 + medHz * 0.28) : medHz;
+              updateTunerDisplayWithHz(ps.smoothedHz, { isHeld: false });
+            }
+          }
+
+          // Freeze & Hold settled reading the moment string begins to decay or window completes
+          if ((decayedBelowFloor && elapsed > 160) || elapsed > 950) {
+            ps.capturing = false;
+            if (ps.samples.length >= 3) {
+              ps.holdHz = computeMedianHz(ps.samples);
+              ps.isHolding = true;
+              ps.holdUntilMs = now + 3500;
+              updateTunerDisplayWithHz(ps.holdHz, { isHeld: true });
+            }
+          }
+        } else if (ps.isHolding) {
+          if (now < ps.holdUntilMs) {
+            // Keep needle frozen rock-steady during hold
+          } else {
+            ps.isHolding = false;
+            if (statusPill) {
+              statusPill.textContent = 'Ready — Pluck a string to capture its pitch';
+              statusPill.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-zinc-800 text-zinc-300 border border-zinc-700';
+            }
+          }
+        }
+
+        ps.prevRms = res.rms;
         state.tunerRafId = requestAnimationFrame(loopTuner);
       }
       state.tunerRafId = requestAnimationFrame(loopTuner);
@@ -7192,10 +7409,13 @@
         if (el) el.scrollIntoView({ behavior: 'smooth' });
         document.getElementById('unifiedSongInput').focus();
       });
-      document.getElementById('btnSongbookAddNew').addEventListener('click', () => {
-        document.getElementById('settingsModalBackdrop').classList.remove('hidden');
-        document.getElementById('unifiedSongInput').focus();
-      });
+      const btnSbAdd = document.getElementById('btnSongbookAddNew');
+      if (btnSbAdd) {
+        btnSbAdd.addEventListener('click', () => {
+          document.getElementById('settingsModalBackdrop').classList.remove('hidden');
+          document.getElementById('unifiedSongInput').focus();
+        });
+      }
 
       document.getElementById('btnModeChords').addEventListener('click', () => {
         state.playMode = 'chords';
@@ -7540,6 +7760,9 @@
       if (btnSbDlApp) btnSbDlApp.addEventListener('click', downloadPortableHtmlWithEmbeddedSongbook);
 
       document.getElementById('btnToggleMicTuner').addEventListener('click', toggleMicrophoneTuner);
+      document.querySelectorAll('.tuner-g-mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => setUkuleleGTuningMode(btn.getAttribute('data-g-mode')));
+      });
       document.querySelectorAll('.btn-ref-tone').forEach(btn => {
         btn.addEventListener('click', () => {
           const strName = btn.getAttribute('data-ref-string');
@@ -7598,9 +7821,11 @@
         });
       }
 
-      document.getElementById('btnExportJsonSongbook').addEventListener('click', exportPortableQCoachJson);
+      const btnExpSb = document.getElementById('btnExportJsonSongbook');
+      if (btnExpSb) btnExpSb.addEventListener('click', exportPortableQCoachJson);
       document.getElementById('btnDownloadPortableBundle').addEventListener('click', exportPortableQCoachJson);
-      document.getElementById('importJsonInput').addEventListener('change', (e) => importPortableQCoachJson(e.target.files[0]));
+      const inpImpSb = document.getElementById('importJsonInput');
+      if (inpImpSb) inpImpSb.addEventListener('change', (e) => importPortableQCoachJson(e.target.files[0]));
       document.getElementById('uploadPortableBundleInput').addEventListener('change', (e) => importPortableQCoachJson(e.target.files[0]));
       document.getElementById('btnSyncPushDrive').addEventListener('click', syncPushToGoogleDrive);
       document.getElementById('btnSyncPullDrive').addEventListener('click', syncPullFromGoogleDrive);
@@ -7615,7 +7840,8 @@
       if (btnStageAutoFill) {
         btnStageAutoFill.addEventListener('click', async () => {
           const sg = getCurrentSong();
-          btnStageAutoFill.textContent = '⏳ Fetching...';
+          const lblEl = document.getElementById('stageAutoFillLabel');
+          if (lblEl) lblEl.textContent = 'Syncing...';
           await hydrateSongLyricsOnDemand(sg, { force: true, silent: false, autoPushDrive: true });
           renderAll();
         });
