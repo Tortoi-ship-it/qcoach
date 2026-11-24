@@ -251,6 +251,20 @@
   <!-- Toast Notification Banner -->
   <div id="toastContainer" class="fixed bottom-24 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
+  <!-- 3-Second Stage Prep Countdown Overlay -->
+  <div id="stageCountdownOverlay" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="q-card rounded-2xl px-8 py-6 text-center space-y-3 shadow-2xl border-2 border-amber-500 max-w-xs w-full">
+      <div class="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-bold">Get Ready to Play</div>
+      <div id="countdownNumberDisplay" class="text-6xl font-black font-mono text-amber-400 leading-none">3</div>
+      <div id="countdownChordCue" class="text-xs font-mono text-qtext font-semibold">Starting on Chord: <strong class="text-emerald-400">C</strong></div>
+      <button id="btnCancelCountdown" type="button" class="mt-1 px-4 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-qmuted hover:text-qtext border border-zinc-700 text-xs font-bold transition">
+        ✕ Cancel
+      </button>
+    </div>
+  </div>
+
+
+
   <!-- ZONE 1: Ultra-Slim Smartphone-Friendly Top Header & Navigation + Three-Dot (⋮) Settings Button -->
   <header id="zoneHeader" class="q-card border-t-0 border-x-0 px-2.5 sm:px-6 py-1.5">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
@@ -436,6 +450,7 @@
                   <button type="button" data-mix="full_song" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition" title="Original Full Mix">Full</button>
                   <button type="button" data-mix="vocal_focus" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-cyan-500/20 border border-cyan-500 text-cyan-300 transition" title="Voice Separation: Isolate Lead Vocal (280Hz-3.9kHz Bandpass)">🎤 Vocal</button>
                   <button type="button" data-mix="karaoke_backing" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition" title="Voice Separation: Remove Lead Vocal (Karaoke Instrumental)">🎸 Backing</button>
+                  <button type="button" data-mix="beat_only" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition" title="Beat Only: No music accompaniment, metronome beat click only">🥁 Beat</button>
                   <button type="button" id="btnToggleMp3UkeOverlay" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-500/20 border border-amber-500/40 text-amber-300 transition" title="Toggle Ukulele Synth Guide over MP3">🎹 Uke: ON</button>
                 </div>
                 <span id="liveAudioMixStatusBadge" class="hidden sm:inline text-[9px] font-mono text-cyan-400 shrink-0">Vocal Focus</span>
@@ -707,7 +722,7 @@
             </div>
             <div class="rounded-lg bg-[#1C1C1E] border border-[#2C2C2E] p-3 space-y-1">
               <div class="font-bold text-amber-400">3. Press ▶ PLAY on Stage</div>
-              <p class="text-zinc-300 leading-relaxed">Follow the active <span class="font-semibold text-qtext">Fretboard Diagram</span> on the left while synced <span class="font-semibold text-qtext">Lyrics &amp; Pitch Contour</span> highlight each syllable on the right.</p>
+              <p class="text-zinc-300 leading-relaxed">A <span class="font-mono text-amber-400">3–2–1</span> countdown gives you 3 seconds to place your fingers on the first chord, then synced <span class="font-semibold text-qtext">Fretboard, Lyrics &amp; Pitch Contour</span> guide you bar by bar.</p>
             </div>
             <div class="rounded-lg bg-[#1C1C1E] border border-[#2C2C2E] p-3 space-y-1">
               <div class="font-bold text-amber-400">4. Follow the Beat LEDs</div>
@@ -734,7 +749,7 @@
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-cyan-300 shrink-0 w-28">Voice Separation</span>
-              <p>Above the Pitch Contour, toggle <span class="font-mono text-qtext">Full</span>, <span class="font-mono text-cyan-300">🎤 Vocal</span> (isolates lead vocal), <span class="font-mono text-qtext">🎸 Backing</span> (karaoke instrumental), and <span class="font-mono text-amber-300">🎹 Uke: ON/OFF</span> (synth guide over audio).</p>
+              <p>Above the Pitch Contour, toggle <span class="font-mono text-qtext">Full</span>, <span class="font-mono text-cyan-300">🎤 Vocal</span>, <span class="font-mono text-qtext">🎸 Backing</span>, <span class="font-mono text-emerald-400">🥁 Beat</span> (metronome beat only — no music accompaniment), and <span class="font-mono text-amber-300">🎹 Uke: ON/OFF</span>.</p>
             </div>
           </div>
         </div>
@@ -1210,10 +1225,11 @@
               <span class="text-[10px] font-mono uppercase text-qmuted">MP3 Mix Preset</span>
               <span id="activeMixPresetLabel" class="text-[10px] font-mono text-cyan-400 font-bold">Vocal Focus</span>
             </div>
-            <div class="grid grid-cols-3 gap-1.5">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
               <button type="button" data-mix="full_song" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">Full Song</button>
               <button type="button" data-mix="vocal_focus" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-cyan-500/20 border border-cyan-500 text-cyan-300">Vocal Focus</button>
               <button type="button" data-mix="karaoke_backing" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">Karaoke</button>
+              <button type="button" data-mix="beat_only" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">🥁 Beat Only</button>
             </div>
           </div>
 
@@ -2330,6 +2346,9 @@
       activeSectionIndex: -1, // -1 = Full Song (All Sections combined end-to-end)
       activeTab: 'stage',
       isPlaying: false,
+      isCountingDown: false,
+      countdownTimerId: null,
+      countdownEnabled: true,
       currentBarIndex: 0,
       currentSubdivisionIndex: 0,
       loopEnabled: true,
@@ -4054,7 +4073,8 @@
       const labelMap = {
         full_song: 'Full Mix',
         vocal_focus: 'Vocal Isolated',
-        karaoke_backing: 'Backing Only'
+        karaoke_backing: 'Backing Only',
+        beat_only: 'Beat Only'
       };
       const lbl = document.getElementById('activeMixPresetLabel');
       if (lbl) lbl.textContent = labelMap[presetName] || 'Vocal Isolated';
@@ -4086,7 +4106,20 @@
           if (state.bassKeeperGain) state.bassKeeperGain.gain.value = 1.15 * mScale;
           state.midLevelGain.gain.value = 0.0 * vScale;
           state.sideLevelGain.gain.value = 1.65 * mScale;
+        } else if (presetName === 'beat_only') {
+          if (state.bassKeeperGain) state.bassKeeperGain.gain.value = 0.0;
+          state.midLevelGain.gain.value = 0.0;
+          state.sideLevelGain.gain.value = 0.0;
         }
+      }
+      const audioEl = document.getElementById('hiddenAudioPlayer');
+      if (audioEl) {
+        audioEl.muted = (presetName === 'beat_only');
+      }
+      if (presetName === 'beat_only' && state.beatMuted) {
+        state.beatMuted = false;
+        const muteBeatBtn = document.getElementById('btnMuteBeat');
+        if (muteBeatBtn) muteBeatBtn.textContent = 'ON';
       }
       saveSongsToIndexedDB();
     }
@@ -5499,8 +5532,9 @@
         playBeatClick(isDownbeat, isFinalSub && chordWillChange, isMainBeat);
 
         const audioEl = document.getElementById('hiddenAudioPlayer');
-        const isLiveAudioPlaying = audioEl && !audioEl.paused && audioEl.src && (audioEl.src.startsWith('blob:') || audioEl.src.startsWith('data:'));
-        if (!isLiveAudioPlaying || state.mp3UkeOverlayEnabled) {
+        const isBeatOnly = (song.autoSync.audioMixMode === 'beat_only');
+        const isLiveAudioPlaying = !isBeatOnly && audioEl && !audioEl.paused && audioEl.src && (audioEl.src.startsWith('blob:') || audioEl.src.startsWith('data:'));
+        if (!isBeatOnly && (!isLiveAudioPlaying || state.mp3UkeOverlayEnabled)) {
           const sylOnSub = (currentBar.syllables || []).find(s => s.subdivision === state.currentSubdivisionIndex);
           if (state.playMode === 'scale') {
             if (sylOnSub || isMainBeat) {
@@ -5596,12 +5630,81 @@
       renderStageTick();
     }
 
-    function startPlayback() {
-      if (state.isPlaying) return;
+    function cancelCountdown() {
+      state.isCountingDown = false;
+      if (state.countdownTimerId) {
+        clearInterval(state.countdownTimerId);
+        state.countdownTimerId = null;
+      }
+      const overlay = document.getElementById('stageCountdownOverlay');
+      if (overlay) overlay.classList.add('hidden');
+    }
+
+    function startPlayback(skipCountdown = false) {
+      if (state.isPlaying || state.isCountingDown) return;
       try {
         const ctx = ensureAudioContext();
         if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
       } catch (e) {}
+
+      if (!skipCountdown && state.countdownEnabled) {
+        state.isCountingDown = true;
+        let remaining = 3;
+
+        const song = getCurrentSong();
+        const section = getCurrentSection();
+        const firstBar = section.bars[state.currentBarIndex] || section.bars[0];
+        const firstChord = getBarActiveChord(firstBar, song);
+
+        const overlay = document.getElementById('stageCountdownOverlay');
+        const numEl = document.getElementById('countdownNumberDisplay');
+        const cueEl = document.getElementById('countdownChordCue');
+        const btnIcon = document.getElementById('playPauseIcon');
+        const btnLabel = document.getElementById('playPauseLabel');
+        const btn = document.getElementById('btnPlayPause');
+
+        if (cueEl) {
+          if (state.playMode === 'scale') {
+            const wire = getScaleWireForBar(firstBar, song, 0);
+            cueEl.innerHTML = `Starting on Note: <strong class="text-cyan-400">${wire.note} (${wire.tabCode})</strong>`;
+          } else {
+            cueEl.innerHTML = `Place fingers on Chord: <strong class="text-emerald-400">${firstChord}</strong>`;
+          }
+        }
+        if (numEl) numEl.textContent = String(remaining);
+        if (overlay) overlay.classList.remove('hidden');
+        if (btnIcon && btnLabel && btn) {
+          btnIcon.textContent = '✕';
+          btnLabel.textContent = '3s...';
+          btn.className = 'px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-black text-xs tracking-wide flex items-center gap-1 shadow transition';
+        }
+
+        // Audible count-in click on 3
+        playBeatClick(false, false, true);
+
+        state.countdownTimerId = setInterval(() => {
+          if (!state.isCountingDown) {
+            cancelCountdown();
+            return;
+          }
+          remaining--;
+          if (remaining > 0) {
+            if (numEl) numEl.textContent = String(remaining);
+            if (btnLabel) btnLabel.textContent = `${remaining}s...`;
+            playBeatClick(remaining === 1, false, true);
+          } else {
+            cancelCountdown();
+            beginImmediatePlayback();
+          }
+        }, 1000);
+        return;
+      }
+
+      beginImmediatePlayback();
+    }
+
+    function beginImmediatePlayback() {
+      if (state.isPlaying) return;
       state.isPlaying = true;
       state.lastStepTimeMs = performance.now();
 
@@ -5615,7 +5718,9 @@
       const song = getCurrentSong();
       const audioEl = document.getElementById('hiddenAudioPlayer');
 
-      if ((song.sourceType === 'local_audio' || song.previewUrl) && audioEl && audioEl.src) {
+      const isBeatOnlyStart = (song.autoSync.audioMixMode === 'beat_only');
+      if (audioEl) audioEl.muted = isBeatOnlyStart;
+      if (!isBeatOnlyStart && (song.sourceType === 'local_audio' || song.previewUrl) && audioEl && audioEl.src) {
         if (audioEl.src.startsWith('blob:')) {
           initMidSideAudioGraph();
         }
@@ -5678,6 +5783,7 @@
     }
 
     function stopPlayback() {
+      cancelCountdown();
       state.isPlaying = false;
       if (state.rafId) {
         cancelAnimationFrame(state.rafId);
@@ -7649,16 +7755,21 @@
           const msgMap = {
             full_song: 'Mix: Full Song (100% Lead Vocal + 100% Ukulele)',
             vocal_focus: 'Mix: Vocal Focus (Boosted Lead Melody + Soft Ukulele Guide)',
-            karaoke_backing: 'Mix: Karaoke Backing (Lead Vocal Muted · Ukulele Only)'
+            karaoke_backing: 'Mix: Karaoke Backing (Lead Vocal Muted · Ukulele Only)',
+            beat_only: 'Mix: Beat Only (No Music Accompaniment — Metronome Beat Only)'
           };
           showToast(msgMap[mode] || 'Mix updated', 'info');
         });
       });
 
       document.getElementById('btnPlayPause').addEventListener('click', () => {
-        if (state.isPlaying) stopPlayback();
+        if (state.isPlaying || state.isCountingDown) stopPlayback();
         else startPlayback();
       });
+      const btnCancelCd = document.getElementById('btnCancelCountdown');
+      if (btnCancelCd) {
+        btnCancelCd.addEventListener('click', () => stopPlayback());
+      }
       document.getElementById('btnRestartSection').addEventListener('click', () => {
         state.currentBarIndex = 0;
         state.currentSubdivisionIndex = 0;
