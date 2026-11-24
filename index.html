@@ -276,12 +276,12 @@
         <div class="min-w-0">
           <div class="flex items-center gap-1.5">
             <span id="headerSongTitle" class="font-bold text-xs sm:text-sm text-amber-400 truncate max-w-[115px] sm:max-w-[260px]">Where Can I Go</span>
-            <span class="text-[10px] font-mono text-qmuted shrink-0">
+            <span class="text-xs font-mono text-qmuted shrink-0">
               B<span id="currentBarReadout" class="text-amber-400 font-bold">1</span>/<span id="totalBarsReadout">12</span>
             </span>
-            <span id="headerLevelBadge" class="hidden md:inline-block text-[10px] font-mono uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">Beginner</span>
+            <span id="headerLevelBadge" class="hidden md:inline-block text-xs font-mono uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">Beginner</span>
           </div>
-          <p id="headerSongArtist" class="hidden sm:block text-[10px] text-qmuted truncate">Sword of the Spirit Worship</p>
+          <p id="headerSongArtist" class="hidden sm:block text-xs text-qmuted truncate">Sword of the Spirit Worship</p>
         </div>
       </div>
 
@@ -325,15 +325,15 @@
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-1.5 overflow-x-auto">
       <!-- Adaptive Beat LED Strip + Glanceable LIFT / LAND Pill -->
       <div class="flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
-        <div id="beatLedContainer" class="flex items-center gap-1 flex-1 max-w-xs"><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-[10px] sm:text-xs font-mono transition-all duration-75 bg-emerald-500 border-emerald-300 text-black font-black led-glow-green scale-105">1 · LAND</div><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-[10px] sm:text-xs font-mono transition-all duration-75 bg-zinc-900 border-zinc-700 text-zinc-400">2</div><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-[10px] sm:text-xs font-mono transition-all duration-75 bg-zinc-900 border-zinc-700 text-zinc-400">3</div><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-[10px] sm:text-xs font-mono transition-all duration-75 bg-zinc-900 border-zinc-700 text-zinc-400">4</div></div>
+        <div id="beatLedContainer" class="flex items-center gap-1 flex-1 max-w-xs"><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-xs sm:text-xs font-mono transition-all duration-75 bg-emerald-500 border-emerald-300 text-black font-black led-glow-green scale-105">1 · LAND</div><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-xs sm:text-xs font-mono transition-all duration-75 bg-zinc-900 border-zinc-700 text-zinc-400">2</div><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-xs sm:text-xs font-mono transition-all duration-75 bg-zinc-900 border-zinc-700 text-zinc-400">3</div><div class="flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-xs sm:text-xs font-mono transition-all duration-75 bg-zinc-900 border-zinc-700 text-zinc-400">4</div></div>
         <div id="liftAlertPill" class="px-3 py-1.5 rounded-xl font-bold text-xs sm:text-sm font-mono tracking-wider border bg-zinc-900 text-zinc-300 border-zinc-700 shrink-0">NEXT: G</div>
       </div>
 
       <!-- Compact Pattern Style Pill + 8-Slot Subdivision Strip -->
       <div class="flex items-center gap-1 shrink-0">
-        <button id="btnQuickTogglePickingStyle" type="button" class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-mono font-bold transition" title="Tap to switch between Fingerpicking Arpeggio (C-E-G-A) and Strumming (D-D-U-U-D-U)">🎸 Strum</button>
-        <span id="subdivisionCounterLabel" class="text-[10px] font-mono text-amber-400 font-extrabold w-4 text-right">1</span>
-        <div id="strumSubdivisionBar" class="flex items-center gap-0.5 bg-[#1C1C1E] p-0.5 rounded-md border border-[#2C2C2E]"><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-emerald-500 text-black font-black border-emerald-300 scale-110">D</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">-</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">D</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">U</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">-</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">U</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">D</button><button type="button" title="Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)" class="w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all bg-zinc-900 text-zinc-400 border-zinc-800">U</button></div>
+        <button id="btnQuickTogglePickingStyle" type="button" class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-mono font-bold transition" title="Tap to switch between Fingerpicking Arpeggio (C-E-G-A) and Strumming (D-D-U-U-D-U)">🎸 Strum</button>
+        <span id="subdivisionCounterLabel" class="text-xs font-mono text-amber-400 font-extrabold w-4 text-right">1</span>
+        <div id="strumSubdivisionBar" class="flex items-center gap-0.5 bg-[#1C1C1E] p-0.5 rounded-md border border-[#2C2C2E]"><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-emerald-500 text-black font-black border-emerald-300">↓</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">·</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">↓</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">↑</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">·</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">↑</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">↓</span><span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none bg-zinc-900 text-zinc-400 border-zinc-800">↑</span></div>
       </div>
     </div>
   </section>
@@ -343,6 +343,19 @@
 
     <!-- TAB VIEW 1: SINGLE-SCREEN SMARTPHONE & DESKTOP STAGE -->
     <div id="viewStage" class="space-y-2">
+      <!-- Dismissible First-Launch 3-Step Quick-Start Strip -->
+      <div id="firstLaunchWelcomeStrip" class="q-card rounded-xl px-3 py-2 flex flex-wrap items-center justify-between gap-2 border-amber-500/40">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-qtext">
+          <span class="font-bold text-amber-400">Quick Start:</span>
+          <span><strong class="text-emerald-400">1.</strong> Tune in <strong>Tuner</strong></span>
+          <span><strong class="text-cyan-400">2.</strong> Pick a song in <strong>Songs</strong></span>
+          <span><strong class="text-amber-400">3.</strong> Press <strong>▶ PLAY</strong> (3s countdown)</span>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="btnWelcomeOpenHelp" type="button" class="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-bold transition">? Full Guide</button>
+          <button id="btnDismissWelcomeStrip" type="button" class="px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-qtext border border-zinc-700 text-xs font-bold transition">Got it ✕</button>
+        </div>
+      </div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-3 items-stretch">
 
         <!-- TOP / LEFT PANEL (5 cols): ACTIVE CHORD + FRETBOARD + UP NEXT (Always Side-by-Side on Mobile!) -->
@@ -361,11 +374,11 @@
             <!-- Compact UP NEXT Indicator right on the top row -->
             <div id="nextChordCard" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#121212] border border-cyan-500/80 shadow-sm" title="Up Next Chord / Melody Note">
               <div class="text-right leading-none">
-                <div id="nextCardLabel" class="text-[8px] font-mono uppercase text-cyan-300 font-bold">UP NEXT CHORD</div>
-                <div id="nextFretCode" class="text-[9px] font-mono text-qmuted">0-2-3-2</div>
+                <div id="nextCardLabel" class="text-xs font-mono uppercase text-cyan-300 font-bold">UP NEXT CHORD</div>
+                <div id="nextFretCode" class="text-xs font-mono text-qmuted">0-2-3-2</div>
               </div>
               <div id="nextChordName" class="text-xl sm:text-2xl font-black text-cyan-400 font-mono tracking-tight px-0.5">G</div>
-              <button id="btnAuditionNextChord" type="button" class="p-1 rounded bg-cyan-500/15 hover:bg-cyan-500/30 text-cyan-300 text-[10px] transition" title="Preview Up Next Sound">
+              <button id="btnAuditionNextChord" type="button" class="p-1 rounded bg-cyan-500/15 hover:bg-cyan-500/30 text-cyan-300 text-xs transition" title="Preview Up Next Sound">
                 🔊
               </button>
             </div>
@@ -374,11 +387,11 @@
           <!-- Center Hero: Horizontal Side-by-Side NOW Chord Name & 4-String Fretboard (Compact on Phone!) -->
           <div id="nowChordCard" class="rounded-xl bg-[#121212] border border-amber-500/90 px-3 py-2 flex flex-row items-center justify-between gap-2 shadow-md flex-1">
             <div class="text-left space-y-0.5 min-w-0">
-              <div id="nowModeSubLabel" class="text-[9px] font-mono uppercase text-amber-300 font-bold">Active Chord</div>
+              <div id="nowModeSubLabel" class="text-xs font-mono uppercase text-amber-300 font-bold">Active Chord</div>
               <div id="nowChordName" class="text-4xl sm:text-6xl font-black text-amber-400 tracking-tighter leading-none">C</div>
               <div id="nowFretCode" class="text-xs font-mono text-zinc-300 font-bold">Frets: 0-0-0-3</div>
-              <div id="nowChordNotes" class="text-[10px] font-mono text-qmuted truncate">G4 · C4 · E4 · C5</div>
-              <button id="btnAuditionNowChord" type="button" class="mt-1 px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-[10px] font-bold transition inline-flex items-center gap-1">
+              <div id="nowChordNotes" class="text-xs font-mono text-qmuted truncate">G4 · C4 · E4 · C5</div>
+              <button id="btnAuditionNowChord" type="button" class="mt-1 px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition inline-flex items-center gap-1">
                 <span id="btnAuditionNowLabel">🔊 Strum C</span>
               </button>
             </div>
@@ -393,8 +406,8 @@
           <!-- Melody View Single-Note Tab Bar (Visible only when Melody View is active) -->
           <div id="scaleGuideBox" class="hidden rounded-lg bg-[#121212] border border-cyan-500/50 px-2.5 py-1.5 space-y-1">
             <div class="flex items-center justify-between">
-              <span id="scaleNameBadge" class="text-[10px] font-mono font-bold text-cyan-300">🎼 Melody Tab</span>
-              <span id="scaleStrumSuggest" class="text-[10px] font-mono text-emerald-400 font-semibold">Single-Note Plucking</span>
+              <span id="scaleNameBadge" class="text-xs font-mono font-bold text-cyan-300">🎼 Melody Tab</span>
+              <span id="scaleStrumSuggest" class="text-xs font-mono text-emerald-400 font-semibold">Single-Note Plucking</span>
             </div>
             <div id="scaleActiveWireReadout" class="text-xs font-bold text-qtext">
               Pluck <span class="text-emerald-400 font-mono">String E · Fret 3</span>
@@ -404,7 +417,7 @@
 
           <!-- Optional Collapsible Mini Up-Next Fretboard -->
           <div id="optionalNextFretboardRow" class="hidden rounded-lg bg-[#121212] border border-cyan-500/30 p-1.5 items-center justify-between">
-            <div class="text-[10px] font-mono text-cyan-300 font-bold">Up Next Diagram:</div>
+            <div class="text-xs font-mono text-cyan-300 font-bold">Up Next Diagram:</div>
             <div id="nextFretboardSvgWrap" class="scale-75 origin-right"></div>
           </div>
         </div>
@@ -415,29 +428,25 @@
           <!-- Compact Bar Chord Progression Strip -->
           <div class="rounded-lg bg-[#121212] border border-amber-500/30 px-2 py-1.5 space-y-1">
             <div class="flex items-center justify-between">
-              <div class="flex items-center gap-1.5 min-w-0">
-                <span id="activeSectionBadge" class="text-[10px] font-mono text-cyan-400 font-bold px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 truncate">Full Song (Chorus 1) · Bar 1/12</span>
-                <span id="stageCurrentModePill" class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">🎸 Mode: Chord View (Strumming Chords)</span>
-              </div>
-              <span id="teleprompterNextChordHint" class="text-[11px] font-mono font-bold text-amber-400 shrink-0">Up Next: G</span>
+              <span id="activeSectionBadge" class="text-xs font-mono text-cyan-400 font-bold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 truncate">Full Song (Chorus 1) · Bar 1/12</span>
             </div>
-            <div id="barProgressionStrip" class="grid grid-cols-8 gap-1"><button type="button" class="py-0.5 px-1 rounded-lg bg-amber-500 text-black font-black text-[10px] sm:text-xs font-mono border border-amber-300 shadow"><div class="text-[9px] opacity-75">B1</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B2</div><div class="truncate">G</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B3</div><div class="truncate">Am</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B4</div><div class="truncate">F</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B5</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B6</div><div class="truncate">G</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B7</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B8</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B9</div><div class="truncate">Am</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B10</div><div class="truncate">F</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B11</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-[9px] opacity-75">B12</div><div class="truncate">G</div></button></div>
+            <div id="barProgressionStrip" class="grid grid-cols-8 gap-1"><button type="button" class="py-0.5 px-1 rounded-lg bg-amber-500 text-black font-black text-xs sm:text-xs font-mono border border-amber-300 shadow"><div class="text-xs opacity-75">B1</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B2</div><div class="truncate">G</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B3</div><div class="truncate">Am</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B4</div><div class="truncate">F</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B5</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B6</div><div class="truncate">G</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B7</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B8</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B9</div><div class="truncate">Am</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B10</div><div class="truncate">F</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B11</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B12</div><div class="truncate">G</div></button></div>
           </div>
 
           <!-- Compact Synced Lyrics + Live Pitch Meter Contour -->
           <div class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-2.5 flex-1 flex flex-col justify-between gap-2">
             <!-- Current Line Syllables + Next Lyric Line + Pattern & Lyric Hydration Bar -->
             <div class="rounded-lg bg-zinc-950/80 border border-zinc-800/90 px-2.5 py-1.5 space-y-1 text-center">
-              <div class="flex flex-wrap items-center justify-between gap-1 text-[10px] font-mono border-b border-zinc-800/70 pb-1">
+              <div class="flex flex-wrap items-center justify-between gap-1 text-xs font-mono border-b border-zinc-800/70 pb-1">
                 <span id="stageStrumPatternBadge" class="text-amber-300 font-bold truncate">🎸 Island Strum (D - D U - U D U)</span>
                 <div class="flex items-center gap-1 shrink-0">
-                  <span id="stageLyricsBadge" class="px-1.5 py-0.5 rounded bg-zinc-900 text-qmuted border border-zinc-800 text-[9px]">4 Sections · 20 Bars</span>
+                  <span id="stageLyricsBadge" class="px-1.5 py-0.5 rounded bg-zinc-900 text-qmuted border border-zinc-800 text-xs">4 Sections · 20 Bars</span>
 
                 </div>
               </div>
               <div id="karaokeSyllableRow" class="flex flex-wrap items-center justify-center gap-1.5 min-h-[28px]"><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-cyan-500/25 border-cyan-400 text-cyan-200 scale-110 shadow-lg shadow-cyan-500/20">Where</span><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-zinc-900 border-zinc-800 text-qtext">can I</span><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-zinc-900 border-zinc-800 text-qtext">go</span><span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border bg-zinc-900 border-zinc-800 text-qtext">from Your</span></div>
-              <div class="text-[11px] text-zinc-400 border-t border-zinc-800/70 pt-1 truncate">
-                <span class="text-[9px] font-mono uppercase tracking-wider text-qmuted mr-1">Next:</span>
+              <div class="text-xs sm:text-sm text-zinc-400 border-t border-zinc-800/70 pt-1.5 truncate">
+                <span class="text-xs font-mono uppercase tracking-wider text-qmuted mr-1">Next:</span>
                 <span id="upcomingLyricPreview" class="text-zinc-300 font-medium"><strong class="text-cyan-400 font-mono">[G]</strong> pres- ence, where can I</span>
               </div>
             </div>
@@ -445,15 +454,12 @@
             <!-- PITCH METER (MELODY CONTOUR + STRUM / PICKING SUBDIVISION LANE + INLINE VOICE SEPARATION PILLS) -->
             <div class="w-full h-28 sm:h-36 bg-zinc-950/95 rounded-lg border border-zinc-800/90 p-1.5 relative overflow-hidden flex flex-col justify-between">
               <div class="flex items-center justify-between gap-1 px-0.5">
-                <span id="contourHeaderTitle" class="text-[9px] font-mono uppercase tracking-wider text-cyan-400 font-bold truncate">🎼 Melody Pitch Contour + Strum Beat Track</span>
-                <div class="flex items-center gap-0.5 shrink-0">
-                  <button type="button" data-mix="full_song" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition" title="Original Full Mix">Full</button>
-                  <button type="button" data-mix="vocal_focus" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-cyan-500/20 border border-cyan-500 text-cyan-300 transition" title="Voice Separation: Isolate Lead Vocal (280Hz-3.9kHz Bandpass)">🎤 Vocal</button>
-                  <button type="button" data-mix="karaoke_backing" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition" title="Voice Separation: Remove Lead Vocal (Karaoke Instrumental)">🎸 Backing</button>
-                  <button type="button" data-mix="beat_only" class="mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition" title="Beat Only: No music accompaniment, metronome beat click only">🥁 Beat</button>
-                  <button type="button" id="btnToggleMp3UkeOverlay" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-500/20 border border-amber-500/40 text-amber-300 transition" title="Toggle Ukulele Synth Guide over MP3">🎹 Uke: ON</button>
+                <span id="contourHeaderTitle" class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold truncate">🎼 Melody Pitch Contour + Strum Beat Track</span>
+                <div class="inline-flex items-center gap-1 bg-[#121212] p-0.5 rounded-lg border border-[#2C2C2E] shrink-0" role="group" aria-label="Stage Audio Mode">
+                  <button type="button" data-mix="full_song" class="mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Full Song (Music + Vocals)">🎵 Song</button>
+                  <button type="button" data-mix="vocal_focus" class="mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-cyan-500/25 border border-cyan-400 text-cyan-200 transition" title="Vocal Focus (Lead Melody Highlighted)">🎤 Vocals</button>
+                  <button type="button" data-mix="beat_only" class="mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Beat Only (Metronome Click — No Music Accompaniment)">🥁 Beat Only</button>
                 </div>
-                <span id="liveAudioMixStatusBadge" class="hidden sm:inline text-[9px] font-mono text-cyan-400 shrink-0">Vocal Focus</span>
               </div>
               <svg id="pitchContourSvg" viewBox="0 0 380 112" class="w-full h-full overflow-visible">
         <line x1="28" y1="22" x2="352" y2="22" stroke="#27272A" stroke-dasharray="3 3" stroke-width="1"></line>
@@ -514,10 +520,10 @@
 
       <!-- Subtle Bottom Stage Dot: Auto-Fill Full Lyrics & Bars for Currently Playing Song Only -->
       <div class="flex items-center justify-end gap-2 px-1 pt-0.5">
-        <button id="btnStageGoogleLyrics" type="button" class="hidden px-2 py-0.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">
+        <button id="btnStageGoogleLyrics" type="button" class="hidden px-2 py-0.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-mono font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">
           🔎 Google Lyrics
         </button>
-        <button id="btnStageAutoFillLyrics" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-amber-500/60 text-[10px] font-mono text-qmuted hover:text-qtext transition shadow-sm" title="Auto-fill full lyrics &amp; bars for the currently playing song only">
+        <button id="btnStageAutoFillLyrics" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-amber-500/60 text-xs font-mono text-qmuted hover:text-qtext transition shadow-sm" title="Auto-fill full lyrics &amp; bars for the currently playing song only">
           <span id="stageAutoFillDot" class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
           <span id="stageAutoFillLabel">Auto-Fill This Song</span>
         </button>
@@ -607,8 +613,13 @@
           </div>
         </div>
 
-        <!-- Live Preview Microphone Pickup & Interactive Tuning Peg Simulator (Works inside Preview Tab & Hardware Mic!) -->
-        <div id="tunerLivePickupBar" class="rounded-2xl bg-[#121212] border border-emerald-500/40 p-4 space-y-3">
+        <!-- Collapsible Tuning Peg Simulator (Hidden by default so real ukulele players see a clean Tuner) -->
+        <div class="flex items-center justify-center">
+          <button id="btnToggleTunerTestBar" type="button" class="px-3 py-1.5 rounded-lg bg-[#121212] hover:bg-zinc-800 text-xs font-mono text-qmuted hover:text-qtext border border-[#2C2C2E] transition">
+            🎛️ Test Without Mic / Practice by Ear ▼
+          </button>
+        </div>
+        <div id="tunerLivePickupBar" class="hidden rounded-2xl bg-[#121212] border border-emerald-500/40 p-4 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <span id="tunerSourceModeDot" class="w-2.5 h-2.5 rounded-full bg-zinc-600"></span>
@@ -629,9 +640,9 @@
               <button type="button" data-sim-string="A4" class="btn-sim-string px-2.5 py-1 rounded-lg bg-amber-500 text-black text-xs font-mono font-black border border-amber-300">A4</button>
             </div>
             <div class="sm:col-span-7 flex items-center gap-2">
-              <span class="text-[10px] font-mono text-red-400 shrink-0">-40c Flat</span>
+              <span class="text-xs font-mono text-red-400 shrink-0">-40c Flat</span>
               <input id="sliderTunerPegCents" type="range" min="-40" max="40" step="0.5" value="0" class="w-full h-1.5 bg-zinc-800 rounded-lg cursor-pointer" title="Adjust Tuning Peg (-40 cents Flat to +40 cents Sharp) to test live microphone pitch detection in preview">
-              <span class="text-[10px] font-mono text-red-400 shrink-0">+40c Sharp</span>
+              <span class="text-xs font-mono text-red-400 shrink-0">+40c Sharp</span>
             </div>
           </div>
         </div>
@@ -709,7 +720,7 @@
         <div data-help-section="quickstart" class="help-section rounded-xl bg-[#121212] border border-emerald-500/30 p-4 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">🚀 1. Quick Start — 4 Steps to Play</h3>
-            <span class="text-[10px] font-mono text-qmuted">Start here</span>
+            <span class="text-xs font-mono text-qmuted">Start here</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
             <div class="rounded-lg bg-[#1C1C1E] border border-[#2C2C2E] p-3 space-y-1">
@@ -741,7 +752,7 @@
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-cyan-400 shrink-0 w-28">Strum / Pick Strip</span>
-              <p>Tap <span class="font-mono text-amber-300">🎸 Strum / 🤌 Pick</span> in the top beat bar to toggle picking style, or click any individual slot (<span class="font-mono">D, U, C, E, G, A, -</span>) to customize your strumming or fingerpicking pattern.</p>
+              <p>Follow the live <span class="font-mono text-amber-300">↓ / ↑</span> strum arrows in the top beat bar (read-only so you never edit by accident). Tap <span class="font-mono text-amber-300">🎸 Strum / 🤌 Pick</span> or open <span class="font-mono">⋮ Settings</span> to change patterns.</p>
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-emerald-400 shrink-0 w-28">🔊 Audition &amp; Bars</span>
@@ -749,7 +760,7 @@
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-cyan-300 shrink-0 w-28">Voice Separation</span>
-              <p>Above the Pitch Contour, toggle <span class="font-mono text-qtext">Full</span>, <span class="font-mono text-cyan-300">🎤 Vocal</span>, <span class="font-mono text-qtext">🎸 Backing</span>, <span class="font-mono text-emerald-400">🥁 Beat</span> (metronome beat only — no music accompaniment), and <span class="font-mono text-amber-300">🎹 Uke: ON/OFF</span>.</p>
+              <p>Above the Pitch Contour, pick your Stage Audio Mode: <span class="font-mono text-qtext">🎵 Song</span>, <span class="font-mono text-cyan-300">🎤 Vocals</span>, or <span class="font-mono text-emerald-400">🥁 Beat Only</span> (metronome click with no music accompaniment).</p>
             </div>
           </div>
         </div>
@@ -758,7 +769,7 @@
         <div data-help-section="adjustments" class="help-section rounded-xl bg-[#121212] border border-cyan-500/30 p-4 space-y-2.5">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold">🎛️ 3. Key Adjustments (Bottom Dock &amp; ⋮ Settings)</h3>
-            <span class="text-[10px] font-mono text-qmuted">Customize to your pace</span>
+            <span class="text-xs font-mono text-qmuted">Customize to your pace</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-zinc-300">
             <div class="rounded-lg bg-[#1C1C1E] border border-[#2C2C2E] p-3 space-y-1">
@@ -838,8 +849,15 @@
           </button>
         </div>
 
+        <!-- 3-Tab Settings Navigation (Practice · Audio · Library) -->
+        <div class="grid grid-cols-3 gap-1.5 bg-[#121212] p-1 rounded-xl border border-[#2C2C2E]" role="tablist" aria-label="Settings Categories">
+          <button type="button" data-settings-tab="practice" class="settings-tab-btn py-2 px-2 rounded-lg text-xs font-extrabold bg-amber-500 text-black transition">🎸 Practice</button>
+          <button type="button" data-settings-tab="audio" class="settings-tab-btn py-2 px-2 rounded-lg text-xs font-semibold text-qmuted hover:text-qtext transition">🎛️ Audio</button>
+          <button type="button" data-settings-tab="library" class="settings-tab-btn py-2 px-2 rounded-lg text-xs font-semibold text-qmuted hover:text-qtext transition">📚 Library</button>
+        </div>
+
         <!-- DISPLAY THEME: Auto (Phone Default) / Dark / Gray Tone / Bright -->
-        <div class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-2.5">
+        <div data-settings-panel="practice" class="settings-tab-panel rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-2.5">
           <div class="flex items-center justify-between gap-2">
             <h3 class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">Display Theme</h3>
             <span id="activeThemeReadout" class="text-[11px] font-mono text-cyan-400 font-bold">Bright</span>
@@ -854,7 +872,7 @@
         </div>
 
         <!-- SECTION 1: Skill Level Mode (Beginner / Intermediate / Expert) & Coach Toggles -->
-        <div class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
+        <div data-settings-panel="practice" class="settings-tab-panel rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">1. Player Skill Level &amp; Coach Prompts</h3>
             <span id="ActiveSkillLabelSettings" class="text-xs font-mono text-emerald-400 font-bold">Beginner Mode</span>
@@ -862,17 +880,13 @@
 
           <!-- 3-Tier Mode Selector: Beginner | Intermediate | Expert -->
           <div class="grid grid-cols-3 gap-2">
-            <button type="button" data-skill="beginner" class="skill-mode-btn py-2 px-2.5 rounded-xl text-xs font-bold border transition bg-emerald-500 text-black border-emerald-300">🌱 Beginner<div class="text-[10px] font-normal opacity-80">Open Chords + Full Visual Guide</div></button>
-            <button type="button" data-skill="intermediate" class="skill-mode-btn py-2 px-2.5 rounded-xl text-xs font-semibold border transition bg-zinc-900 text-qmuted border-zinc-800 hover:text-qtext">🎸 Intermediate<div class="text-[10px] font-normal opacity-80">Rich Chords + Streamlined Stage</div></button>
-            <button type="button" data-skill="expert" class="skill-mode-btn py-2 px-2.5 rounded-xl text-xs font-semibold border transition bg-zinc-900 text-qmuted border-zinc-800 hover:text-qtext">⚡ Expert<div class="text-[10px] font-normal opacity-80">Full Voicings (Cmaj7/G6) · Pure Stage</div></button>
+            <button type="button" data-skill="beginner" class="skill-mode-btn py-2 px-2.5 rounded-xl text-xs font-bold border transition bg-emerald-500 text-black border-emerald-300">🌱 Beginner<div class="text-xs font-normal opacity-80">Open Chords + Full Visual Guide</div></button>
+            <button type="button" data-skill="intermediate" class="skill-mode-btn py-2 px-2.5 rounded-xl text-xs font-semibold border transition bg-zinc-900 text-qmuted border-zinc-800 hover:text-qtext">🎸 Intermediate<div class="text-xs font-normal opacity-80">Rich Chords + Streamlined Stage</div></button>
+            <button type="button" data-skill="expert" class="skill-mode-btn py-2 px-2.5 rounded-xl text-xs font-semibold border transition bg-zinc-900 text-qmuted border-zinc-800 hover:text-qtext">⚡ Expert<div class="text-xs font-normal opacity-80">Full Voicings (Cmaj7/G6) · Pure Stage</div></button>
           </div>
 
           <!-- Voice Coach, TTS Lyrics & High-Neck Chord Voicing Toggles inside Settings -->
           <div class="pt-2 border-t border-zinc-800 space-y-2">
-            <button id="btnToggleTts" type="button" class="w-full py-2 px-3 rounded-xl text-xs font-mono font-bold border transition bg-zinc-800 text-zinc-400 border-zinc-700 flex items-center justify-between">
-              <span>🗣️ Voice-Only Coach Prompts (Spoken Cues)</span>
-              <span id="ttsCoachStateLabel">OFF</span>
-            </button>
             <div class="grid grid-cols-2 gap-2">
               <button id="btnStageVoiceCoach" type="button" class="py-1.5 px-2.5 rounded-xl text-xs font-mono font-semibold border transition bg-zinc-800 text-qmuted border-zinc-700 hover:text-qtext flex items-center justify-center gap-1">
                 <span>🔇 Voice Coach: OFF</span>
@@ -883,7 +897,7 @@
             </div>
             <div class="flex items-center justify-between pt-1 text-xs text-qmuted">
               <span>Ukulele Chord Voicing Position:</span>
-              <button id="btnToggleHighChordVoicing" type="button" class="px-2 py-0.5 rounded-md bg-zinc-800 hover:bg-zinc-700 text-[10px] font-mono text-amber-300 border border-zinc-700 transition">Voicing: Open</button>
+              <button id="btnToggleHighChordVoicing" type="button" class="px-2 py-0.5 rounded-md bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-amber-300 border border-zinc-700 transition">Voicing: Open</button>
             </div>
           </div>
 
@@ -897,10 +911,10 @@
         </div>
 
         <!-- SECTION 2: Unified Add Song Pipeline (Song Name / YouTube Link / MP3 Upload) -->
-        <div id="settingsSectionAddSong" class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
+        <div id="settingsSectionAddSong" data-settings-panel="library" class="settings-tab-panel hidden rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold">2. Add Song (Name, YouTube Link, or MP3/MP4)</h3>
-            <span id="activeSourceBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            <span id="activeSourceBadge" class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
               4-PHASE PIPELINE
             </span>
           </div>
@@ -942,9 +956,9 @@
             <div class="flex items-center justify-between gap-2 border-b border-zinc-800 pb-1.5">
               <div>
                 <div class="text-xs font-mono font-bold text-cyan-300">📖 Multi-Song PDF Songbook Detected</div>
-                <div id="pdfSongbookSubtitle" class="text-[10px] font-mono text-qmuted">Select a song to import &amp; cross-reference, or import all verified songs.</div>
+                <div id="pdfSongbookSubtitle" class="text-xs font-mono text-qmuted">Select a song to import &amp; cross-reference, or import all verified songs.</div>
               </div>
-              <button id="btnImportAllPdfSongs" type="button" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-[10px] shrink-0 transition">
+              <button id="btnImportAllPdfSongs" type="button" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs shrink-0 transition">
                 ⚡ Import All
               </button>
             </div>
@@ -955,7 +969,7 @@
           <div id="pipelineStepsBox" class="hidden rounded-xl bg-zinc-950 border border-zinc-800 p-3 space-y-1.5 font-mono text-[11px]">
             <div class="flex items-center justify-between border-b border-zinc-800 pb-1 mb-1">
               <span class="text-cyan-400 font-bold">⚙️ Song Discovery &amp; Embedding Steps</span>
-              <span id="pipelineOverallBadge" class="text-[10px] text-amber-400">Running...</span>
+              <span id="pipelineOverallBadge" class="text-xs text-amber-400">Running...</span>
             </div>
             <div id="pipelineStep1" class="text-zinc-400">⏳ Step 1: Identifying source &amp; harvesting metadata/audio...</div>
             <div id="pipelineStep2" class="text-zinc-500">○ Step 2: Cross-verifying BPM, meter, key &amp; groove...</div>
@@ -968,8 +982,8 @@
             <div class="flex items-center justify-between gap-2">
               <div id="uploadFeedbackTitle" class="font-bold text-emerald-400">✓ Song has been successfully added to Song Bank!</div>
               <div class="flex items-center gap-1.5 shrink-0">
-                <button id="btnFeedbackOpenManualForm" type="button" class="hidden px-2.5 py-1 rounded bg-amber-500 hover:bg-amber-400 text-black font-bold text-[10px]">📝 Enter Songsheet Manually</button>
-                <button id="btnFeedbackGoToStage" type="button" class="px-2 py-0.5 rounded bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-[10px]">▶ Open Stage</button>
+                <button id="btnFeedbackOpenManualForm" type="button" class="hidden px-2.5 py-1 rounded bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs">📝 Enter Songsheet Manually</button>
+                <button id="btnFeedbackGoToStage" type="button" class="px-2 py-0.5 rounded bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs">▶ Open Stage</button>
               </div>
             </div>
             <div id="uploadFeedbackDetails" class="text-[11px] text-zinc-300"></div>
@@ -986,28 +1000,28 @@
                 <span>📝 Manual Songsheet Entry (Chords, Tempo, Key &amp; Lyrics)</span>
                 <span id="manualFormChevron">▼</span>
               </button>
-              <span class="text-[10px] font-mono text-qmuted">4-Pillar Verified</span>
+              <span class="text-xs font-mono text-qmuted">4-Pillar Verified</span>
             </div>
 
             <div id="manualSongsheetDrawer" class="hidden rounded-xl bg-zinc-950 border border-cyan-500/40 p-3 space-y-2.5">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div>
-                  <label class="block text-[10px] font-mono uppercase text-qmuted mb-1">Song Title <span class="text-red-400">*</span></label>
+                  <label class="block text-xs font-mono uppercase text-qmuted mb-1">Song Title <span class="text-red-400">*</span></label>
                   <input id="manualSongTitle" type="text" placeholder="e.g. Song of Patrick" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-qtext focus:outline-none focus:border-cyan-500">
                 </div>
                 <div>
-                  <label class="block text-[10px] font-mono uppercase text-qmuted mb-1">Artist / Collection</label>
+                  <label class="block text-xs font-mono uppercase text-qmuted mb-1">Artist / Collection</label>
                   <input id="manualSongArtist" type="text" placeholder="e.g. Sword of the Spirit Worship" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-qtext focus:outline-none focus:border-cyan-500">
                 </div>
               </div>
 
               <div class="grid grid-cols-3 gap-2">
                 <div>
-                  <label class="block text-[10px] font-mono uppercase text-qmuted mb-1">Tempo BPM <span class="text-red-400">*</span></label>
+                  <label class="block text-xs font-mono uppercase text-qmuted mb-1">Tempo BPM <span class="text-red-400">*</span></label>
                   <input id="manualSongBpm" type="number" min="40" max="180" value="76" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-amber-300 focus:outline-none focus:border-cyan-500">
                 </div>
                 <div>
-                  <label class="block text-[10px] font-mono uppercase text-qmuted mb-1">Meter <span class="text-red-400">*</span></label>
+                  <label class="block text-xs font-mono uppercase text-qmuted mb-1">Meter <span class="text-red-400">*</span></label>
                   <select id="manualSongMeter" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-2 py-1.5 text-xs font-mono text-qtext focus:outline-none focus:border-cyan-500">
                     <option value="4/4" selected="">4/4 Common</option>
                     <option value="3/4">3/4 Waltz</option>
@@ -1015,7 +1029,7 @@
                   </select>
                 </div>
                 <div>
-                  <label class="block text-[10px] font-mono uppercase text-qmuted mb-1">Key <span class="text-red-400">*</span></label>
+                  <label class="block text-xs font-mono uppercase text-qmuted mb-1">Key <span class="text-red-400">*</span></label>
                   <select id="manualSongKey" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-2 py-1.5 text-xs font-mono text-emerald-300 focus:outline-none focus:border-cyan-500">
                     <option value="C" selected="">C Major</option>
                     <option value="G">G Major</option>
@@ -1030,7 +1044,7 @@
               </div>
 
               <div>
-                <label class="block text-[10px] font-mono uppercase text-qmuted mb-1">Strumming / Picking Pattern</label>
+                <label class="block text-xs font-mono uppercase text-qmuted mb-1">Strumming / Picking Pattern</label>
                 <select id="manualSongStrumStyle" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500">
                   <option value="island">🎸 Island Strum (D - D U - U D U)</option>
                   <option value="folk">🎸 Folk Strum (D - D U D - D U)</option>
@@ -1043,8 +1057,8 @@
 
               <div class="space-y-1">
                 <div class="flex items-center justify-between">
-                  <label class="text-[10px] font-mono uppercase text-qmuted">Lyrics &amp; <span class="text-amber-400">[Chord]</span> / Chord-Above-Lyric / <span class="text-cyan-400">| Bar |</span> Sheet <span class="text-red-400">*</span></label>
-                  <button id="btnInsertSampleSongsheet" type="button" class="text-[10px] font-mono text-amber-400 hover:text-amber-300 underline">
+                  <label class="text-xs font-mono uppercase text-qmuted">Lyrics &amp; <span class="text-amber-400">[Chord]</span> / Chord-Above-Lyric / <span class="text-cyan-400">| Bar |</span> Sheet <span class="text-red-400">*</span></label>
+                  <button id="btnInsertSampleSongsheet" type="button" class="text-xs font-mono text-amber-400 hover:text-amber-300 underline">
                     + Sample [Chord] Sheet
                   </button>
                 </div>
@@ -1092,7 +1106,7 @@
         </div>
 
         <!-- SECTION 3: Musical Key Transpose, Time Signature Meter & Bar Chord Editor -->
-        <div class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
+        <div data-settings-panel="practice" class="settings-tab-panel rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">3. Key Transpose, Meter &amp; Bar Editor</h3>
             <span id="headerKeyBadge" class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">Key: C (Orig: B +1)</span>
@@ -1177,10 +1191,10 @@
         </div>
 
         <!-- SECTION 4: 3-Channel Audio Mixer, Presets & Beat-1 Fine-Tune Sync -->
-        <div class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
+        <div data-settings-panel="audio" class="settings-tab-panel hidden rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">4. Audio Mixer &amp; Auto-Sync Offset</h3>
-            <span id="syncConfidenceBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300">Beat 1 Locked (94%)</span>
+            <span id="syncConfidenceBadge" class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300">Beat 1 Locked (94%)</span>
           </div>
 
           <!-- 3-Channel Sliders -->
@@ -1190,7 +1204,7 @@
                 <span class="font-semibold text-qtext">1. Beat Click &amp; LIFT Woodblock</span>
                 <div class="flex items-center gap-1.5">
                   <span id="valBeatVol" class="text-[11px] font-mono text-amber-400">85%</span>
-                  <button id="btnMuteBeat" type="button" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">ON</button>
+                  <button id="btnMuteBeat" type="button" class="px-1.5 py-0.5 rounded text-xs font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">ON</button>
                 </div>
               </div>
               <input id="sliderBeatVol" type="range" min="0" max="100" value="85" class="w-full h-1.5 bg-zinc-800 rounded-lg cursor-pointer">
@@ -1201,7 +1215,7 @@
                 <span id="labelMusicChannel" class="font-semibold text-qtext">2. Ukulele / Backing Track</span>
                 <div class="flex items-center gap-1.5">
                   <span id="valMusicVol" class="text-[11px] font-mono text-amber-400">90%</span>
-                  <button id="btnMuteMusic" type="button" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">ON</button>
+                  <button id="btnMuteMusic" type="button" class="px-1.5 py-0.5 rounded text-xs font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">ON</button>
                 </div>
               </div>
               <input id="sliderMusicVol" type="range" min="0" max="100" value="90" class="w-full h-1.5 bg-zinc-800 rounded-lg cursor-pointer">
@@ -1212,7 +1226,7 @@
                 <span class="font-semibold text-cyan-300">3. Vocals (Mid-Side 1.2kHz EQ)</span>
                 <div class="flex items-center gap-1.5">
                   <span id="valVocalVol" class="text-[11px] font-mono text-cyan-400">100%</span>
-                  <button id="btnMuteVocal" type="button" class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">ON</button>
+                  <button id="btnMuteVocal" type="button" class="px-1.5 py-0.5 rounded text-xs font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">ON</button>
                 </div>
               </div>
               <input id="sliderVocalVol" type="range" min="0" max="125" value="100" class="w-full h-1.5 bg-zinc-800 rounded-lg cursor-pointer">
@@ -1222,8 +1236,8 @@
           <!-- 1-Click MP3 Mix Presets -->
           <div class="pt-1">
             <div class="flex items-center justify-between mb-1">
-              <span class="text-[10px] font-mono uppercase text-qmuted">MP3 Mix Preset</span>
-              <span id="activeMixPresetLabel" class="text-[10px] font-mono text-cyan-400 font-bold">Vocal Focus</span>
+              <span class="text-xs font-mono uppercase text-qmuted">MP3 Mix Preset</span>
+              <span id="activeMixPresetLabel" class="text-xs font-mono text-cyan-400 font-bold">Vocal Focus</span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
               <button type="button" data-mix="full_song" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">Full Song</button>
@@ -1245,10 +1259,10 @@
         </div>
 
         <!-- SECTION 5: Hybrid Cloud Sync (Google Drive REST v3 + Portable .qcoach.json) & Mastery Stats -->
-        <div class="rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
+        <div data-settings-panel="library" class="settings-tab-panel hidden rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold">5. Cloud Sync &amp; Practice Stats</h3>
-            <span id="idbStatusBadge" class="text-[10px] font-mono text-emerald-400">Cross-Browser Songbook Ready (105 songs · 63ms)</span>
+            <span id="idbStatusBadge" class="text-xs font-mono text-emerald-400">Cross-Browser Songbook Ready (105 songs · 63ms)</span>
           </div>
 
           <input id="inputGDriveToken" type="password" placeholder="Optional Google OAuth Token (drive.file)..." class="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-1.5 text-xs font-mono text-qtext focus:outline-none focus:border-cyan-500">
@@ -1285,44 +1299,46 @@
   </div>
 
   <!-- ZONE 4: Ultra-Slim Single-Line Bottom Transport Dock (Fits on 1 row on Smartphone Touchscreen) -->
-  <footer id="zoneBottomDock" class="sticky bottom-0 z-30 bg-[#1C1C1E]/95 backdrop-blur-md border-t border-[#2C2C2E] px-2.5 sm:px-6 py-1.5 shadow-2xl">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-1.5 overflow-x-auto">
+  <footer id="zoneBottomDock" class="sticky bottom-0 z-30 bg-[#1C1C1E]/95 backdrop-blur-md border-t border-[#2C2C2E] px-3 sm:px-6 py-2 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto">
 
-      <!-- Left: Compact Play / Pause + Restart -->
-      <div class="flex items-center gap-1 shrink-0">
-        <button id="btnPlayPause" type="button" class="px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs tracking-wide flex items-center gap-1 shadow transition">
+      <!-- Left: Ergonomic Play / Pause + Restart (>=44px touch targets) -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="btnPlayPause" type="button" class="min-h-[44px] px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-sm tracking-wide flex items-center gap-1.5 shadow transition">
           <span id="playPauseIcon">▶</span>
           <span id="playPauseLabel">PLAY</span>
         </button>
 
-        <button id="btnRestartSection" type="button" class="px-2 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-qtext border border-zinc-700 text-xs font-bold transition" title="Restart from Bar 1">
+        <button id="btnRestartSection" type="button" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-qtext border border-zinc-700 text-sm font-bold transition" title="Restart from Bar 1">
           ⏮
         </button>
       </div>
 
-      <!-- Center: Compact Tempo Buttons (-5, BPM, +5) -->
-      <div class="flex items-center gap-1 bg-[#121212] px-2 py-1 rounded-lg border border-[#2C2C2E] shrink-0">
-        <button id="btnBpmMinus" type="button" class="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-qtext font-mono font-bold text-[11px] border border-zinc-700 active:scale-95 transition" title="Decrease Tempo by 5 BPM">
+      <!-- Center: Unified Tempo & Pace Bar (No Mental Math) -->
+      <div class="flex items-center gap-1.5 bg-[#121212] px-2 py-1 rounded-xl border border-[#2C2C2E] shrink-0">
+        <button id="btnBpmMinus" type="button" class="min-h-[36px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-qtext font-mono font-bold text-xs border border-zinc-700 active:scale-95 transition" title="Decrease Tempo by 5 BPM">
           -5
         </button>
 
-        <div class="text-center px-1.5 leading-none">
-          <span id="bpmReadout" class="text-xs sm:text-sm font-mono font-black text-amber-400">74</span>
-          <span class="text-[9px] font-mono text-qmuted">BPM</span>
+        <div class="text-center px-2 leading-tight">
+          <span id="bpmReadout" class="text-sm sm:text-base font-mono font-black text-amber-400">74</span>
+          <span class="text-xs font-mono text-qmuted">BPM</span>
         </div>
 
-        <button id="btnBpmPlus" type="button" class="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-qtext font-mono font-bold text-[11px] border border-zinc-700 active:scale-95 transition" title="Increase Tempo by 5 BPM">
+        <button id="btnBpmPlus" type="button" class="min-h-[36px] px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-qtext font-mono font-bold text-xs border border-zinc-700 active:scale-95 transition" title="Increase Tempo by 5 BPM">
           +5
         </button>
+
+        <div class="hidden sm:flex items-center gap-1 pl-2 ml-1 border-l border-[#2C2C2E]">
+          <button type="button" data-speed="0.6" class="speed-preset-btn min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-mono bg-zinc-800 text-qmuted hover:text-qtext transition" title="Slow Practice (60% speed)">Slow</button>
+          <button type="button" data-speed="0.75" class="speed-preset-btn min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-mono bg-zinc-800 text-qmuted hover:text-qtext transition" title="Steady Practice (75% speed)">Steady</button>
+          <button type="button" data-speed="1.0" class="speed-preset-btn min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-mono bg-amber-500 text-black font-bold transition" title="Full Song Tempo (100%)">Full</button>
+        </div>
       </div>
 
-      <!-- Right: Speed Pills (60%/75%/100%) + Compact Auto-Ramp Button -->
-      <div class="flex items-center gap-1 shrink-0">
-        <button type="button" data-speed="0.6" class="speed-preset-btn px-1.5 py-1 rounded text-[10px] font-mono bg-zinc-800 text-qmuted hover:text-qtext">60%</button>
-        <button type="button" data-speed="0.75" class="speed-preset-btn px-1.5 py-1 rounded text-[10px] font-mono bg-zinc-800 text-qmuted hover:text-qtext">75%</button>
-        <button type="button" data-speed="1.0" class="speed-preset-btn px-1.5 py-1 rounded text-[10px] font-mono bg-amber-500 text-black font-bold">100%</button>
-
-        <button id="btnToggleAutoRamp" type="button" class="px-2 py-1 rounded-lg text-[10px] font-mono font-bold bg-zinc-800 text-qmuted border border-zinc-700 hover:text-qtext transition" title="Auto-Ramp Tempo (+5 BPM every 2 loops)">
+      <!-- Right: Auto-Ramp -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="btnToggleAutoRamp" type="button" class="min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-zinc-800 text-qmuted border border-zinc-700 hover:text-qtext transition" title="Auto-Ramp Tempo (+5 BPM every 2 loops)">
           📈 Ramp
         </button>
       </div>
@@ -2992,6 +3008,7 @@
       const cleanArtist = (song.artist || '').split('·')[0].trim();
       const q = encodeURIComponent(`${cleanTitle} ${cleanArtist} lyrics chords`);
       window.open(`https://www.google.com/search?q=${q}`, '_blank', 'noopener,noreferrer');
+      switchSettingsTab('library');
       document.getElementById('settingsModalBackdrop').classList.remove('hidden');
       const drawer = document.getElementById('pasteLyricsDrawer');
       if (drawer) drawer.classList.remove('hidden');
@@ -4058,11 +4075,11 @@
 
       document.querySelectorAll('.mix-preset-btn').forEach(btn => {
         const active = btn.getAttribute('data-mix') === presetName;
-        const isCompactStage = btn.classList.contains('text-[9px]');
+        const isCompactStage = !!btn.closest('#viewStage');
         if (isCompactStage) {
           btn.className = active
-            ? 'mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-cyan-500/25 border border-cyan-400 text-cyan-200 transition'
-            : 'mix-preset-btn px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold text-qmuted hover:text-qtext transition';
+            ? 'mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-cyan-500/25 border border-cyan-400 text-cyan-200 transition'
+            : 'mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition';
         } else {
           btn.className = active
             ? 'mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-cyan-500/20 border border-cyan-500 text-cyan-300'
@@ -4769,7 +4786,7 @@
         }
 
         const ledEl = document.createElement('div');
-        ledEl.className = `flex-1 min-w-[34px] sm:min-w-[54px] py-0.5 px-1 rounded-lg border text-center text-[10px] sm:text-xs font-mono transition-all duration-75 ${bgClass}`;
+        ledEl.className = `flex-1 min-w-[44px] sm:min-w-[60px] py-1.5 px-1.5 rounded-lg border text-center text-xs font-mono transition-all duration-75 ${bgClass}`;
         ledEl.textContent = labelText;
         ledContainer.appendChild(ledEl);
       }
@@ -4808,17 +4825,11 @@
         if (!isCurrentSub && isFingerPickSym) {
           cellClass = 'bg-cyan-950/60 text-cyan-300 border-cyan-700/60 font-bold';
         }
-        const cell = document.createElement('button');
-        cell.type = 'button';
-        cell.title = 'Click to cycle slot: Down (D) / Up (U) / Fingerpick String (C, E, G, A) / Rest (-)';
-        cell.className = `w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] sm:text-xs font-mono border transition-all ${cellClass}`;
-        cell.textContent = sym;
-        cell.addEventListener('click', () => {
-          const cycle = { 'D': 'U', 'U': 'C', 'C': 'E', 'E': 'G', 'G': 'A', 'A': '-', '-': 'D' };
-          song.musicalMeta.strumPattern[s % pattern.length] = cycle[sym] || 'D';
-          saveSongsToIndexedDB();
-          renderAll();
-        });
+        const displaySym = sym === 'D' ? '↓' : (sym === 'U' ? '↑' : (sym === '-' ? '·' : sym));
+        const cell = document.createElement('span');
+        cell.title = 'Strum / Pick cue (change pattern via 🎸 Strum / 🤌 Pick or ⋮ Settings)';
+        cell.className = `w-6 h-6 sm:w-7 sm:h-7 rounded-md flex items-center justify-center text-xs font-mono border select-none transition-all ${cellClass}`;
+        cell.textContent = displaySym;
         strumWrap.appendChild(cell);
       }
 
@@ -4837,8 +4848,8 @@
         const isFp = (song.musicalMeta.strumPattern || []).some(x => ['G', 'C', 'E', 'A'].includes(x));
         quickStyleBtn.textContent = isFp ? '🤌 Pick' : '🎸 Strum';
         quickStyleBtn.className = isFp
-          ? 'px-1.5 py-0.5 rounded bg-cyan-500 text-black text-[9px] font-mono font-black transition'
-          : 'px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-mono font-bold transition';
+          ? 'px-1.5 py-0.5 rounded bg-cyan-500 text-black text-xs font-mono font-black transition'
+          : 'px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-mono font-bold transition';
       }
     }
 
@@ -4920,8 +4931,8 @@
           btnHighVoicing.classList.remove('hidden');
           btnHighVoicing.textContent = state.highChordVoicing ? 'Voicing: High Neck ↑' : 'Voicing: Open';
           btnHighVoicing.className = state.highChordVoicing
-            ? 'px-2 py-0.5 rounded-md bg-amber-500 text-black text-[10px] font-mono font-black border border-amber-300 transition'
-            : 'px-2 py-0.5 rounded-md bg-zinc-800 hover:bg-zinc-700 text-[10px] font-mono text-amber-300 border border-zinc-700 transition';
+            ? 'px-2 py-0.5 rounded-md bg-amber-500 text-black text-xs font-mono font-black border border-amber-300 transition'
+            : 'px-2 py-0.5 rounded-md bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-amber-300 border border-zinc-700 transition';
         }
         if (btnAuditionLbl) btnAuditionLbl.textContent = `🔊 Strum ${nowChordName}`;
         if (nextCardLbl) nextCardLbl.textContent = 'UP NEXT CHORD';
@@ -4968,7 +4979,8 @@
       const partLabel = currentBar.sectionPartName ? `${section.name} (${currentBar.sectionPartName})` : section.name;
       document.getElementById('activeSectionBadge').textContent = `${partLabel} · Bar ${state.currentBarIndex + 1}/${bars.length}`;
       document.getElementById('editBarNumLabel').textContent = state.currentBarIndex + 1;
-      document.getElementById('teleprompterNextChordHint').textContent = chordWillChange ? `Up Next: ${nextChord}` : `Hold: ${nowChord}`;
+      const nextHintEl = document.getElementById('teleprompterNextChordHint');
+      if (nextHintEl) nextHintEl.textContent = chordWillChange ? `Up Next: ${nextChord}` : `Hold: ${nowChord}`;
 
       const patBadge = document.getElementById('stageStrumPatternBadge');
       if (patBadge) {
@@ -4982,13 +4994,13 @@
       if (lyrBadge) {
         if (song.lyricsHydrated) {
           lyrBadge.textContent = `✓ ${song.lyricsSource || 'Full Lyrics'}`;
-          lyrBadge.className = 'px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[9px] font-bold';
+          lyrBadge.className = 'px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-bold';
         } else if (song.lyricsLookupAttempted) {
           lyrBadge.textContent = 'Chart Ready (Paste Lyrics)';
-          lyrBadge.className = 'px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px]';
+          lyrBadge.className = 'px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs';
         } else {
           lyrBadge.textContent = `${song.sections.length} Sections · ${bars.length} Bars`;
-          lyrBadge.className = 'px-1.5 py-0.5 rounded bg-zinc-900 text-qmuted border border-zinc-800 text-[9px]';
+          lyrBadge.className = 'px-1.5 py-0.5 rounded bg-zinc-900 text-qmuted border border-zinc-800 text-xs';
         }
       }
       if (autoBtn) {
@@ -5116,6 +5128,7 @@
         emptyHint.className = 'px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-xs font-mono text-amber-300 font-bold transition';
         emptyHint.textContent = '✎ No lyrics synced yet — Click here to paste Lyrics & [Chords]';
         emptyHint.addEventListener('click', () => {
+          switchSettingsTab('library');
           document.getElementById('settingsModalBackdrop').classList.remove('hidden');
           document.getElementById('pasteLyricsDrawer').classList.remove('hidden');
           document.getElementById('textareaCustomLyrics').focus();
@@ -5126,7 +5139,7 @@
         const isCurrent = idx === activeSylIndex;
         const isPast = idx < activeSylIndex;
         const span = document.createElement('span');
-        let cls = 'px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg text-sm sm:text-lg font-extrabold transition-all duration-100 border ';
+        let cls = 'px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-lg text-lg sm:text-xl font-extrabold transition-all duration-100 border ';
         if (isCurrent) {
           cls += 'bg-cyan-500/25 border-cyan-400 text-cyan-200 scale-110 shadow-lg shadow-cyan-500/20';
         } else if (isPast) {
@@ -5155,9 +5168,9 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = isCur
-          ? 'py-0.5 px-1 rounded-lg bg-amber-500 text-black font-black text-[10px] sm:text-xs font-mono border border-amber-300 shadow'
-          : 'py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-[10px] sm:text-xs font-mono border border-[#2C2C2E]';
-        btn.innerHTML = `<div class="text-[9px] opacity-75">B${idx + 1}</div><div class="truncate">${splitLabel}</div>`;
+          ? 'py-0.5 px-1 rounded-lg bg-amber-500 text-black font-black text-xs sm:text-xs font-mono border border-amber-300 shadow'
+          : 'py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]';
+        btn.innerHTML = `<div class="text-xs opacity-75">B${idx + 1}</div><div class="truncate">${splitLabel}</div>`;
         btn.addEventListener('click', () => {
           state.currentBarIndex = idx;
           state.currentSubdivisionIndex = 0;
@@ -5195,9 +5208,9 @@
         const bMode = btn.getAttribute('data-skill');
         const isCur = bMode === mode;
         const TitleMap = {
-          beginner: '🌱 Beginner<div class="text-[10px] font-normal opacity-80">Open Chords + Full Visual Guide</div>',
-          intermediate: '🎸 Intermediate<div class="text-[10px] font-normal opacity-80">Rich Chords + Streamlined Stage</div>',
-          expert: '⚡ Expert<div class="text-[10px] font-normal opacity-80">Full Voicings (Cmaj7/G6) · Pure Stage</div>'
+          beginner: '🌱 Beginner<div class="text-xs font-normal opacity-80">Open Chords + Full Visual Guide</div>',
+          intermediate: '🎸 Intermediate<div class="text-xs font-normal opacity-80">Rich Chords + Streamlined Stage</div>',
+          expert: '⚡ Expert<div class="text-xs font-normal opacity-80">Full Voicings (Cmaj7/G6) · Pure Stage</div>'
         };
         btn.innerHTML = TitleMap[bMode];
         btn.className = isCur
@@ -5277,14 +5290,14 @@
         card.innerHTML = `
           <div class="space-y-1.5">
             <div class="flex items-center justify-between gap-2">
-              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded ${
+              <span class="text-xs font-mono uppercase px-2 py-0.5 rounded ${
                 song.sourceType === 'local_audio' ? 'bg-cyan-500/20 text-cyan-300' : 'bg-amber-500/20 text-amber-300'
               }">${song.sourceType === 'local_audio' ? (song.mediaFormat || 'MP3') + ' + Auto-Sync' : (song.mediaFormat || 'YouTube / Online')}</span>
               <span class="text-xs font-mono text-emerald-400 font-bold">${song.musicalMeta.bpm} BPM · ${ts.beatsPerBar}/${ts.beatUnit}</span>
             </div>
             <h3 class="font-bold text-base text-qtext">${song.title}</h3>
             <p class="text-xs text-qmuted">${song.artist}</p>
-            <div class="flex flex-wrap items-center gap-1 pt-0.5 text-[10px] font-mono">
+            <div class="flex flex-wrap items-center gap-1 pt-0.5 text-xs font-mono">
               <span class="px-1.5 py-0.5 rounded ${isFp ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30' : 'bg-zinc-900 text-amber-300 border border-zinc-800'}">${isFp ? '🤌' : '🎸'} ${patLabel}</span>
               <span class="px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-400 border border-zinc-800">${secCount} Sec · ${totalBars}b</span>
               ${song.lyricsHydrated ? `<span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">✓ ${song.lyricsSource || 'Full Lyrics'}</span>` : ''}
@@ -5297,7 +5310,7 @@
               ${isCurrent ? '✓ Active on Stage' : 'Load onto Stage'}
             </button>
             ${song.sourceType !== 'local_audio' ? `<button type="button" data-autofill-song="${song.id}" class="btn-autofill-card px-2 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 text-xs font-bold transition" title="Auto-Fill full synced lyrics &amp; tabs from LRCLIB">✨</button>` : ''}
-            ${song.isPreloaded ? '<span class="px-2 py-1 text-[10px] font-mono text-zinc-500 border border-zinc-800 rounded-lg" title="Preloaded core songbook (locked)">🔒</span>' : `<button type="button" data-delete-song="${song.id}" class="btn-delete-songbook px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-300 border border-red-500/30 text-xs font-bold transition" title="Delete custom song from Songbook">🗑️</button>`}
+            ${song.isPreloaded ? '<span class="px-2 py-1 text-xs font-mono text-zinc-500 border border-zinc-800 rounded-lg" title="Preloaded core songbook (locked)">🔒</span>' : `<button type="button" data-delete-song="${song.id}" class="btn-delete-songbook px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/30 text-red-300 border border-red-500/30 text-xs font-bold transition" title="Delete custom song from Songbook">🗑️</button>`}
           </div>
         `;
         grid.appendChild(card);
@@ -5676,7 +5689,7 @@
         if (btnIcon && btnLabel && btn) {
           btnIcon.textContent = '✕';
           btnLabel.textContent = '3s...';
-          btn.className = 'px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-black text-xs tracking-wide flex items-center gap-1 shadow transition';
+          btn.className = 'min-h-[44px] px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-sm tracking-wide flex items-center gap-1.5 shadow transition';
         }
 
         // Audible count-in click on 3
@@ -5713,7 +5726,7 @@
       const btn = document.getElementById('btnPlayPause');
       btnIcon.textContent = '⏸';
       btnLabel.textContent = 'PAUSE';
-      btn.className = 'px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-black text-xs tracking-wide flex items-center gap-1 shadow transition';
+      btn.className = 'min-h-[44px] px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-sm tracking-wide flex items-center gap-1.5 shadow transition';
 
       const song = getCurrentSong();
       const audioEl = document.getElementById('hiddenAudioPlayer');
@@ -5797,7 +5810,7 @@
       if (btnIcon && btnLabel && btn) {
         btnIcon.textContent = '▶';
         btnLabel.textContent = 'PLAY';
-        btn.className = 'px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs tracking-wide flex items-center gap-1 shadow transition';
+        btn.className = 'min-h-[44px] px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-sm tracking-wide flex items-center gap-1.5 shadow transition';
       }
     }
 
@@ -6131,7 +6144,13 @@
           ? '🎙️ Pluck-Lock Mic Active — Pluck one string at a time (auto-freezes before decay)'
           : '🎙️ Live Preview Mode Active — Pluck Strings or Drag Peg Slider Below';
       }
-      showToast(gotHardwareMic ? 'Pluck-Lock Microphone Tuner Active!' : 'Microphone Tuner Active in Preview Mode!', 'success');
+      if (!gotHardwareMic) {
+        const simBar = document.getElementById('tunerLivePickupBar');
+        const simToggle = document.getElementById('btnToggleTunerTestBar');
+        if (simBar) simBar.classList.remove('hidden');
+        if (simToggle) simToggle.textContent = '🎛️ Hide Test Simulator ▲';
+      }
+      showToast(gotHardwareMic ? 'Pluck-Lock Microphone Tuner Active!' : 'No mic detected — opened built-in Tuning Simulator!', 'success');
 
       const buf = new Float32Array(analyser.fftSize);
       function loopTuner() {
@@ -6220,7 +6239,7 @@
       if (fbManualBtn) fbManualBtn.classList.add('hidden');
       if (fbMissing) { fbMissing.classList.add('hidden'); fbMissing.textContent = ''; }
       if (box) box.classList.remove('hidden');
-      if (badge) { badge.textContent = titleLabel || 'Running...'; badge.className = 'text-[10px] text-amber-400'; }
+      if (badge) { badge.textContent = titleLabel || 'Running...'; badge.className = 'text-xs text-amber-400'; }
       const s1 = document.getElementById('pipelineStep1');
       const s2 = document.getElementById('pipelineStep2');
       const s3 = document.getElementById('pipelineStep3');
@@ -6249,7 +6268,7 @@
       const badge = document.getElementById('pipelineOverallBadge');
       if (badge) {
         badge.textContent = success ? 'Complete' : 'Aborted';
-        badge.className = success ? 'text-[10px] text-emerald-400 font-bold' : 'text-[10px] text-red-400 font-bold';
+        badge.className = success ? 'text-xs text-emerald-400 font-bold' : 'text-xs text-red-400 font-bold';
       }
       const fbCard = document.getElementById('uploadFeedbackCard');
       const fbTitle = document.getElementById('uploadFeedbackTitle');
@@ -6823,10 +6842,10 @@
           const previewChords = [...new Set(cand.chords)].slice(0, 5).join(' ') || 'No chords detected';
           row.innerHTML = `
             <div class="min-w-0">
-              <div class="text-xs font-bold text-qtext truncate">${cand.title} <span class="text-[10px] font-mono text-qmuted">(p.${cand.page})</span></div>
-              <div class="text-[10px] font-mono text-amber-400 truncate">${cand.bpm ? cand.bpm + ' BPM · ' : ''}${cand.meter} · ${previewChords}</div>
+              <div class="text-xs font-bold text-qtext truncate">${cand.title} <span class="text-xs font-mono text-qmuted">(p.${cand.page})</span></div>
+              <div class="text-xs font-mono text-amber-400 truncate">${cand.bpm ? cand.bpm + ' BPM · ' : ''}${cand.meter} · ${previewChords}</div>
             </div>
-            <button type="button" class="btn-import-pdf-item px-2.5 py-1 rounded bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-[10px] shrink-0 transition">
+            <button type="button" class="btn-import-pdf-item px-2.5 py-1 rounded bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs shrink-0 transition">
               Import
             </button>
           `;
@@ -7358,6 +7377,9 @@
       document.getElementById('btnOpenSettingsDrawer').addEventListener('click', () => {
         settingsModal.classList.remove('hidden');
       });
+      document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchSettingsTab(btn.getAttribute('data-settings-tab')));
+      });
       document.getElementById('btnCloseSettingsDrawer').addEventListener('click', () => {
         settingsModal.classList.add('hidden');
       });
@@ -7501,7 +7523,8 @@
       });
 
       document.getElementById('btnStageVoiceCoach').addEventListener('click', toggleVoiceCoach);
-      document.getElementById('btnToggleTts').addEventListener('click', toggleVoiceCoach);
+      const btnTtsLegacy = document.getElementById('btnToggleTts');
+      if (btnTtsLegacy) btnTtsLegacy.addEventListener('click', toggleVoiceCoach);
 
       document.getElementById('btnToggleNextDiagram').addEventListener('click', () => {
         state.showNextFretboardDiagram = !state.showNextFretboardDiagram;
@@ -7510,6 +7533,7 @@
       });
 
       document.getElementById('btnQuickAddSong').addEventListener('click', () => {
+        switchSettingsTab('library');
         document.getElementById('settingsModalBackdrop').classList.remove('hidden');
         const el = document.getElementById('settingsSectionAddSong');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -7659,6 +7683,126 @@
           await analyzeUploadedAudioBuffer(buf, file.name, file);
         }
       });
+
+      // Loose-End Fix 1: Audition Current Chord / Melody Note ("🔊 Strum C")
+      const btnAudNow = document.getElementById('btnAuditionNowChord');
+      if (btnAudNow) {
+        btnAudNow.addEventListener('click', () => {
+          const song = getCurrentSong();
+          const bars = getCurrentSection().bars;
+          const currentBar = bars[state.currentBarIndex] || bars[0];
+          if (state.playMode === 'scale') {
+            const w = getScaleWireForBar(currentBar, song);
+            playSingleFretNote(w.stringIdx, w.fret, 0.75);
+          } else {
+            playNylonUkuleleChord(getBarActiveChord(currentBar, song), 'D', 0.85);
+          }
+        });
+      }
+
+      // Loose-End Fix 2: Toggle Ukulele Synth Overlay over MP3 ("🎹 Uke: ON/OFF")
+      const btnUkeOverlay = document.getElementById('btnToggleMp3UkeOverlay');
+      if (btnUkeOverlay) {
+        btnUkeOverlay.addEventListener('click', () => {
+          state.mp3UkeOverlayEnabled = !state.mp3UkeOverlayEnabled;
+          btnUkeOverlay.textContent = state.mp3UkeOverlayEnabled ? '🎹 Uke: ON' : '🎹 Uke: OFF';
+          btnUkeOverlay.className = state.mp3UkeOverlayEnabled
+            ? 'px-1.5 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 border border-amber-500/40 text-amber-300 transition'
+            : 'px-1.5 py-0.5 rounded text-xs font-mono font-semibold text-qmuted border border-zinc-700 transition';
+          showToast(state.mp3UkeOverlayEnabled ? 'Ukulele Synth Guide: ON' : 'Ukulele Synth Guide: OFF', 'info');
+        });
+      }
+
+      // Loose-End Fix 3: Quick Toggle Picking vs Strumming Style in Sticky Beat Bar
+      const btnQuickPick = document.getElementById('btnQuickTogglePickingStyle');
+      if (btnQuickPick) {
+        btnQuickPick.addEventListener('click', () => {
+          const song = getCurrentSong();
+          const beats = (song.musicalMeta.timeSignature && song.musicalMeta.timeSignature.beatsPerBar) || 4;
+          const isCurrentlyFp = (song.musicalMeta.strumPattern || []).some(x => ['G', 'C', 'E', 'A'].includes(x));
+          if (isCurrentlyFp) {
+            song.musicalMeta.strumPattern = beats === 3 ? ['D', '-', 'D', 'U', 'D', 'U'] : (beats === 6 ? ['D', '-', 'D', 'U', 'D', 'U'] : ['D', '-', 'D', 'U', '-', 'U', 'D', 'U']);
+            song.musicalMeta.playingStyle = beats === 3 ? '3/4 Waltz' : (beats === 6 ? '6/8 Rolling' : 'Island Strum');
+          } else {
+            song.musicalMeta.strumPattern = beats === 3 ? ['C', 'E', 'G', 'A', 'E', 'G'] : ['C', 'E', 'G', 'A', 'C', 'E', 'A', 'E'];
+            song.musicalMeta.playingStyle = 'Fingerpicking Arpeggio';
+          }
+          song.musicalMeta.strumPatternLabel = getPatternLabelForSong(song);
+          saveSongsToIndexedDB();
+          renderAll();
+          showToast(`Pattern: ${song.musicalMeta.strumPatternLabel}`, 'info');
+        });
+      }
+
+      // Loose-End Fix 4: Picking / Strum Style Dropdown in Settings -> 3
+      const selStrumEl = document.getElementById('selectStageStrumStyle');
+      if (selStrumEl) {
+        selStrumEl.addEventListener('change', (e) => {
+          const song = getCurrentSong();
+          const val = e.target.value;
+          const presetMap = {
+            fp_arpeggio: { pat: ['C', 'E', 'G', 'A', 'C', 'E', 'A', 'E'], style: 'Fingerpicking Arpeggio' },
+            fp_travis:   { pat: ['C', 'E', 'G', 'E', 'A', 'E', 'G', 'E'], style: 'Travis Fingerpicking' },
+            fp_waltz:    { pat: ['C', 'E', 'G', 'A', 'E', 'G'],           style: '3/4 Fingerpicking' },
+            st_island:   { pat: ['D', '-', 'D', 'U', '-', 'U', 'D', 'U'], style: 'Island Strum' },
+            st_folk:     { pat: ['D', '-', 'D', 'U', 'D', '-', 'D', 'U'], style: 'Folk Strum' },
+            st_down:     { pat: ['D', '-', 'D', '-', 'D', '-', 'D', '-'], style: 'Worship Downbeats' }
+          };
+          if (presetMap[val]) {
+            song.musicalMeta.strumPattern = presetMap[val].pat.slice();
+            song.musicalMeta.playingStyle = presetMap[val].style;
+            song.musicalMeta.strumPatternLabel = getPatternLabelForSong(song);
+            saveSongsToIndexedDB();
+            renderAll();
+            showToast(`Updated pattern: ${presetMap[val].style}`, 'success');
+          }
+        });
+      }
+
+      // Loose-End Fix 5: Meter Selector Buttons (3/4, 4/4, 6/8) in Settings -> 3
+      document.querySelectorAll('.meter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const meterStr = btn.getAttribute('data-meter');
+          const song = getCurrentSong();
+          if (meterStr === '3/4') {
+            song.musicalMeta.timeSignature = { beatsPerBar: 3, beatUnit: 4, subdivisionsPerBeat: 2 };
+            song.musicalMeta.strumPattern = ['D', '-', 'D', 'U', 'D', 'U'];
+          } else if (meterStr === '6/8') {
+            song.musicalMeta.timeSignature = { beatsPerBar: 6, beatUnit: 8, subdivisionsPerBeat: 1 };
+            song.musicalMeta.strumPattern = ['D', '-', 'D', 'U', 'D', 'U'];
+          } else {
+            song.musicalMeta.timeSignature = { beatsPerBar: 4, beatUnit: 4, subdivisionsPerBeat: 2 };
+            song.musicalMeta.strumPattern = ['D', '-', 'D', 'U', '-', 'U', 'D', 'U'];
+          }
+          song.musicalMeta.strumPatternLabel = getPatternLabelForSong(song);
+          state.currentSubdivisionIndex = 0;
+          saveSongsToIndexedDB();
+          renderAll();
+          showToast(`Meter switched to ${meterStr}`, 'info');
+        });
+      });
+
+      // Loose-End Fix 6: Re-Analyze MP3 button in Settings -> 3
+      const btnReanalyze = document.getElementById('btnStageReanalyzeMp3');
+      if (btnReanalyze) {
+        btnReanalyze.addEventListener('click', () => {
+          reanalyzeExistingUploadedSong(getCurrentSong(), true);
+        });
+      }
+
+      // Phase 1 Tuner Test Simulator Toggle
+      const btnToggleTunerSim = document.getElementById('btnToggleTunerTestBar');
+      if (btnToggleTunerSim) {
+        btnToggleTunerSim.addEventListener('click', () => {
+          const simBar = document.getElementById('tunerLivePickupBar');
+          if (!simBar) return;
+          const isHidden = simBar.classList.toggle('hidden');
+          btnToggleTunerSim.textContent = isHidden
+            ? '🎛️ Test Without Mic / Practice by Ear ▼'
+            : '🎛️ Hide Test Simulator ▲';
+        });
+      }
+
       document.getElementById('btnAuditionNextChord').addEventListener('click', () => {
         const song = getCurrentSong();
         const bars = getCurrentSection().bars;
@@ -7807,8 +7951,8 @@
           document.querySelectorAll('.speed-preset-btn').forEach(b => {
             const active = Number(b.getAttribute('data-speed')) === rate;
             b.className = active
-              ? 'speed-preset-btn px-1.5 py-1 rounded text-[10px] font-mono bg-amber-500 text-black font-bold'
-              : 'speed-preset-btn px-1.5 py-1 rounded text-[10px] font-mono bg-zinc-800 text-qmuted hover:text-qtext';
+              ? 'speed-preset-btn min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-mono bg-amber-500 text-black font-bold transition'
+              : 'speed-preset-btn min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-mono bg-zinc-800 text-qmuted hover:text-qtext transition';
           });
           renderSettingsAndBottomDock();
         });
@@ -7832,8 +7976,8 @@
         state.loopsSinceRamp = 0;
         e.target.textContent = state.autoRampEnabled ? '📈 +5' : '📈 Ramp';
         e.target.className = state.autoRampEnabled
-          ? 'px-2 py-1 rounded-lg text-[10px] font-mono font-black bg-emerald-500 text-black border border-emerald-300 shadow transition'
-          : 'px-2 py-1 rounded-lg text-[10px] font-mono font-bold bg-zinc-800 text-qmuted border border-zinc-700 hover:text-qtext transition';
+          ? 'min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-mono font-black bg-emerald-500 text-black border border-emerald-300 shadow transition'
+          : 'min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-zinc-800 text-qmuted border border-zinc-700 hover:text-qtext transition';
       });
 
       document.getElementById('btnTransposeDown').addEventListener('click', () => {
@@ -8042,7 +8186,47 @@
       });
     }
 
+
+    function switchSettingsTab(tabName) {
+      const target = ['practice', 'audio', 'library'].includes(tabName) ? tabName : 'practice';
+      document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+        const active = btn.getAttribute('data-settings-tab') === target;
+        btn.className = active
+          ? 'settings-tab-btn py-2 px-2 rounded-lg text-xs font-extrabold bg-amber-500 text-black transition'
+          : 'settings-tab-btn py-2 px-2 rounded-lg text-xs font-semibold text-qmuted hover:text-qtext transition';
+      });
+      document.querySelectorAll('.settings-tab-panel').forEach(panel => {
+        const match = panel.getAttribute('data-settings-panel') === target;
+        panel.classList.toggle('hidden', !match);
+      });
+    }
+
+    function initFirstLaunchWelcomeStrip() {
+      const strip = document.getElementById('firstLaunchWelcomeStrip');
+      if (!strip) return;
+      try {
+        if (localStorage.getItem('qcoach_welcome_dismissed_v1') === '1') {
+          strip.classList.add('hidden');
+        }
+      } catch (e) {}
+      const btnDismiss = document.getElementById('btnDismissWelcomeStrip');
+      if (btnDismiss) {
+        btnDismiss.addEventListener('click', () => {
+          strip.classList.add('hidden');
+          try { localStorage.setItem('qcoach_welcome_dismissed_v1', '1'); } catch (e) {}
+        });
+      }
+      const btnHelp = document.getElementById('btnWelcomeOpenHelp');
+      if (btnHelp) {
+        btnHelp.addEventListener('click', () => {
+          const hm = document.getElementById('helpModalBackdrop');
+          if (hm) hm.classList.remove('hidden');
+        });
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', async () => {
+      initFirstLaunchWelcomeStrip();
       initThemeSystem();
       initPwaManifestAndServiceWorker();
       await initIndexedDB();
