@@ -553,7 +553,13 @@
               <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-bold">▶ YouTube Real-Vocal Sync</span>
               <span id="ytSyncStatusPill" class="text-xs font-mono text-emerald-400 font-bold">Ready</span>
             </div>
-            <p class="text-xs text-qmuted">Play the real human singer in sync with QCoach’s 3-second countdown, chords, lyrics, and speed presets. Built-in synth vocals mute automatically while YouTube is active.</p>
+            <p class="text-xs text-qmuted"><strong>YouTube Master Clock:</strong> Chords, Beat LEDs, and lyrics lock directly to YouTube’s live playback time (zero lag). Tap <strong>🎯 Mark Beat 1 Now</strong> right when Beat 1 starts to lock any video’s intro. <em>Note: YouTube streams can’t be split into Vocal/Karaoke stems by the browser; switching to 🥁 Beat Only mutes YouTube automatically.</em></p>
+            <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+              <button id="btnYtMarkBeatOne" type="button" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono transition" title="Tap on the exact Beat 1 of the YouTube song to lock chords &amp; lyrics">🎯 Mark Beat 1 Now</button>
+              <button id="btnYtNudgeBack" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-mono font-bold transition" title="Start chords 0.25s earlier">-0.25s</button>
+              <button id="btnYtNudgeFwd" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-mono font-bold transition" title="Start chords 0.25s later">+0.25s</button>
+              <button id="btnYtFindKaraoke" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-cyan-300 border border-zinc-700 text-xs font-mono font-semibold transition" title="Search YouTube for a Karaoke / Instrumental version of this song">🎸 Find Karaoke</button>
+            </div>
           </div>
           <div class="space-y-2">
             <div class="flex items-center gap-1.5">
@@ -4694,6 +4700,12 @@
       if (presetName === 'beat_only' || presetName === 'karaoke_backing') {
         stopVocalHumVoice(false);
       }
+      if (state.ytSyncEnabled && state.ytPlayer && state.ytPlayerReady) {
+        try {
+          if (presetName === 'beat_only') state.ytPlayer.mute();
+          else state.ytPlayer.unMute();
+        } catch (e) {}
+      }
       if (audioEl) {
         audioEl.muted = (presetName === 'beat_only');
       }
@@ -6469,6 +6481,9 @@
         const closestRate = allowedRates.reduce((a, b) => Math.abs(b - rate) < Math.abs(a - rate) ? b : a, 1);
         state.ytPlayer.setPlaybackRate(closestRate);
         state.ytPlayer.seekTo(targetSec, true);
+        const isBeatOnly = (song.autoSync.audioMixMode === 'beat_only');
+        if (isBeatOnly && state.ytPlayer.mute) state.ytPlayer.mute();
+        else if (!isBeatOnly && state.ytPlayer.unMute) state.ytPlayer.unMute();
         if (shouldPlay) state.ytPlayer.playVideo();
       } catch (e) {}
     }
@@ -6532,6 +6547,57 @@
           }
         } else if (!audioEl || audioEl.paused) {
           audioClockActive = false;
+        }
+
+        const ytMasterActive = state.ytSyncEnabled && state.ytPlayer && state.ytPlayerReady && !!extractYouTubeVideoId(activeSong.youtubeUrl || '');
+        if (ytMasterActive) {
+          let ytState = -1;
+          let ytTime = 0;
+          try {
+            ytState = state.ytPlayer.getPlayerState ? state.ytPlayer.getPlayerState() : -1;
+            ytTime = state.ytPlayer.getCurrentTime ? state.ytPlayer.getCurrentTime() : 0;
+          } catch (e) {}
+
+          const pill = document.getElementById('ytSyncStatusPill');
+          // Only advance chords/lyrics when YouTube is actually PLAYING (state === 1)
+          if (ytState === 1) {
+            const offsetSec = activeSong.autoSync.beatOneOffsetSec || 0;
+            if (ytTime < offsetSec) {
+              if (pill) pill.textContent = `Intro… Beat 1 in ${(offsetSec - ytTime).toFixed(1)}s`;
+            } else {
+              const elapsedSec = ytTime - offsetSec;
+              const exactBeat = elapsedSec * ((activeSong.musicalMeta.bpm || 74) / 60);
+              const exactSubTotal = Math.max(0, Math.floor(exactBeat * ts.subdivisionsPerBeat));
+              const sectionBars = Math.max(1, getCurrentSection().bars.length);
+              const rawBarIdx = Math.floor(exactSubTotal / totalSubs);
+
+              if (!state.loopEnabled && rawBarIdx >= sectionBars) {
+                state.currentBarIndex = 0;
+                state.currentSubdivisionIndex = 0;
+                stopPlayback();
+                renderAll();
+                return;
+              }
+              const newBarIdx = rawBarIdx % sectionBars;
+              const newSubIdx = ((exactSubTotal % totalSubs) + totalSubs) % totalSubs;
+              if (pill) pill.textContent = `✓ Locked · ${ytTime.toFixed(1)}s (Bar ${newBarIdx + 1})`;
+
+              if (newBarIdx !== state.currentBarIndex || newSubIdx !== state.currentSubdivisionIndex) {
+                state.currentBarIndex = newBarIdx;
+                state.currentSubdivisionIndex = newSubIdx;
+                state.lastStepTimeMs = nowMs;
+                triggerSubdivisionAudioAndCues();
+                renderStageTick();
+              }
+            }
+          } else if (ytState === 3) {
+            if (pill) pill.textContent = '⏳ Buffering YouTube (Stage waiting)…';
+          } else if (ytState === 0) {
+            stopPlayback();
+            return;
+          }
+          state.rafId = requestAnimationFrame(tickLoop);
+          return;
         }
 
         if (audioClockActive && activeSong.sourceType === 'local_audio' && audioEl && !audioEl.paused && curAudioT >= (activeSong.autoSync.beatOneOffsetSec || 0)) {
@@ -8969,6 +9035,56 @@
       if (btnAutoYt) {
         btnAutoYt.addEventListener('click', () => autoFindYouTubeForSong(getCurrentSong(), false));
       }
+
+      const btnMarkB1 = document.getElementById('btnYtMarkBeatOne');
+      if (btnMarkB1) {
+        btnMarkB1.addEventListener('click', async () => {
+          if (!state.ytPlayer || !state.ytPlayerReady || !state.ytPlayer.getCurrentTime) {
+            showToast('Play the YouTube video first, then tap 🎯 Mark Beat 1 Now on Beat 1!', 'info');
+            return;
+          }
+          const t = Number(state.ytPlayer.getCurrentTime().toFixed(2));
+          const song = getCurrentSong();
+          song.autoSync.beatOneOffsetSec = Math.max(0, t);
+          state.currentBarIndex = 0;
+          state.currentSubdivisionIndex = 0;
+          await saveSongsToIndexedDB();
+          renderAll();
+          showToast(`Locked Beat 1 to ${t.toFixed(2)}s for "${song.title}"!`, 'success');
+        });
+      }
+
+      const btnYtBack = document.getElementById('btnYtNudgeBack');
+      if (btnYtBack) {
+        btnYtBack.addEventListener('click', async () => {
+          const song = getCurrentSong();
+          song.autoSync.beatOneOffsetSec = Math.max(0, Number(((song.autoSync.beatOneOffsetSec || 0) - 0.25).toFixed(2)));
+          await saveSongsToIndexedDB();
+          renderAll();
+          showToast(`Beat 1 offset: ${song.autoSync.beatOneOffsetSec.toFixed(2)}s`, 'info');
+        });
+      }
+
+      const btnYtFwd = document.getElementById('btnYtNudgeFwd');
+      if (btnYtFwd) {
+        btnYtFwd.addEventListener('click', async () => {
+          const song = getCurrentSong();
+          song.autoSync.beatOneOffsetSec = Number(((song.autoSync.beatOneOffsetSec || 0) + 0.25).toFixed(2));
+          await saveSongsToIndexedDB();
+          renderAll();
+          showToast(`Beat 1 offset: ${song.autoSync.beatOneOffsetSec.toFixed(2)}s`, 'info');
+        });
+      }
+
+      const btnYtKaraoke = document.getElementById('btnYtFindKaraoke');
+      if (btnYtKaraoke) {
+        btnYtKaraoke.addEventListener('click', () => {
+          const song = getCurrentSong();
+          const q = encodeURIComponent(`${song.title} ${song.artist || ''} karaoke instrumental`.trim());
+          window.open(`https://www.youtube.com/results?search_query=${q}`, '_blank', 'noopener,noreferrer');
+        });
+      }
+
       const btnFindYt = document.getElementById('btnFindSongOnYouTube');
       if (btnFindYt) {
         btnFindYt.addEventListener('click', () => {
