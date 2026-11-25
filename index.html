@@ -455,10 +455,11 @@
             <div class="w-full h-28 sm:h-36 bg-zinc-950/95 rounded-lg border border-zinc-800/90 p-1.5 relative overflow-hidden flex flex-col justify-between">
               <div class="flex items-center justify-between gap-1 px-0.5">
                 <span id="contourHeaderTitle" class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold truncate">🎼 Melody Pitch Contour + Strum Beat Track</span>
-                <div class="inline-flex items-center gap-1 bg-[#121212] p-0.5 rounded-lg border border-[#2C2C2E] shrink-0" role="group" aria-label="Stage Audio Mode">
-                  <button type="button" data-mix="full_song" class="mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Full Song (Music + Vocals)">🎵 Song</button>
-                  <button type="button" data-mix="vocal_focus" class="mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-cyan-500/25 border border-cyan-400 text-cyan-200 transition" title="Vocal Focus (Lead Melody Highlighted)">🎤 Vocals</button>
-                  <button type="button" data-mix="beat_only" class="mix-preset-btn px-2.5 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Beat Only (Metronome Click — No Music Accompaniment)">🥁 Beat Only</button>
+                <div class="inline-flex flex-wrap items-center gap-1 bg-[#121212] p-0.5 rounded-lg border border-[#2C2C2E] shrink-0" role="group" aria-label="Stage Audio Mode">
+                  <button type="button" data-mix="full_song" class="mix-preset-btn px-2 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Full Song (Ukulele + Vocals)">🎵 Song</button>
+                  <button type="button" data-mix="vocal_focus" class="mix-preset-btn px-2 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Vocal Focus (Lead Melody Highlighted)">🎤 Vocals</button>
+                  <button type="button" data-mix="karaoke_backing" class="mix-preset-btn px-2 py-1 rounded-md text-xs font-mono font-semibold text-qmuted hover:text-qtext transition" title="Karaoke (Ukulele Backing Only — Vocals Muted)">🎸 Karaoke</button>
+                  <button type="button" data-mix="beat_only" class="mix-preset-btn px-2 py-1 rounded-md text-xs font-mono font-bold bg-cyan-500/25 border border-cyan-400 text-cyan-200 transition" title="Beat Only (Metronome Click — No Music Accompaniment)">🥁 Beat Only</button>
                 </div>
               </div>
               <svg id="pitchContourSvg" viewBox="0 0 380 112" class="w-full h-full overflow-visible">
@@ -760,7 +761,7 @@
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-cyan-300 shrink-0 w-28">Voice Separation</span>
-              <p>Above the Pitch Contour, pick your Stage Audio Mode: <span class="font-mono text-qtext">🎵 Song</span>, <span class="font-mono text-cyan-300">🎤 Vocals</span>, or <span class="font-mono text-emerald-400">🥁 Beat Only</span> (metronome click with no music accompaniment).</p>
+              <p>Above the Pitch Contour, pick any of the 4 Stage Audio Modes: <span class="font-mono text-qtext">🎵 Song</span>, <span class="font-mono text-cyan-300">🎤 Vocals</span>, <span class="font-mono text-amber-300">🎸 Karaoke</span> (ukulele backing without vocals), or <span class="font-mono text-emerald-400">🥁 Beat Only</span> (metronome click with no music accompaniment).</p>
             </div>
           </div>
         </div>
@@ -1155,8 +1156,8 @@
               <span class="text-xs font-mono text-qmuted">Practice Section &amp; Loop:</span>
               <div class="flex items-center gap-1.5 bg-zinc-900 px-2.5 py-1 rounded-lg border border-zinc-800">
                 <select id="selectSection" class="bg-transparent text-xs font-bold text-qtext focus:outline-none cursor-pointer"><option value="-1">🎵 Full Song (12 Bars)</option><option value="0">↳ Practice: Chorus 1 (8b)</option><option value="1">↳ Practice: Verse 1 (4b)</option></select>
-                <button id="btnToggleLoop" type="button" class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 transition">
-                  🔁 Loop
+                <button id="btnToggleLoop" type="button" class="px-2 py-0.5 rounded text-xs font-mono font-semibold bg-zinc-800 text-qmuted border border-zinc-700 transition">
+                  ➡ 1-Pass
                 </button>
               </div>
             </div>
@@ -1193,8 +1194,37 @@
         <!-- SECTION 4: 3-Channel Audio Mixer, Presets & Beat-1 Fine-Tune Sync -->
         <div data-settings-panel="audio" class="settings-tab-panel hidden rounded-xl bg-[#121212] border border-[#2C2C2E] p-4 space-y-3">
           <div class="flex items-center justify-between">
-            <h3 class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">4. Audio Mixer &amp; Auto-Sync Offset</h3>
+            <h3 class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">4. Metronome, Audio Mixer &amp; Sync</h3>
             <span id="syncConfidenceBadge" class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300">Beat 1 Locked (94%)</span>
+          </div>
+
+          <!-- Traditional Metronome + Chord-Change Cue Toggle -->
+          <div class="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
+            <div>
+              <div class="text-xs font-semibold text-qtext">🔔 Metronome Chord-Change Cue</div>
+              <div class="text-xs text-qmuted">Traditional TOCK/tick + distinct chime when chord changes</div>
+            </div>
+            <button id="btnToggleChordChangeCue" type="button" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0 transition">
+              ON
+            </button>
+          </div>
+
+          <!-- Real Human Hum Sampler (Record 2s of your own real "mmm" hum for 100% natural vocal flow) -->
+          <div class="space-y-2 pb-2 border-b border-zinc-800">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <div class="text-xs font-semibold text-qtext">🎙️ Real Human Hum Voice</div>
+                <div id="humVoiceSourceLabel" class="text-xs text-qmuted">Built-in LF-Glottal Hum (or record 2s of your real hum)</div>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button id="btnRecordRealHum" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition">
+                  🎙️ Record 2s Hum
+                </button>
+                <button id="btnResetRealHum" type="button" class="hidden px-2 py-1.5 rounded-lg text-xs font-mono bg-zinc-800 hover:bg-zinc-700 text-qmuted border border-zinc-700 transition" title="Reset back to built-in LF-Glottal hum">
+                  ↺
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- 3-Channel Sliders -->
@@ -1237,13 +1267,13 @@
           <div class="pt-1">
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs font-mono uppercase text-qmuted">MP3 Mix Preset</span>
-              <span id="activeMixPresetLabel" class="text-xs font-mono text-cyan-400 font-bold">Vocal Focus</span>
+              <span id="activeMixPresetLabel" class="text-xs font-mono text-cyan-400 font-bold">Beat Only</span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
               <button type="button" data-mix="full_song" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">Full Song</button>
-              <button type="button" data-mix="vocal_focus" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-cyan-500/20 border border-cyan-500 text-cyan-300">Vocal Focus</button>
+              <button type="button" data-mix="vocal_focus" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">Vocal Focus</button>
               <button type="button" data-mix="karaoke_backing" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">Karaoke</button>
-              <button type="button" data-mix="beat_only" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext">🥁 Beat Only</button>
+              <button type="button" data-mix="beat_only" class="mix-preset-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-cyan-500/20 border border-cyan-500 text-cyan-300">🥁 Beat Only</button>
             </div>
           </div>
 
@@ -1402,7 +1432,7 @@
           beatOneOffsetSec: 3.42,
           detectionConfidence: 0.94,
           playbackRate: 1.0,
-          audioMixMode: 'vocal_focus'
+          audioMixMode: 'beat_only'
         },
         musicalMeta: {
           originalKey: 'B',
@@ -1605,7 +1635,7 @@
           beatOneOffsetSec: 1.80,
           detectionConfidence: 0.97,
           playbackRate: 1.0,
-          audioMixMode: 'full_song'
+          audioMixMode: 'beat_only'
         },
         musicalMeta: {
           originalKey: 'C',
@@ -1695,7 +1725,7 @@
           beatOneOffsetSec: 2.15,
           detectionConfidence: 0.96,
           playbackRate: 1.0,
-          audioMixMode: 'vocal_focus'
+          audioMixMode: 'beat_only'
         },
         musicalMeta: {
           originalKey: 'C',
@@ -2104,7 +2134,7 @@
           mediaFormat: cat,
           youtubeUrl: url || '',
           hasAudioBlob: false,
-          autoSync: { beatOneOffsetSec: 0.40, detectionConfidence: 0.96, playbackRate: 1.0, audioMixMode: 'vocal_focus' },
+          autoSync: { beatOneOffsetSec: 0.40, detectionConfidence: 0.96, playbackRate: 1.0, audioMixMode: 'beat_only' },
           musicalMeta: {
             originalKey: key || (isMinorKey ? 'Am' : 'C'),
             activeKey: 'C',
@@ -2367,7 +2397,7 @@
       countdownEnabled: true,
       currentBarIndex: 0,
       currentSubdivisionIndex: 0,
-      loopEnabled: true,
+      loopEnabled: false,
       autoRampEnabled: false,
       loopsSinceRamp: 0,
       ttsEnabled: false,
@@ -2377,7 +2407,9 @@
       sessionAudioUrls: {},
       playMode: 'chords', // 'chords' (Chord View) or 'scale' (Melody View)
       highChordVoicing: false, // false = Standard Open Chords, true = Higher Up-the-Neck Voicings
-      mp3UkeOverlayEnabled: true, // Whether ukulele synth plays alongside uploaded MP3
+      mp3UkeOverlayEnabled: true,
+      instrumentSound: 'ukulele', // 'ukulele' | 'guitar' | 'piano'
+      chordChangeCueEnabled: true, // Whether ukulele synth plays alongside uploaded MP3
       songbookCategory: 'all',
       stageMode: false,
       beatVol: 0.85,
@@ -3442,7 +3474,7 @@
           beatOneOffsetSec: opts.beatOneOffsetSec !== undefined ? opts.beatOneOffsetSec : 0.40,
           detectionConfidence: 0.95,
           playbackRate: 1.0,
-          audioMixMode: 'vocal_focus'
+          audioMixMode: 'beat_only'
         },
         musicalMeta: {
           originalKey: key,
@@ -3807,57 +3839,199 @@
       return state.audioCtx;
     }
 
-    function playNylonUkuleleChord(chordName, direction = 'D', durationSec = 0.65) {
+    // =========================================================================
+    // Realistic Acoustic Audio Engine:
+    //  - Karplus-Strong Physical-Modeling Plucked Strings (Nylon Ukulele & Guitar)
+    //  - Multi-Partial Felt-Hammer Warm Piano
+    //  - Traditional Mechanical Pendulum Metronome (TOCK / tick) + Chord-Change Bell Cue
+    // =========================================================================
+    const pluckedBufferCache = new Map();
+
+    function getPluckedStringBuffer(ctx, freq, durationSec, isGuitar = false) {
+      const key = `${isGuitar ? 'g' : 'u'}_${Math.round(freq * 10)}_${Math.round(durationSec * 10)}`;
+      if (pluckedBufferCache.has(key)) return pluckedBufferCache.get(key);
+
+      const sr = ctx.sampleRate;
+      const totalSamples = Math.max(Math.floor(sr * 0.25), Math.floor(sr * durationSec));
+      const buf = ctx.createBuffer(1, totalSamples, sr);
+      const out = buf.getChannelData(0);
+
+      // Fractional period length for accurate pitch
+      const period = sr / Math.max(65, freq);
+      const N = Math.max(2, Math.floor(period));
+      const frac = period - N;
+      const ring = new Float32Array(N);
+
+      // Warm finger-pluck excitation: lowpass-filtered burst (nylon/acoustic feel, no harsh buzz)
+      let lp = 0;
+      const alpha = isGuitar ? 0.42 : 0.34;
+      for (let i = 0; i < N; i++) {
+        const white = (Math.random() * 2 - 1);
+        lp = lp + alpha * (white - lp);
+        // Add subtle fundamental warmth to initial pluck
+        const warmFund = 0.28 * Math.sin((2 * Math.PI * i) / N);
+        ring[i] = lp * 0.85 + warmFund;
+      }
+
+      // Remove DC offset from excitation
+      let dc = 0;
+      for (let i = 0; i < N; i++) dc += ring[i];
+      dc /= N;
+      for (let i = 0; i < N; i++) ring[i] -= dc;
+
+      // Karplus-Strong waveguide loop with frequency-dependent damping
+      const decayFactor = 0.9942;
+      const brightMix = 0.52; // Nylon dampens upper partials faster than steel
+      let idx = 0;
+      let prevSample = 0;
+
+      for (let i = 0; i < totalSamples; i++) {
+        const cur = ring[idx];
+        const nextIdx = (idx + 1) % N;
+        const next = ring[nextIdx];
+        // Simple fractional interpolation + 2-point lowpass string damping
+        const interp = cur * (1 - frac) + next * frac;
+        const filtered = (brightMix * interp + (1 - brightMix) * prevSample) * decayFactor;
+        prevSample = interp;
+        out[i] = cur;
+        ring[idx] = filtered;
+        idx = nextIdx;
+      }
+
+      // Soft 4ms pluck attack + gentle tail fade-out to prevent clicks
+      const attackLen = Math.min(totalSamples, Math.floor(sr * 0.004));
+      for (let i = 0; i < attackLen; i++) out[i] *= (i / attackLen);
+      const fadeLen = Math.min(totalSamples, Math.floor(sr * 0.04));
+      for (let i = 0; i < fadeLen; i++) {
+        out[totalSamples - 1 - i] *= (i / fadeLen);
+      }
+
+      if (pluckedBufferCache.size > 160) {
+        const firstKey = pluckedBufferCache.keys().next().value;
+        pluckedBufferCache.delete(firstKey);
+      }
+      pluckedBufferCache.set(key, buf);
+      return buf;
+    }
+
+    let acousticBodyBus = null;
+    function getAcousticBodyDestination(ctx) {
+      if (acousticBodyBus && acousticBodyBus.ctx === ctx) return acousticBodyBus.input;
+      // Authentic Concert Ukulele wooden body resonance (tight low-cut + warm koa/mahogany body peaks)
+      const input = ctx.createGain();
+      const hp = ctx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = 210; // Removes muddy guitar-like low end so it stays bright like a ukulele
+      hp.Q.value = 0.7;
+
+      const bodyLow = ctx.createBiquadFilter();
+      bodyLow.type = 'peaking';
+      bodyLow.frequency.value = 420; // Concert ukulele helmholtz air cavity resonance
+      bodyLow.Q.value = 1.8;
+      bodyLow.gain.value = 4.8;
+
+      const bodyMid = ctx.createBiquadFilter();
+      bodyMid.type = 'peaking';
+      bodyMid.frequency.value = 920; // Sweet wooden top-plate chime
+      bodyMid.Q.value = 1.6;
+      bodyMid.gain.value = 2.8;
+
+      const airShelf = ctx.createBiquadFilter();
+      airShelf.type = 'lowpass';
+      airShelf.frequency.value = 5200; // Crisp nylon shimmer without harshness
+      airShelf.Q.value = 0.7;
+
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -14;
+      comp.knee.value = 18;
+      comp.ratio.value = 3;
+      comp.attack.value = 0.005;
+      comp.release.value = 0.12;
+
+      input.connect(hp);
+      hp.connect(bodyLow);
+      bodyLow.connect(bodyMid);
+      bodyMid.connect(airShelf);
+      airShelf.connect(comp);
+      comp.connect(ctx.destination);
+
+      acousticBodyBus = { ctx, input };
+      return input;
+    }
+
+    function playAcousticPianoTone(ctx, freq, startAt, durationSec, velocity = 0.22) {
+      // Multi-partial acoustic piano with felt hammer transient & natural harmonic rolloff
+      const masterGain = ctx.createGain();
+      masterGain.gain.setValueAtTime(0.0001, startAt);
+      masterGain.gain.linearRampToValueAtTime(velocity, startAt + 0.006);
+      masterGain.gain.exponentialRampToValueAtTime(velocity * 0.48, startAt + 0.18);
+      masterGain.gain.exponentialRampToValueAtTime(0.0006, startAt + durationSec);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(Math.min(5200, freq * 8), startAt);
+      filter.frequency.exponentialRampToValueAtTime(Math.max(700, freq * 2.2), startAt + durationSec);
+
+      const partials = [
+        { mult: 1.0,   amp: 1.00, decay: 1.00 },
+        { mult: 2.001, amp: 0.42, decay: 0.72 },
+        { mult: 3.004, amp: 0.18, decay: 0.50 },
+        { mult: 4.009, amp: 0.08, decay: 0.34 }
+      ];
+
+      partials.forEach(p => {
+        const osc = ctx.createOscillator();
+        const pGain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq * p.mult, startAt);
+        pGain.gain.setValueAtTime(p.amp, startAt);
+        pGain.gain.exponentialRampToValueAtTime(0.001, startAt + Math.max(0.08, durationSec * p.decay));
+        osc.connect(pGain);
+        pGain.connect(filter);
+        osc.start(startAt);
+        osc.stop(startAt + durationSec + 0.05);
+      });
+
+      filter.connect(masterGain);
+      masterGain.connect(getAcousticBodyDestination(ctx));
+    }
+
+    function playRealisticNote(freq, startAt, durationSec, volumeScale = 1.0) {
+      const ctx = ensureAudioContext();
+      const vol = Math.min(0.80, 0.38 * state.musicVol * volumeScale);
+      if (vol <= 0.002) return;
+
+      const buf = getPluckedStringBuffer(ctx, freq, Math.max(0.45, durationSec * 1.05), false);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(vol, startAt);
+      src.connect(gain);
+      gain.connect(getAcousticBodyDestination(ctx));
+      src.start(startAt);
+    }
+
+    function playNylonUkuleleChord(chordName, direction = 'D', durationSec = 0.85) {
       if (state.musicMuted || state.musicVol <= 0.01) return;
       const ctx = ensureAudioContext();
       const chord = getChordData(chordName);
       const indices = direction === 'U' ? [3, 2, 1, 0] : [0, 1, 2, 3];
       const now = ctx.currentTime;
+      const stagger = direction === 'U' ? 0.014 : 0.022;
 
       indices.forEach((stringIdx, orderIdx) => {
         const fret = chord.frets[stringIdx];
         if (fret < 0) return;
         const baseHz = OPEN_STRING_HZ[stringIdx];
         const freq = baseHz * Math.pow(2, fret / 12);
-        const startAt = now + orderIdx * 0.018;
-
-        const osc = ctx.createOscillator();
-        const subOsc = ctx.createOscillator();
-        const filter = ctx.createBiquadFilter();
-        const gain = ctx.createGain();
-
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, startAt);
-        subOsc.type = 'sine';
-        subOsc.frequency.setValueAtTime(freq * 2, startAt);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2100, startAt);
-        filter.frequency.exponentialRampToValueAtTime(650, startAt + durationSec);
-
-        const peakGain = 0.16 * state.musicVol * (direction === 'U' ? 0.78 : 1.0);
-        gain.gain.setValueAtTime(0.0001, startAt);
-        gain.gain.linearRampToValueAtTime(peakGain, startAt + 0.008);
-        gain.gain.exponentialRampToValueAtTime(0.0005, startAt + durationSec);
-
-        const subGain = ctx.createGain();
-        subGain.gain.setValueAtTime(peakGain * 0.25, startAt);
-        subGain.gain.exponentialRampToValueAtTime(0.0001, startAt + durationSec * 0.6);
-
-        osc.connect(filter);
-        subOsc.connect(subGain);
-        subGain.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(startAt);
-        subOsc.start(startAt);
-        osc.stop(startAt + durationSec + 0.03);
-        subOsc.stop(startAt + durationSec + 0.03);
+        const startAt = now + orderIdx * stagger;
+        const vel = (direction === 'U' ? 0.72 : 0.95) * (1 - orderIdx * 0.05);
+        playRealisticNote(freq, startAt, Math.max(0.7, durationSec), vel);
       });
     }
 
-    function playChordStringPluck(chordName, stringSym, durationSec = 0.55) {
+    function playChordStringPluck(chordName, stringSym, durationSec = 0.75) {
       if (state.musicMuted || state.musicVol <= 0.01) return;
       const symMap = { 'G': 0, 'C': 1, 'E': 2, 'A': 3 };
       const stringIdx = symMap[stringSym] !== undefined ? symMap[stringSym] : 1;
@@ -3870,20 +4044,17 @@
       const target = TUNER_TARGETS.find(t => t.name === stringName) || TUNER_TARGETS[3];
       const ctx = ensureAudioContext();
       const now = ctx.currentTime;
-      const osc = ctx.createOscillator();
+      const buf = getPluckedStringBuffer(ctx, target.hz, 1.6, false);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
       const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(target.hz, now);
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.25, now + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0008, now + 1.4);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
+      gain.gain.setValueAtTime(0.45, now);
+      src.connect(gain);
+      gain.connect(getAcousticBodyDestination(ctx));
       if (state.tunerInputBus) {
         try { gain.connect(state.tunerInputBus); } catch (e) {}
       }
-      osc.start(now);
-      osc.stop(now + 1.45);
+      src.start(now);
     }
 
     let metronomeNoiseBuffer = null;
@@ -3891,107 +4062,449 @@
       if (metronomeNoiseBuffer && metronomeNoiseBuffer.sampleRate === ctx.sampleRate) {
         return metronomeNoiseBuffer;
       }
-      const len = Math.floor(ctx.sampleRate * 0.025);
+      // Crisp 12ms mechanical escapement transient impulse (sharp initial click, dry woody snap)
+      const len = Math.floor(ctx.sampleRate * 0.012);
       const buf = ctx.createBuffer(1, len, ctx.sampleRate);
       const data = buf.getChannelData(0);
       for (let i = 0; i < len; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.0035));
+        const env = i < 12 ? 1.0 : Math.exp(-(i - 12) / (ctx.sampleRate * 0.0018));
+        data[i] = (Math.random() * 2 - 1) * env;
       }
       metronomeNoiseBuffer = buf;
       return buf;
     }
 
-    function playBeatClick(isDownbeat, isLiftSubdivision, isMainBeat) {
+    // Distinct Mechanical Bell / Wooden Cue when the chord/fretboard is changing
+    function playChordChangeCue(ctx, now, level, isLandingBell = false) {
+      if (!state.chordChangeCueEnabled) return;
+      if (isLandingBell) {
+        // Classic Wittner mechanical pendulum metronome brass bell ping on Beat 1 of a new chord
+        const bell1 = ctx.createOscillator();
+        const bell2 = ctx.createOscillator();
+        const bGain = ctx.createGain();
+        bell1.type = 'sine';
+        bell2.type = 'sine';
+        bell1.frequency.setValueAtTime(2637.0, now);         // Clear E7 brass bell
+        bell2.frequency.setValueAtTime(2637.0 * 2.756, now); // Authentic bell inharmonic partial
+
+        bGain.gain.setValueAtTime(0.0001, now);
+        bGain.gain.linearRampToValueAtTime(Math.min(0.65, level * 0.42), now + 0.002);
+        bGain.gain.exponentialRampToValueAtTime(0.0006, now + 0.34);
+
+        const o2Gain = ctx.createGain();
+        o2Gain.gain.setValueAtTime(0.28, now);
+        o2Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+
+        bell1.connect(bGain);
+        bell2.connect(o2Gain);
+        o2Gain.connect(bGain);
+        bGain.connect(ctx.destination);
+
+        bell1.start(now);
+        bell2.start(now);
+        bell1.stop(now + 0.36);
+        bell2.stop(now + 0.12);
+      } else {
+        // Crisp high wooden rim-tap on LIFT! (4&) right before the chord changes
+        const cueOsc = ctx.createOscillator();
+        const cueGain = ctx.createGain();
+        cueOsc.type = 'triangle';
+        cueOsc.frequency.setValueAtTime(2200, now);
+        cueOsc.frequency.exponentialRampToValueAtTime(1650, now + 0.028);
+
+        cueGain.gain.setValueAtTime(0.0001, now);
+        cueGain.gain.linearRampToValueAtTime(Math.min(0.55, level * 0.48), now + 0.0015);
+        cueGain.gain.exponentialRampToValueAtTime(0.0008, now + 0.042);
+
+        cueOsc.connect(cueGain);
+        cueGain.connect(ctx.destination);
+        cueOsc.start(now);
+        cueOsc.stop(now + 0.048);
+      }
+    }
+
+    function playBeatClick(isDownbeat, isLiftSubdivision, isMainBeat, chordJustChanged = false) {
       if (state.beatMuted || state.beatVol <= 0.01) return;
-      if (!isMainBeat) return;
       try {
-      const ctx = ensureAudioContext();
-      const now = ctx.currentTime;
+        const ctx = ensureAudioContext();
+        const now = ctx.currentTime;
+        const masterLevel = Math.min(1.0, 0.92 * state.beatVol);
 
-      const noiseSrc = ctx.createBufferSource();
-      noiseSrc.buffer = getMetronomeNoiseBuffer(ctx);
-      const bandpass = ctx.createBiquadFilter();
-      bandpass.type = 'bandpass';
-      bandpass.frequency.setValueAtTime(isDownbeat ? 2400 : 1850, now);
-      bandpass.Q.setValueAtTime(3.2, now);
+        // 1. Chord-Change Anticipation Cue on LIFT! subdivision (offbeat)
+        if (isLiftSubdivision && !isMainBeat) {
+          playChordChangeCue(ctx, now, masterLevel, false);
+          return;
+        }
+        if (!isMainBeat) return;
 
-      const clickGain = ctx.createGain();
-      const masterLevel = 0.42 * state.beatVol * (isDownbeat ? 1.0 : 0.72);
-      clickGain.gain.setValueAtTime(masterLevel, now);
-      clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+        // 2. Robust Casio / Yamaha Keyboard Metronome (Punchy 2-Tone Pitched Woodblock: G6 / C6)
+        const beatAmp = Math.min(1.0, masterLevel * (isDownbeat ? 1.05 : 0.88));
+        const baseFreq = isDownbeat ? 1567.98 : 1046.50; // Classic keyboard 5th interval (G6 downbeat, C6 beats 2-4)
 
-      noiseSrc.connect(bandpass);
-      bandpass.connect(clickGain);
-      clickGain.connect(ctx.destination);
-      noiseSrc.start(now);
+        // Core robust pitched woodblock pulse (filtered square + sine for full-bodied projection)
+        const mainOsc = ctx.createOscillator();
+        const subOsc = ctx.createOscillator();
+        const lpFilter = ctx.createBiquadFilter();
+        const mainGain = ctx.createGain();
 
-      const woodOsc = ctx.createOscillator();
-      const woodGain = ctx.createGain();
-      woodOsc.type = 'triangle';
-      const startPitch = isDownbeat ? 920 : 680;
-      const endPitch = isDownbeat ? 420 : 310;
-      woodOsc.frequency.setValueAtTime(startPitch, now);
-      woodOsc.frequency.exponentialRampToValueAtTime(endPitch, now + 0.018);
+        mainOsc.type = 'square';
+        mainOsc.frequency.setValueAtTime(baseFreq * 1.04, now);
+        mainOsc.frequency.exponentialRampToValueAtTime(baseFreq, now + 0.008);
 
-      woodGain.gain.setValueAtTime(masterLevel * 0.65, now);
-      woodGain.gain.exponentialRampToValueAtTime(0.0008, now + 0.024);
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(baseFreq, now);
 
-      woodOsc.connect(woodGain);
-      woodGain.connect(ctx.destination);
-      woodOsc.start(now);
-      woodOsc.stop(now + 0.026);
+        lpFilter.type = 'lowpass';
+        lpFilter.frequency.setValueAtTime(baseFreq * 2.4, now);
+        lpFilter.Q.setValueAtTime(1.5, now);
+
+        const sqGain = ctx.createGain();
+        sqGain.gain.setValueAtTime(0.38, now);
+        const sineGain = ctx.createGain();
+        sineGain.gain.setValueAtTime(0.85, now);
+
+        const dur = isDownbeat ? 0.062 : 0.052;
+        mainGain.gain.setValueAtTime(0.0001, now);
+        mainGain.gain.linearRampToValueAtTime(beatAmp * 0.95, now + 0.002);
+        mainGain.gain.setValueAtTime(beatAmp * 0.88, now + 0.012);
+        mainGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+        mainOsc.connect(sqGain);
+        subOsc.connect(sineGain);
+        sqGain.connect(lpFilter);
+        sineGain.connect(lpFilter);
+        lpFilter.connect(mainGain);
+        mainGain.connect(ctx.destination);
+
+        mainOsc.start(now);
+        subOsc.start(now);
+        mainOsc.stop(now + dur + 0.008);
+        subOsc.stop(now + dur + 0.008);
+
+        // Crisp 6ms wooden attack click for immediate beat clarity on phone speakers
+        const clickOsc = ctx.createOscillator();
+        const clickGain = ctx.createGain();
+        clickOsc.type = 'triangle';
+        clickOsc.frequency.setValueAtTime(baseFreq * 2.0, now);
+        clickOsc.frequency.exponentialRampToValueAtTime(baseFreq * 0.9, now + 0.007);
+        clickGain.gain.setValueAtTime(beatAmp * 0.55, now);
+        clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.009);
+        clickOsc.connect(clickGain);
+        clickGain.connect(ctx.destination);
+        clickOsc.start(now);
+        clickOsc.stop(now + 0.011);
+
+        // 3. Classic mechanical metronome bell ping on Beat 1 when landing on a new chord
+        if (isDownbeat && chordJustChanged) {
+          playChordChangeCue(ctx, now, masterLevel, true);
+        }
       } catch (e) {}
     }
 
+    // =========================================================================
+    // Sample-Based Human Humming Engine:
+    //  1) Built-in: Liljencrants-Fant (LF) Glottal-Pulse Buffer with true
+    //     cycle-by-cycle stochastic pitch jitter, amplitude shimmer,
+    //     open-phase breath aspiration, and closed-mouth /m/ nasal filtering.
+    //  2) Custom Real Voice: Record 2 seconds of your own real "mmm" hum;
+    //     QCoach auto-detects pitch, crossfades a seamless loop, and glides it
+    //     across every song's vocal contour!
+    // =========================================================================
     const MELODY_STEP_SEMITONES = [0, 2, 4, 5, 7, 9, 11, 12];
-    function playMelodyGuideSyllable(pitchStep, song, durationSec = 0.52) {
-      if (state.vocalMuted || state.vocalVol <= 0.01) return;
-      const mixMode = song.autoSync.audioMixMode || 'vocal_focus';
-      if (mixMode === 'karaoke_backing') return;
+    let builtInHumSample = null;   // { ctx, buffer, baseHz }
+    let customUserHumSample = null; // { ctx, buffer, baseHz }
+    let vocalHumVoice = null;
+
+    function buildLfGlottalHumSample(ctx, baseHz = 220.0, durSec = 2.4) {
+      if (builtInHumSample && builtInHumSample.ctx === ctx) return builtInHumSample;
+
+      const sr = ctx.sampleRate;
+      const totalN = Math.floor(sr * durSec);
+      const raw = new Float32Array(totalN);
+
+      // Generate cycle-by-cycle Liljencrants-Fant (LF) glottal flow pulses
+      // with authentic human pitch jitter (~0.7%), amplitude shimmer (~3.5%), and phase-locked breath
+      let pos = 0;
+      let prevAmp = 1.0;
+      let prevJitter = 0.0;
+      let b0 = 0, b1 = 0;
+
+      while (pos < totalN) {
+        // Correlated pink-like jitter & shimmer (not harsh white randomness)
+        prevJitter = prevJitter * 0.65 + (Math.random() * 2 - 1) * 0.0045;
+        prevAmp = prevAmp * 0.7 + (1.0 + (Math.random() * 2 - 1) * 0.045) * 0.3;
+        const cycleF0 = baseHz * (1.0 + prevJitter);
+        const T0 = Math.max(16, Math.round(sr / cycleF0));
+        const openLen = Math.floor(T0 * 0.62);   // Open glottal phase (~62% Oq for soft hum)
+        const closeLen = Math.max(4, Math.floor(T0 * 0.14)); // Soft return phase
+
+        for (let i = 0; i < T0 && (pos + i) < totalN; i++) {
+          let g = 0;
+          if (i < openLen) {
+            // Smooth LF opening + closing curve (rounded, warm, zero sharp sawtooth corner)
+            const u = i / openLen;
+            g = Math.sin(Math.PI * u) * Math.sin(Math.PI * u * 0.78);
+          } else if (i < openLen + closeLen) {
+            // Soft glottal return tail
+            const r = (i - openLen) / closeLen;
+            g = -0.18 * (1 - r) * (1 - r);
+          }
+          // Phase-locked soft breath aspiration during open glottis
+          const w = Math.random() * 2 - 1;
+          b0 = 0.94 * b0 + w * 0.06;
+          b1 = 0.80 * b1 + b0 * 0.20;
+          const asp = (i < openLen ? 0.065 : 0.020) * b1;
+          raw[pos + i] = (g * prevAmp + asp);
+        }
+        pos += T0;
+      }
+
+      // Apply closed-mouth nasal murmur shaping offline:
+      // 2-pole lowpass (~560 Hz) + gentle 270 Hz nasal resonance so it is purely warm /m/
+      let y1 = 0, y2 = 0;
+      const fc = 540;
+      const alpha = Math.min(0.9, (2 * Math.PI * fc) / sr);
+      for (let i = 0; i < totalN; i++) {
+        y1 = y1 + alpha * (raw[i] - y1);
+        y2 = y2 + alpha * (y1 - y2);
+        raw[i] = y2;
+      }
+
+      // Normalize and create a seamless 180ms crossfaded loop (zero click at loop boundary)
+      const xfade = Math.floor(sr * 0.18);
+      const loopLen = totalN - xfade;
+      const looped = new Float32Array(loopLen);
+      let peak = 0.001;
+      for (let i = 0; i < loopLen; i++) {
+        let s = raw[i];
+        if (i < xfade) {
+          const w = i / xfade; // equal-power crossfade tail into head
+          s = raw[i] * Math.sin(w * Math.PI * 0.5) + raw[loopLen + i] * Math.cos(w * Math.PI * 0.5);
+        }
+        looped[i] = s;
+        if (Math.abs(s) > peak) peak = Math.abs(s);
+      }
+      const norm = 0.72 / peak;
+      const buf = ctx.createBuffer(1, loopLen, sr);
+      const ch = buf.getChannelData(0);
+      for (let i = 0; i < loopLen; i++) ch[i] = looped[i] * norm;
+
+      builtInHumSample = { ctx, buffer: buf, baseHz };
+      return builtInHumSample;
+    }
+
+    async function recordRealHumanHumSample() {
+      const btn = document.getElementById('btnRecordRealHum');
+      const lbl = document.getElementById('humVoiceSourceLabel');
+      const resetBtn = document.getElementById('btnResetRealHum');
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast('Microphone not available in this browser.', 'warn');
+        return;
+      }
+
+      try {
+        const ctx = ensureAudioContext();
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+        });
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = '🔴 Hum "mmmm" (2s)...';
+        }
+        showToast('Hum one steady "mmmm" note now for 2 seconds!', 'info');
+
+        const recorder = new MediaRecorder(stream);
+        const chunks = [];
+        recorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+        recorder.start();
+
+        await new Promise(r => setTimeout(r, 2100));
+        const blob = await new Promise((resolve) => {
+          recorder.onstop = () => resolve(new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }));
+          recorder.stop();
+        });
+        stream.getTracks().forEach(t => t.stop());
+
+        const ab = await blob.arrayBuffer();
+        const decoded = await ctx.decodeAudioData(ab);
+        const srcData = decoded.getChannelData(0);
+        const sr = decoded.sampleRate;
+
+        // Take the cleanest middle 1.2s sustain segment of the recorded hum
+        const startIdx = Math.min(Math.floor(sr * 0.35), Math.floor(srcData.length * 0.2));
+        const endIdx = Math.min(srcData.length, startIdx + Math.floor(sr * 1.25));
+        const segLen = endIdx - startIdx;
+        if (segLen < Math.floor(sr * 0.35)) {
+          throw new Error('Recording too short');
+        }
+
+        // Detect the exact base pitch of the user's real hum
+        const sliceForPitch = srcData.subarray(startIdx, Math.min(endIdx, startIdx + 4096));
+        const pitchRes = autoCorrelatePitch(sliceForPitch, sr);
+        const detectedBaseHz = (pitchRes && pitchRes.hz > 95 && pitchRes.hz < 520) ? pitchRes.hz : 220.0;
+
+        // Crossfade into a seamless loop buffer
+        const xfade = Math.min(Math.floor(sr * 0.14), Math.floor(segLen * 0.2));
+        const loopLen = segLen - xfade;
+        const buf = ctx.createBuffer(1, loopLen, sr);
+        const out = buf.getChannelData(0);
+        let peak = 0.001;
+        for (let i = 0; i < loopLen; i++) {
+          let s = srcData[startIdx + i];
+          if (i < xfade) {
+            const w = i / xfade;
+            s = srcData[startIdx + i] * Math.sin(w * Math.PI * 0.5) +
+                srcData[startIdx + loopLen + i] * Math.cos(w * Math.PI * 0.5);
+          }
+          out[i] = s;
+          if (Math.abs(s) > peak) peak = Math.abs(s);
+        }
+        const scale = 0.78 / peak;
+        for (let i = 0; i < loopLen; i++) out[i] *= scale;
+
+        customUserHumSample = { ctx, buffer: buf, baseHz: detectedBaseHz };
+        stopVocalHumVoice(true);
+
+        if (lbl) lbl.textContent = `✓ Using YOUR Real Hum (base ${detectedBaseHz.toFixed(0)} Hz)`;
+        if (resetBtn) resetBtn.classList.remove('hidden');
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🎙️ Re-Record Hum';
+        }
+
+        // Audition a 2-note hum preview immediately
+        const song = getCurrentSong();
+        const prevMode = song.autoSync.audioMixMode;
+        song.autoSync.audioMixMode = 'vocal_focus';
+        playMelodyGuideSyllable(0, song, 0.55, 'mmm');
+        setTimeout(() => {
+          playMelodyGuideSyllable(2, song, 0.55, 'mmm');
+          setTimeout(() => {
+            stopVocalHumVoice(false);
+            song.autoSync.audioMixMode = prevMode;
+          }, 550);
+        }, 420);
+        showToast(`Captured your real hum (${detectedBaseHz.toFixed(0)} Hz)! Switch Stage to 🎤 Vocals to hear it.`, 'success');
+      } catch (err) {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🎙️ Record 2s Hum';
+        }
+        showToast('Could not record hum — check microphone permission.', 'warn');
+      }
+    }
+
+    function ensureVocalHumVoice(ctx, initialFreq) {
+      const sample = (customUserHumSample && customUserHumSample.ctx === ctx)
+        ? customUserHumSample
+        : buildLfGlottalHumSample(ctx, 220.0, 2.4);
+
+      if (vocalHumVoice && vocalHumVoice.ctx === ctx && vocalHumVoice.active && vocalHumVoice.sample === sample) {
+        return vocalHumVoice;
+      }
+      stopVocalHumVoice(true);
+
+      const now = ctx.currentTime;
+      const src = ctx.createBufferSource();
+      src.buffer = sample.buffer;
+      src.loop = true;
+      src.playbackRate.setValueAtTime(Math.max(0.5, Math.min(2.0, initialFreq / sample.baseHz)), now);
+
+      // Gentle warm nasal cavity polish
+      const nasalNotch = ctx.createBiquadFilter();
+      nasalNotch.type = 'notch';
+      nasalNotch.frequency.setValueAtTime(1080, now);
+      nasalNotch.Q.setValueAtTime(1.8, now);
+
+      const warmLp = ctx.createBiquadFilter();
+      warmLp.type = 'lowpass';
+      warmLp.frequency.setValueAtTime(customUserHumSample ? 2400 : 980, now);
+      warmLp.Q.setValueAtTime(0.6, now);
+
+      const masterEnv = ctx.createGain();
+      masterEnv.gain.setValueAtTime(0.0001, now);
+
+      src.connect(nasalNotch);
+      nasalNotch.connect(warmLp);
+      warmLp.connect(masterEnv);
+      masterEnv.connect(ctx.destination);
+      src.start(now);
+
+      vocalHumVoice = {
+        ctx,
+        active: true,
+        sample,
+        src,
+        masterEnv,
+        fadeTimer: null
+      };
+      return vocalHumVoice;
+    }
+
+    function stopVocalHumVoice(immediate = false) {
+      if (!vocalHumVoice) return;
+      const v = vocalHumVoice;
+      vocalHumVoice = null;
+      v.active = false;
+      if (v.fadeTimer) clearTimeout(v.fadeTimer);
+      try {
+        const now = v.ctx.currentTime;
+        const release = immediate ? 0.025 : 0.16;
+        v.masterEnv.gain.cancelScheduledValues(now);
+        v.masterEnv.gain.setValueAtTime(Math.max(0.0001, v.masterEnv.gain.value), now);
+        v.masterEnv.gain.exponentialRampToValueAtTime(0.0001, now + release);
+        v.src.stop(now + release + 0.03);
+      } catch (e) {}
+    }
+
+    function playMelodyGuideSyllable(pitchStep, song, durationSec = 0.72, syllableText = '') {
+      if (state.vocalMuted || state.vocalVol <= 0.01) {
+        stopVocalHumVoice();
+        return;
+      }
+      const mixMode = song.autoSync.audioMixMode || 'beat_only';
+      if (mixMode === 'karaoke_backing' || mixMode === 'beat_only') {
+        stopVocalHumVoice();
+        return;
+      }
 
       try {
         const ctx = ensureAudioContext();
         const now = ctx.currentTime;
         const stepIdx = Math.max(0, Math.min(MELODY_STEP_SEMITONES.length - 1, pitchStep || 0));
         const semitonesFromC4 = MELODY_STEP_SEMITONES[stepIdx] + getRelativeSemitoneShift(song);
-        const freq = 261.63 * Math.pow(2, semitonesFromC4 / 12) * 2;
+        const targetFreq = 196.00 * Math.pow(2, semitonesFromC4 / 12);
 
-        const osc1 = ctx.createOscillator();
-        const osc2 = ctx.createOscillator();
-        const filter = ctx.createBiquadFilter();
-        const gain = ctx.createGain();
+        const voice = ensureVocalHumVoice(ctx, targetFreq);
+        const targetRate = Math.max(0.55, Math.min(1.85, targetFreq / voice.sample.baseHz));
 
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(freq, now);
-        osc2.type = 'sine';
-        osc2.frequency.setValueAtTime(freq * 1.003, now);
+        // Smooth legato pitch glide across hummed syllables
+        voice.src.playbackRate.cancelScheduledValues(now);
+        voice.src.playbackRate.setTargetAtTime(targetRate, now, 0.045);
 
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(2600, now);
+        const mixBoost = mixMode === 'vocal_focus' ? 1.30 : 0.85;
+        const peakGain = Math.min(0.82, 0.55 * state.vocalVol * mixBoost);
+        const holdDur = Math.max(0.55, durationSec * 1.45);
 
-        const mixBoost = mixMode === 'vocal_focus' ? 1.55 : 0.95;
-        const amp = Math.min(0.45, 0.24 * state.vocalVol * mixBoost);
+        voice.masterEnv.gain.cancelScheduledValues(now);
+        const curG = Math.max(0.001, voice.masterEnv.gain.value);
+        voice.masterEnv.gain.setValueAtTime(curG, now);
+        // Gentle closed-mouth breath phrasing swell
+        voice.masterEnv.gain.linearRampToValueAtTime(peakGain * 0.72, now + 0.035);
+        voice.masterEnv.gain.linearRampToValueAtTime(peakGain, now + 0.11);
+        voice.masterEnv.gain.setTargetAtTime(peakGain * 0.80, now + 0.16, holdDur * 0.55);
 
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(amp, now + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0008, now + durationSec);
-
-        osc1.connect(filter);
-        osc2.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + durationSec + 0.03);
-        osc2.stop(now + durationSec + 0.03);
+        if (voice.fadeTimer) clearTimeout(voice.fadeTimer);
+        voice.fadeTimer = setTimeout(() => {
+          if (vocalHumVoice === voice) stopVocalHumVoice(false);
+        }, Math.round((holdDur + 0.65) * 1000));
       } catch (e) {}
     }
 
     function initMidSideAudioGraph() {
       const ctx = ensureAudioContext();
       if (state.mediaElementSource) {
-        applyMidSidePreset(getCurrentSong().autoSync.audioMixMode || 'vocal_focus');
+        applyMidSidePreset(getCurrentSong().autoSync.audioMixMode || 'beat_only');
         return;
       }
       const audioEl = document.getElementById('hiddenAudioPlayer');
@@ -4065,7 +4578,7 @@
         state.mergerNode.connect(state.masterMp3Gain);
         state.masterMp3Gain.connect(ctx.destination);
 
-        applyMidSidePreset(getCurrentSong().autoSync.audioMixMode || 'vocal_focus');
+        applyMidSidePreset(getCurrentSong().autoSync.audioMixMode || 'beat_only');
       } catch (e) {}
     }
 
@@ -4130,6 +4643,9 @@
         }
       }
       const audioEl = document.getElementById('hiddenAudioPlayer');
+      if (presetName === 'beat_only' || presetName === 'karaoke_backing') {
+        stopVocalHumVoice(false);
+      }
       if (audioEl) {
         audioEl.muted = (presetName === 'beat_only');
       }
@@ -4583,45 +5099,11 @@
       return getScaleWireForBar(nextBar, song, 0);
     }
 
-    function playSingleFretNote(stringIdx, fret, durationSec = 0.62) {
+    function playSingleFretNote(stringIdx, fret, durationSec = 0.72) {
       if (state.musicMuted || state.musicVol <= 0.01) return;
       const ctx = ensureAudioContext();
-      const now = ctx.currentTime;
       const freq = OPEN_STRING_HZ[stringIdx] * Math.pow(2, fret / 12);
-
-      const osc = ctx.createOscillator();
-      const harmonicOsc = ctx.createOscillator();
-      const filter = ctx.createBiquadFilter();
-      const gain = ctx.createGain();
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now);
-      harmonicOsc.type = 'sine';
-      harmonicOsc.frequency.setValueAtTime(freq * 2, now);
-
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(2400, now);
-      filter.frequency.exponentialRampToValueAtTime(800, now + durationSec);
-
-      const peak = Math.min(0.45, 0.30 * state.musicVol);
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(peak, now + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0008, now + durationSec);
-
-      const harmGain = ctx.createGain();
-      harmGain.gain.setValueAtTime(peak * 0.3, now);
-      harmGain.gain.exponentialRampToValueAtTime(0.0001, now + durationSec * 0.5);
-
-      osc.connect(filter);
-      harmonicOsc.connect(harmGain);
-      harmGain.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(now);
-      harmonicOsc.start(now);
-      osc.stop(now + durationSec + 0.04);
-      harmonicOsc.stop(now + durationSec + 0.04);
+      playRealisticNote(freq, ctx.currentTime, Math.max(0.65, durationSec), 1.0);
     }
 
     function renderScaleWireFretboardSvg(activeWire, accentColor = '#06B6D4', sizeClass = 'w-40 sm:w-48') {
@@ -5473,6 +5955,9 @@
         audioEl.src = song.previewUrl;
         audioEl.load();
       }
+      let prefMix = 'beat_only';
+      try { prefMix = localStorage.getItem('qcoach_preferred_mix_v2') || 'beat_only'; } catch (e) {}
+      applyMidSidePreset(prefMix);
       renderAll();
       showToast(`Loaded "${song.title}" onto Stage`, 'success');
 
@@ -5538,28 +6023,29 @@
         const isDownbeat = state.currentSubdivisionIndex === 0;
         const isFinalSub = state.currentSubdivisionIndex === totalSubs - 1;
 
+        const prevBar = bars[(state.currentBarIndex - 1 + bars.length) % bars.length] || bars[0];
+        const prevChord = getBarActiveChord(prevBar, song);
         const nowChord = getBarActiveChord(currentBar, song);
         const nextChord = getBarActiveChord(nextBar, song);
         const chordWillChange = nowChord !== nextChord;
+        const chordJustChanged = (nowChord !== prevChord) || state.currentBarIndex === 0;
 
-        playBeatClick(isDownbeat, isFinalSub && chordWillChange, isMainBeat);
+        playBeatClick(isDownbeat, isFinalSub && chordWillChange, isMainBeat, chordJustChanged);
 
         const audioEl = document.getElementById('hiddenAudioPlayer');
-        const isBeatOnly = (song.autoSync.audioMixMode === 'beat_only');
+        const mixMode = song.autoSync.audioMixMode || 'beat_only';
+        const isBeatOnly = (mixMode === 'beat_only');
         const isLiveAudioPlaying = !isBeatOnly && audioEl && !audioEl.paused && audioEl.src && (audioEl.src.startsWith('blob:') || audioEl.src.startsWith('data:'));
+        const sylOnSub = (currentBar.syllables || []).find(s => s.subdivision === state.currentSubdivisionIndex);
+
         if (!isBeatOnly && (!isLiveAudioPlaying || state.mp3UkeOverlayEnabled)) {
-          const sylOnSub = (currentBar.syllables || []).find(s => s.subdivision === state.currentSubdivisionIndex);
           if (state.playMode === 'scale') {
             if (sylOnSub || isMainBeat) {
               const wire = getScaleWireForBar(currentBar, song, state.currentSubdivisionIndex);
               playSingleFretNote(wire.stringIdx, wire.fret, isDownbeat ? 0.65 : 0.45);
             }
-            if (sylOnSub && !isLiveAudioPlaying) {
-              playMelodyGuideSyllable(sylOnSub.pitchStep, song, 0.42);
-            }
           } else {
-            const mixMode = song.autoSync.audioMixMode || 'vocal_focus';
-            const ukeScale = mixMode === 'vocal_focus' ? 0.20 : 1.0;
+            const ukeScale = mixMode === 'vocal_focus' ? 0.22 : 1.0;
             const pattern = song.musicalMeta.strumPattern || ['D', '-', 'D', 'U', '-', 'U', 'D', 'U'];
             const action = pattern[state.currentSubdivisionIndex % pattern.length];
             if (['G', 'C', 'E', 'A'].includes(action)) {
@@ -5570,10 +6056,14 @@
               playNylonUkuleleChord(nowChord, action, isDownbeat ? 0.72 : 0.45);
               state.musicVol = savedVol;
             }
-            if (sylOnSub && !isLiveAudioPlaying) {
-              playMelodyGuideSyllable(sylOnSub.pitchStep, song, 0.38);
-            }
           }
+        }
+
+        // Smooth Legato Vocal Humming Guide (works on BOTH built-in & uploaded songs in Song / Vocals modes)
+        if (sylOnSub && (mixMode === 'vocal_focus' || mixMode === 'full_song')) {
+          const effectiveBpm = Math.max(30, (song.musicalMeta.bpm || 74) * (song.autoSync.playbackRate || 1.0));
+          const subDurSec = (60 / effectiveBpm) / ts.subdivisionsPerBeat;
+          playMelodyGuideSyllable(sylOnSub.pitchStep, song, Math.max(0.45, subDurSec * 2.2), sylOnSub.text || '');
         }
 
         if (state.ttsSingLyricsEnabled && isDownbeat) {
@@ -5797,6 +6287,7 @@
 
     function stopPlayback() {
       cancelCountdown();
+      stopVocalHumVoice(false);
       state.isPlaying = false;
       if (state.rafId) {
         cancelAnimationFrame(state.rafId);
@@ -7867,6 +8358,69 @@
         state.beatVol = Number(e.target.value) / 100;
         document.getElementById('valBeatVol').textContent = `${e.target.value}%`;
       });
+
+      // Instrument Sound Selector (Ukulele / Guitar / Piano)
+      const applyInstrumentSound = (inst, audition = false) => {
+        const valid = ['ukulele', 'guitar', 'piano'].includes(inst) ? inst : 'ukulele';
+        state.instrumentSound = valid;
+        try { localStorage.setItem('qcoach_instrument_sound', valid); } catch (e) {}
+        const nameMap = { ukulele: 'Nylon Ukulele', guitar: 'Acoustic Guitar', piano: 'Warm Piano' };
+        const lbl = document.getElementById('activeInstrumentLabel');
+        if (lbl) lbl.textContent = nameMap[valid];
+        document.querySelectorAll('.instrument-sound-btn').forEach(b => {
+          const active = b.getAttribute('data-instrument') === valid;
+          b.className = active
+            ? 'instrument-sound-btn py-1.5 px-2 rounded-lg text-xs font-bold bg-amber-500 text-black border border-amber-300 transition'
+            : 'instrument-sound-btn py-1.5 px-2 rounded-lg text-xs font-semibold bg-zinc-900 border border-zinc-800 text-qmuted hover:text-qtext transition';
+        });
+        if (audition) {
+          const song = getCurrentSong();
+          const bar = getCurrentSection().bars[state.currentBarIndex] || getCurrentSection().bars[0];
+          playNylonUkuleleChord(getBarActiveChord(bar, song), 'D', 0.9);
+          showToast(`Instrument Sound: ${nameMap[valid]}`, 'success');
+        }
+      };
+      try {
+        const savedInst = localStorage.getItem('qcoach_instrument_sound');
+        if (savedInst) applyInstrumentSound(savedInst, false);
+      } catch (e) {}
+      document.querySelectorAll('.instrument-sound-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyInstrumentSound(btn.getAttribute('data-instrument'), true));
+      });
+
+      // Metronome Chord-Change Cue Toggle
+
+      // Real Human Hum Sampler buttons in Settings -> Audio
+      const btnRecHum = document.getElementById('btnRecordRealHum');
+      if (btnRecHum) btnRecHum.addEventListener('click', recordRealHumanHumSample);
+      const btnResetHum = document.getElementById('btnResetRealHum');
+      if (btnResetHum) {
+        btnResetHum.addEventListener('click', () => {
+          customUserHumSample = null;
+          stopVocalHumVoice(true);
+          btnResetHum.classList.add('hidden');
+          const lbl = document.getElementById('humVoiceSourceLabel');
+          if (lbl) lbl.textContent = 'Built-in LF-Glottal Hum (or record 2s of your real hum)';
+          if (btnRecHum) btnRecHum.textContent = '🎙️ Record 2s Hum';
+          showToast('Reset to built-in LF-Glottal Hum.', 'info');
+        });
+      }
+
+      const btnCueToggle = document.getElementById('btnToggleChordChangeCue');
+      if (btnCueToggle) {
+        btnCueToggle.addEventListener('click', () => {
+          state.chordChangeCueEnabled = !state.chordChangeCueEnabled;
+          btnCueToggle.textContent = state.chordChangeCueEnabled ? 'ON' : 'OFF';
+          btnCueToggle.className = state.chordChangeCueEnabled
+            ? 'px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0 transition'
+            : 'px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-zinc-800 text-qmuted border border-zinc-700 shrink-0 transition';
+          if (state.chordChangeCueEnabled) {
+            playBeatClick(true, false, true, true);
+          }
+          showToast(state.chordChangeCueEnabled ? 'Chord-Change Bell Cue: ON' : 'Chord-Change Bell Cue: OFF (Metronome TOCK/tick only)', 'info');
+        });
+      }
+
       document.getElementById('btnMuteBeat').addEventListener('click', (e) => {
         state.beatMuted = !state.beatMuted;
         e.target.textContent = state.beatMuted ? 'MUTE' : 'ON';
@@ -7895,6 +8449,7 @@
       document.querySelectorAll('.mix-preset-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const mode = btn.getAttribute('data-mix');
+          try { localStorage.setItem('qcoach_preferred_mix_v2', mode); } catch (e) {}
           applyMidSidePreset(mode);
           const msgMap = {
             full_song: 'Mix: Full Song (100% Lead Vocal + 100% Ukulele)',
@@ -8238,6 +8793,9 @@
           if (!ok) ensureSongHasCompleteAnalysis(s);
         }
       }
+      let preferredMix = 'beat_only';
+      try { preferredMix = localStorage.getItem('qcoach_preferred_mix_v2') || 'beat_only'; } catch (e) {}
+      applyMidSidePreset(preferredMix);
       await saveSongsToIndexedDB();
       renderAll();
     });
