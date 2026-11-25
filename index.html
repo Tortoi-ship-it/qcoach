@@ -553,9 +553,9 @@
               <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-bold">▶ YouTube Real-Vocal Sync</span>
               <span id="ytSyncStatusPill" class="text-xs font-mono text-emerald-400 font-bold">Ready</span>
             </div>
-            <p class="text-xs text-qmuted"><strong>YouTube Master Clock:</strong> Chords, Beat LEDs, and lyrics lock directly to YouTube’s live playback time (zero lag). Tap <strong>🎯 Mark Beat 1 Now</strong> right when Beat 1 starts to lock any video’s intro. <em>Note: YouTube streams can’t be split into Vocal/Karaoke stems by the browser; switching to 🥁 Beat Only mutes YouTube automatically.</em></p>
+            <p class="text-xs text-qmuted"><strong>YouTube Master Clock:</strong> Chords, Beat LEDs, and lyrics lock directly to YouTube’s live playback time (zero lag). Tap <strong>🎯 Tap Beat (1-2-3-4)</strong> four times on the beat when lyrics start—Tap 1 locks Beat 1 and Taps 2–4 lock the video’s exact BPM in one go. <em>Note: YouTube streams can’t be split into Vocal/Karaoke stems by the browser; switching to 🥁 Beat Only mutes YouTube automatically.</em></p>
             <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-              <button id="btnYtMarkBeatOne" type="button" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono transition" title="Tap on the exact Beat 1 of the YouTube song to lock chords &amp; lyrics">🎯 Mark Beat 1 Now</button>
+              <button id="btnYtMarkBeatOne" type="button" class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono transition" title="Tap 1-2-3-4 on the beat when lyrics start: Tap 1 locks Beat 1, Taps 2–4 lock exact YouTube BPM">🎯 Tap Beat (1-2-3-4)</button>
               <button id="btnYtNudgeBack" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-mono font-bold transition" title="Start chords 0.25s earlier">-0.25s</button>
               <button id="btnYtNudgeFwd" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-mono font-bold transition" title="Start chords 0.25s later">+0.25s</button>
               <button id="btnYtFindKaraoke" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-cyan-300 border border-zinc-700 text-xs font-mono font-semibold transition" title="Search YouTube for a Karaoke / Instrumental version of this song">🎸 Find Karaoke</button>
@@ -6428,6 +6428,17 @@
               const pill = document.getElementById('ytSyncStatusPill');
               if (pill) pill.textContent = '✓ Player Ready';
             },
+            onStateChange: (ev) => {
+              if (!state.ytSyncEnabled) return;
+              const s = ev && ev.data;
+              if (s === 1 && !state.isPlaying && !state.isCountingDown) {
+                // User pressed Play inside YouTube directly -> lock Stage immediately!
+                beginImmediatePlayback(true);
+              } else if (s === 2 && state.isPlaying) {
+                // User paused inside YouTube -> pause Stage cleanly
+                stopPlayback();
+              }
+            },
             onError: (ev) => {
               const code = ev && ev.data;
               const pill = document.getElementById('ytSyncStatusPill');
@@ -6494,7 +6505,7 @@
       }
     }
 
-    function beginImmediatePlayback() {
+    function beginImmediatePlayback(fromYouTubePlayer = false) {
       if (state.isPlaying) return;
       state.isPlaying = true;
       state.lastStepTimeMs = performance.now();
@@ -6509,7 +6520,7 @@
       const song = getCurrentSong();
       const audioEl = document.getElementById('hiddenAudioPlayer');
 
-      if (state.ytSyncEnabled && extractYouTubeVideoId(song.youtubeUrl || '')) {
+      if (!fromYouTubePlayer && state.ytSyncEnabled && extractYouTubeVideoId(song.youtubeUrl || '')) {
         syncYouTubeToBar(state.currentBarIndex, true);
       }
       const isBeatOnlyStart = (song.autoSync.audioMixMode === 'beat_only');
@@ -6580,7 +6591,7 @@
               }
               const newBarIdx = rawBarIdx % sectionBars;
               const newSubIdx = ((exactSubTotal % totalSubs) + totalSubs) % totalSubs;
-              if (pill) pill.textContent = `✓ Locked · ${ytTime.toFixed(1)}s (Bar ${newBarIdx + 1})`;
+              if (pill) pill.textContent = `✓ Locked · ${Math.round(activeSong.musicalMeta.bpm || 74)} BPM · ${ytTime.toFixed(1)}s (B${newBarIdx + 1})`;
 
               if (newBarIdx !== state.currentBarIndex || newSubIdx !== state.currentSubdivisionIndex) {
                 state.currentBarIndex = newBarIdx;
@@ -9036,21 +9047,70 @@
         btnAutoYt.addEventListener('click', () => autoFindYouTubeForSong(getCurrentSong(), false));
       }
 
+
+      // Unified 1-Button Sync: Tap 1 locks Beat 1, Taps 2–4 auto-calibrate exact YouTube BPM
+      let ytSyncTaps = [];
+      let ytSyncResetTimer = null;
       const btnMarkB1 = document.getElementById('btnYtMarkBeatOne');
       if (btnMarkB1) {
         btnMarkB1.addEventListener('click', async () => {
-          if (!state.ytPlayer || !state.ytPlayerReady || !state.ytPlayer.getCurrentTime) {
-            showToast('Play the YouTube video first, then tap 🎯 Mark Beat 1 Now on Beat 1!', 'info');
-            return;
-          }
-          const t = Number(state.ytPlayer.getCurrentTime().toFixed(2));
+          const now = performance.now();
           const song = getCurrentSong();
-          song.autoSync.beatOneOffsetSec = Math.max(0, t);
-          state.currentBarIndex = 0;
-          state.currentSubdivisionIndex = 0;
-          await saveSongsToIndexedDB();
-          renderAll();
-          showToast(`Locked Beat 1 to ${t.toFixed(2)}s for "${song.title}"!`, 'success');
+          const hasYtTime = state.ytPlayer && state.ytPlayerReady && state.ytPlayer.getCurrentTime;
+
+          // Start a fresh 1-2-3-4 sequence if idle for > 2.2s or after completing 4 taps
+          if (ytSyncTaps.length >= 4 || (ytSyncTaps.length > 0 && (now - ytSyncTaps[ytSyncTaps.length - 1]) > 2200)) {
+            ytSyncTaps = [];
+          }
+
+          ytSyncTaps.push(now);
+          if (ytSyncResetTimer) clearTimeout(ytSyncResetTimer);
+
+          if (ytSyncTaps.length === 1) {
+            // TAP 1: Lock Beat 1 offset right now!
+            if (hasYtTime) {
+              const t = Number(state.ytPlayer.getCurrentTime().toFixed(2));
+              song.autoSync.beatOneOffsetSec = Math.max(0, t);
+              state.currentBarIndex = 0;
+              state.currentSubdivisionIndex = 0;
+              await saveSongsToIndexedDB();
+              renderAll();
+              btnMarkB1.textContent = `🎯 Beat 1 @ ${t.toFixed(1)}s — Tap 2/4`;
+            } else {
+              btnMarkB1.textContent = '🎯 Tap 2/4…';
+            }
+          } else {
+            // TAPS 2–4: Measure exact BPM from taps while keeping Beat 1 locked!
+            let sumDiff = 0;
+            for (let i = 1; i < ytSyncTaps.length; i++) {
+              sumDiff += (ytSyncTaps[i] - ytSyncTaps[i - 1]);
+            }
+            const avgMs = sumDiff / (ytSyncTaps.length - 1);
+            const measuredBpm = Math.max(40, Math.min(180, Math.round(60000 / avgMs)));
+
+            song.musicalMeta.bpm = measuredBpm;
+            song.autoSync.playbackRate = 1.0;
+            await saveSongsToIndexedDB();
+            renderSettingsAndBottomDock();
+
+            if (ytSyncTaps.length < 4) {
+              btnMarkB1.textContent = `🎯 ${measuredBpm} BPM — Tap ${ytSyncTaps.length + 1}/4`;
+            } else {
+              btnMarkB1.textContent = `✓ Locked ${measuredBpm} BPM`;
+              showToast(`Locked Beat 1 (${(song.autoSync.beatOneOffsetSec || 0).toFixed(2)}s) & ${measuredBpm} BPM for "${song.title}"!`, 'success');
+              ytSyncResetTimer = setTimeout(() => {
+                btnMarkB1.textContent = '🎯 Tap Beat (1-2-3-4)';
+                ytSyncTaps = [];
+              }, 2000);
+              return;
+            }
+          }
+
+          // Auto-reset button label if user only wanted a single Beat-1 tap
+          ytSyncResetTimer = setTimeout(() => {
+            btnMarkB1.textContent = '🎯 Tap Beat (1-2-3-4)';
+            ytSyncTaps = [];
+          }, 2400);
         });
       }
 
