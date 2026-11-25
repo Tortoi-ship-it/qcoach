@@ -6018,9 +6018,12 @@
       let prefMix = 'beat_only';
       try { prefMix = localStorage.getItem('qcoach_preferred_mix_v2') || 'beat_only'; } catch (e) {}
       applyMidSidePreset(prefMix);
-      if (state.ytSyncEnabled) {
-        const vid = extractYouTubeVideoId(song.youtubeUrl || '');
-        if (vid) loadYouTubeIframeApiAndCue(vid);
+      const existingYtVid = extractYouTubeVideoId(song.youtubeUrl || '');
+      if (existingYtVid) {
+        if (state.ytSyncEnabled) loadYouTubeIframeApiAndCue(existingYtVid);
+      } else if (!song.ytAutoLookupAttempted && song.sourceType !== 'local_audio') {
+        // Silently pre-find & save the YouTube link in the background so it is ready on Stage
+        autoFindYouTubeForSong(song, true);
       }
       renderAll();
       showToast(`Loaded "${song.title}" onto Stage`, 'success');
@@ -6300,8 +6303,8 @@
       }
       if (lbl) {
         lbl.textContent = state.ytSyncEnabled
-          ? (vid ? 'YouTube Vocal Sync: ON' : 'YouTube Sync: Add Link')
-          : 'YouTube Vocal Sync: OFF';
+          ? (vid ? 'YouTube Vocal Sync: ON' : 'YouTube Sync: Finding…')
+          : (vid ? 'YouTube Sync: Ready' : 'YouTube Vocal Sync: OFF');
       }
       if (btn) {
         btn.className = state.ytSyncEnabled
@@ -6355,15 +6358,20 @@
 
       if (btnAuto) { btnAuto.disabled = false; btnAuto.textContent = '✨ Auto-Find Video'; }
 
+      song.ytAutoLookupAttempted = true;
       if (foundVid) {
         song.youtubeUrl = `https://youtu.be/${foundVid}`;
         await saveSongsToIndexedDB();
-        updateStageYouTubeUi();
-        loadYouTubeIframeApiAndCue(foundVid);
+        if (song.id === state.currentSongId) {
+          updateStageYouTubeUi();
+          if (state.ytSyncEnabled) loadYouTubeIframeApiAndCue(foundVid);
+        }
         if (!silent) showToast(`Auto-matched YouTube video for "${song.title}"!`, 'success');
         return foundVid;
       } else {
-        if (statusPill) statusPill.textContent = 'Auto-search unavailable — click 🔎 Search YouTube';
+        if (song.id === state.currentSongId && statusPill) {
+          statusPill.textContent = 'No auto-match yet — click 🔎 Search YouTube';
+        }
         if (!silent) showToast('Auto-search mirrors busy — click "🔎 Search YouTube" to pick your favorite link.', 'info');
         return '';
       }
