@@ -2,6 +2,7 @@
 <html lang="en" data-theme="light"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>QCoach — Performance-Ready Ukulele Rhythm, Vocal &amp; Chord Coach</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous"></script>
@@ -519,15 +520,56 @@
 
       </div>
 
-      <!-- Subtle Bottom Stage Dot: Auto-Fill Full Lyrics & Bars for Currently Playing Song Only -->
-      <div class="flex items-center justify-end gap-2 px-1 pt-0.5">
-        <button id="btnStageGoogleLyrics" type="button" class="hidden px-2 py-0.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-mono font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">
-          🔎 Google Lyrics
+      <!-- Bottom Stage Utility Row: YouTube Vocal Sync (Left) + Auto-Fill Dot (Right) -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-1 pt-0.5">
+        <button id="btnToggleStageYouTube" type="button" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-red-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm" title="Play &amp; sync the real YouTube recording with your chords, Beat LEDs, and lyrics">
+          <span class="text-red-400">▶</span>
+          <span id="stageYouTubeBtnLabel">YouTube Vocal Sync: OFF</span>
         </button>
-        <button id="btnStageAutoFillLyrics" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-amber-500/60 text-xs font-mono text-qmuted hover:text-qtext transition shadow-sm" title="Auto-fill full lyrics &amp; bars for the currently playing song only">
-          <span id="stageAutoFillDot" class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
-          <span id="stageAutoFillLabel">Auto-Fill This Song</span>
-        </button>
+
+        <div class="flex items-center gap-2">
+          <button id="btnStageGoogleLyrics" type="button" class="hidden px-2 py-0.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-mono font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">
+            🔎 Google Lyrics
+          </button>
+          <button id="btnStageAutoFillLyrics" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-amber-500/60 text-xs font-mono text-qmuted hover:text-qtext transition shadow-sm" title="Auto-fill full lyrics &amp; bars for the currently playing song only">
+            <span id="stageAutoFillDot" class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+            <span id="stageAutoFillLabel">Auto-Fill This Song</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Collapsible Official YouTube IFrame Vocal Sync Panel (Loads API on demand) -->
+      <div id="stageYouTubePanel" class="hidden q-card rounded-xl p-3 flex flex-col sm:flex-row items-stretch gap-3 border-red-500/30">
+        <div class="w-full sm:w-[320px] h-[200px] rounded-lg overflow-hidden bg-zinc-950 border border-[#2C2C2E] shrink-0 flex items-center justify-center relative">
+          <div id="ytStagePlayerMount" class="w-full h-full"></div>
+          <div id="ytStageEmptyNotice" class="hidden absolute inset-0 flex flex-col items-center justify-center p-4 text-center space-y-2 bg-zinc-950">
+            <div class="text-xs font-mono font-bold text-amber-400">No YouTube link linked to this song yet</div>
+            <p class="text-xs text-qmuted">Find the song on YouTube, paste its link on the right, and click Save.</p>
+          </div>
+        </div>
+        <div class="flex-1 flex flex-col justify-between gap-2 min-w-0">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-bold">▶ YouTube Real-Vocal Sync</span>
+              <span id="ytSyncStatusPill" class="text-xs font-mono text-emerald-400 font-bold">Ready</span>
+            </div>
+            <p class="text-xs text-qmuted">Play the real human singer in sync with QCoach’s 3-second countdown, chords, lyrics, and speed presets. Built-in synth vocals mute automatically while YouTube is active.</p>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center gap-1.5">
+              <input id="inputStageYtUrl" type="text" placeholder="Paste YouTube URL (e.g. https://youtu.be/...)" class="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-qtext placeholder-qmuted focus:outline-none focus:border-amber-500">
+              <button id="btnSaveStageYtUrl" type="button" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs shrink-0 transition">Save Link</button>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button id="btnAutoFindStageYt" type="button" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold transition">✨ Auto-Find Video</button>
+                <button id="btnFindSongOnYouTube" type="button" class="px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-qtext border border-zinc-700 text-xs font-mono font-semibold transition">🔎 Search YouTube</button>
+                <a id="linkOpenYtExternal" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="hidden px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 text-xs font-mono font-bold transition">↗ Open on YouTube</a>
+              </div>
+              <span class="text-xs font-mono text-qmuted">Beat-1 sync in <strong>⋮ Settings → 🎛️ Audio</strong></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -761,7 +803,7 @@
             </div>
             <div class="flex items-start gap-2.5 bg-[#1C1C1E] border border-[#2C2C2E] rounded-lg p-2.5">
               <span class="font-mono font-bold text-cyan-300 shrink-0 w-28">Voice Separation</span>
-              <p>Above the Pitch Contour, pick any of the 4 Stage Audio Modes: <span class="font-mono text-qtext">🎵 Song</span>, <span class="font-mono text-cyan-300">🎤 Vocals</span>, <span class="font-mono text-amber-300">🎸 Karaoke</span> (ukulele backing without vocals), or <span class="font-mono text-emerald-400">🥁 Beat Only</span> (metronome click with no music accompaniment).</p>
+              <p>Use <span class="font-mono text-red-400">▶ YouTube Vocal Sync</span> at the bottom of Stage to play the real singer in sync with your chords, or pick any of the 4 offline Stage Audio Modes above the Pitch Contour: <span class="font-mono text-qtext">🎵 Song</span>, <span class="font-mono text-cyan-300">🎤 Vocals</span>, <span class="font-mono text-amber-300">🎸 Karaoke</span> (ukulele backing without vocals), or <span class="font-mono text-emerald-400">🥁 Beat Only</span> (metronome click with no music accompaniment).</p>
             </div>
           </div>
         </div>
@@ -2395,6 +2437,11 @@
       isCountingDown: false,
       countdownTimerId: null,
       countdownEnabled: true,
+      ytSyncEnabled: false,
+      ytApiLoaded: false,
+      ytPlayer: null,
+      ytPlayerReady: false,
+      ytLoadedVideoId: '',
       currentBarIndex: 0,
       currentSubdivisionIndex: 0,
       loopEnabled: false,
@@ -4381,6 +4428,7 @@
           playMelodyGuideSyllable(2, song, 0.55, 'mmm');
           setTimeout(() => {
             stopVocalHumVoice(false);
+      pauseYouTubeIfActive();
             song.autoSync.audioMixMode = prevMode;
           }, 550);
         }, 420);
@@ -5958,6 +6006,10 @@
       let prefMix = 'beat_only';
       try { prefMix = localStorage.getItem('qcoach_preferred_mix_v2') || 'beat_only'; } catch (e) {}
       applyMidSidePreset(prefMix);
+      if (state.ytSyncEnabled) {
+        const vid = extractYouTubeVideoId(song.youtubeUrl || '');
+        if (vid) loadYouTubeIframeApiAndCue(vid);
+      }
       renderAll();
       showToast(`Loaded "${song.title}" onto Stage`, 'success');
 
@@ -5978,6 +6030,7 @@
       renderTeleprompterAndContour();
       renderSettingsAndBottomDock();
       renderSongbook();
+      updateStageYouTubeUi();
     }
 
     function maybeSpeakCoachCue(text, subKey) {
@@ -5995,6 +6048,7 @@
     }
 
     function syncAudioElementToBar(barIdx) {
+      if (state.ytSyncEnabled) syncYouTubeToBar(barIdx, state.isPlaying);
       try {
         const song = getCurrentSong();
         if (song.sourceType !== 'local_audio' && !song.previewUrl) return;
@@ -6038,7 +6092,8 @@
         const isLiveAudioPlaying = !isBeatOnly && audioEl && !audioEl.paused && audioEl.src && (audioEl.src.startsWith('blob:') || audioEl.src.startsWith('data:'));
         const sylOnSub = (currentBar.syllables || []).find(s => s.subdivision === state.currentSubdivisionIndex);
 
-        if (!isBeatOnly && (!isLiveAudioPlaying || state.mp3UkeOverlayEnabled)) {
+        const isYtActiveForUke = state.ytSyncEnabled && state.ytPlayerReady && !!extractYouTubeVideoId(song.youtubeUrl || '');
+        if (!isBeatOnly && !isYtActiveForUke && (!isLiveAudioPlaying || state.mp3UkeOverlayEnabled)) {
           if (state.playMode === 'scale') {
             if (sylOnSub || isMainBeat) {
               const wire = getScaleWireForBar(currentBar, song, state.currentSubdivisionIndex);
@@ -6060,7 +6115,8 @@
         }
 
         // Smooth Legato Vocal Humming Guide (works on BOTH built-in & uploaded songs in Song / Vocals modes)
-        if (sylOnSub && (mixMode === 'vocal_focus' || mixMode === 'full_song')) {
+        const isYtPlayingSync = state.ytSyncEnabled && state.ytPlayerReady && !!extractYouTubeVideoId(song.youtubeUrl || '');
+        if (!isYtPlayingSync && sylOnSub && (mixMode === 'vocal_focus' || mixMode === 'full_song')) {
           const effectiveBpm = Math.max(30, (song.musicalMeta.bpm || 74) * (song.autoSync.playbackRate || 1.0));
           const subDurSec = (60 / effectiveBpm) / ts.subdivisionsPerBeat;
           playMelodyGuideSyllable(sylOnSub.pitchStep, song, Math.max(0.45, subDurSec * 2.2), sylOnSub.text || '');
@@ -6206,6 +6262,223 @@
       beginImmediatePlayback();
     }
 
+    // =========================================================================
+    // Official YouTube IFrame Player Sync Engine (Zero-Upload Real Vocal MVP)
+    // =========================================================================
+    function extractYouTubeVideoId(urlStr) {
+      const s = (urlStr || '').trim();
+      if (!s) return '';
+      if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+      const m = s.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+      return m ? m[1] : '';
+    }
+
+    function updateStageYouTubeUi() {
+      const song = getCurrentSong();
+      const panel = document.getElementById('stageYouTubePanel');
+      const btn = document.getElementById('btnToggleStageYouTube');
+      const lbl = document.getElementById('stageYouTubeBtnLabel');
+      const urlIn = document.getElementById('inputStageYtUrl');
+      const emptyNotice = document.getElementById('ytStageEmptyNotice');
+      const statusPill = document.getElementById('ytSyncStatusPill');
+
+      const vid = extractYouTubeVideoId(song.youtubeUrl || '');
+      if (urlIn && document.activeElement !== urlIn) {
+        urlIn.value = song.youtubeUrl || '';
+      }
+      if (lbl) {
+        lbl.textContent = state.ytSyncEnabled
+          ? (vid ? 'YouTube Vocal Sync: ON' : 'YouTube Sync: Add Link')
+          : 'YouTube Vocal Sync: OFF';
+      }
+      if (btn) {
+        btn.className = state.ytSyncEnabled
+          ? 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/15 hover:bg-red-500/25 border border-red-500/50 text-xs font-mono font-bold text-red-400 transition shadow-sm'
+          : 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-red-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm';
+      }
+      if (panel) panel.classList.toggle('hidden', !state.ytSyncEnabled);
+      if (emptyNotice) emptyNotice.classList.toggle('hidden', !!vid);
+      if (statusPill) {
+        statusPill.textContent = vid
+          ? `Linked · Offset ${(song.autoSync.beatOneOffsetSec || 0).toFixed(2)}s`
+          : 'Paste a YouTube URL';
+      }
+    }
+
+    async function autoFindYouTubeForSong(song, silent = false) {
+      if (!song) return '';
+      const statusPill = document.getElementById('ytSyncStatusPill');
+      const btnAuto = document.getElementById('btnAutoFindStageYt');
+      if (statusPill) statusPill.textContent = '⏳ Searching YouTube...';
+      if (btnAuto) { btnAuto.disabled = true; btnAuto.textContent = '⏳ Finding...'; }
+
+      const cleanTitle = (song.title || '').replace(/\([^)]*\)/g, '').trim();
+      const cleanArtist = (song.artist || '').split('·')[0].replace(/Traditional|Worship|Catholic|Carol|Hymn/gi, '').trim();
+      const q = `${cleanTitle} ${cleanArtist} song`.trim();
+
+      // Try CORS-friendly public Piped / Invidious JSON search mirrors (zero API key needed)
+      const endpoints = [
+        `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(q)}&filter=videos`,
+        `https://api.piped.private.coffee/search?q=${encodeURIComponent(q)}&filter=videos`,
+        `https://inv.nadeko.net/api/v1/search?q=${encodeURIComponent(q)}&type=video`
+      ];
+
+      let foundVid = '';
+      for (const ep of endpoints) {
+        try {
+          const res = await safeFetch(ep, {}, 3800);
+          if (!res || !res.ok) continue;
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : (Array.isArray(data.items) ? data.items : []);
+          for (const it of items) {
+            const candidate = it.videoId || extractYouTubeVideoId(it.url || '');
+            if (candidate && /^[a-zA-Z0-9_-]{11}$/.test(candidate)) {
+              foundVid = candidate;
+              break;
+            }
+          }
+          if (foundVid) break;
+        } catch (e) {}
+      }
+
+      if (btnAuto) { btnAuto.disabled = false; btnAuto.textContent = '✨ Auto-Find Video'; }
+
+      if (foundVid) {
+        song.youtubeUrl = `https://youtu.be/${foundVid}`;
+        await saveSongsToIndexedDB();
+        updateStageYouTubeUi();
+        loadYouTubeIframeApiAndCue(foundVid);
+        if (!silent) showToast(`Auto-matched YouTube video for "${song.title}"!`, 'success');
+        return foundVid;
+      } else {
+        if (statusPill) statusPill.textContent = 'Auto-search unavailable — click 🔎 Search YouTube';
+        if (!silent) showToast('Auto-search mirrors busy — click "🔎 Search YouTube" to pick your favorite link.', 'info');
+        return '';
+      }
+    }
+
+    function loadYouTubeIframeApiAndCue(videoId) {
+      const extLink = document.getElementById('linkOpenYtExternal');
+      if (extLink) {
+        if (videoId) {
+          extLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+          extLink.classList.remove('hidden');
+        } else {
+          extLink.classList.add('hidden');
+        }
+      }
+      if (!videoId) {
+        updateStageYouTubeUi();
+        return;
+      }
+
+      const applyIframeReferrerFix = () => {
+        try {
+          const ifr = state.ytPlayer && state.ytPlayer.getIframe ? state.ytPlayer.getIframe() : document.querySelector('#ytStagePlayerMount iframe, iframe#ytStagePlayerMount');
+          if (ifr) {
+            ifr.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            ifr.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+          }
+        } catch (e) {}
+      };
+
+      const createOrCue = () => {
+        if (!window.YT || !window.YT.Player) return;
+        if (state.ytPlayer && state.ytPlayerReady) {
+          applyIframeReferrerFix();
+          if (state.ytLoadedVideoId !== videoId) {
+            state.ytLoadedVideoId = videoId;
+            try { state.ytPlayer.cueVideoById(videoId); } catch (e) {}
+          }
+          return;
+        }
+        if (state.ytPlayer) return;
+        const mount = document.getElementById('ytStagePlayerMount');
+        if (!mount) return;
+        state.ytLoadedVideoId = videoId;
+
+        const hasHttpOrigin = window.location.origin && /^https?:\/\//.test(window.location.origin);
+        state.ytPlayer = new window.YT.Player('ytStagePlayerMount', {
+          width: '100%',
+          height: '200',
+          host: 'https://www.youtube-nocookie.com',
+          videoId,
+          playerVars: {
+            playsinline: 1,
+            rel: 0,
+            enablejsapi: 1,
+            origin: hasHttpOrigin ? window.location.origin : undefined
+          },
+          events: {
+            onReady: () => {
+              state.ytPlayerReady = true;
+              applyIframeReferrerFix();
+              const pill = document.getElementById('ytSyncStatusPill');
+              if (pill) pill.textContent = '✓ Player Ready';
+            },
+            onError: (ev) => {
+              const code = ev && ev.data;
+              const pill = document.getElementById('ytSyncStatusPill');
+              if (code === 153 || !hasHttpOrigin) {
+                if (pill) pill.textContent = '⚠ Preview sandbox blocks YouTube Referer (works on GitHub Pages HTTPS)';
+                showToast('YouTube Error 153 happens in sandboxed previews or file:// — works normally on GitHub Pages HTTPS, or click ↗ Open on YouTube.', 'warn');
+              } else if (code === 101 || code === 150) {
+                if (pill) pill.textContent = '⚠ Uploader disabled embedding — try another link';
+                showToast('This uploader disabled embedding — paste another version or click ↗ Open on YouTube.', 'warn');
+              }
+            }
+          }
+        });
+        setTimeout(applyIframeReferrerFix, 250);
+      };
+
+      if (window.YT && window.YT.Player) {
+        createOrCue();
+        return;
+      }
+      const prevCb = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof prevCb === 'function') prevCb();
+        state.ytApiLoaded = true;
+        const curVid = extractYouTubeVideoId(getCurrentSong().youtubeUrl || '');
+        if (curVid) createOrCue();
+      };
+      if (!document.getElementById('qcoachYtApiScript')) {
+        const tag = document.createElement('script');
+        tag.id = 'qcoachYtApiScript';
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+      }
+    }
+
+    function syncYouTubeToBar(barIdx, shouldPlay = false) {
+      if (!state.ytSyncEnabled || !state.ytPlayer || !state.ytPlayerReady) return;
+      const song = getCurrentSong();
+      const vid = extractYouTubeVideoId(song.youtubeUrl || '');
+      if (!vid) return;
+      try {
+        if (state.ytLoadedVideoId !== vid) {
+          state.ytLoadedVideoId = vid;
+          state.ytPlayer.cueVideoById(vid);
+        }
+        const ts = song.musicalMeta.timeSignature || { beatsPerBar: 4 };
+        const barSec = (ts.beatsPerBar || 4) * (60 / (song.musicalMeta.bpm || 74));
+        const targetSec = Math.max(0, (song.autoSync.beatOneOffsetSec || 0) + barIdx * barSec);
+        const rate = song.autoSync.playbackRate || 1.0;
+        const allowedRates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
+        const closestRate = allowedRates.reduce((a, b) => Math.abs(b - rate) < Math.abs(a - rate) ? b : a, 1);
+        state.ytPlayer.setPlaybackRate(closestRate);
+        state.ytPlayer.seekTo(targetSec, true);
+        if (shouldPlay) state.ytPlayer.playVideo();
+      } catch (e) {}
+    }
+
+    function pauseYouTubeIfActive() {
+      if (state.ytPlayer && state.ytPlayerReady) {
+        try { state.ytPlayer.pauseVideo(); } catch (e) {}
+      }
+    }
+
     function beginImmediatePlayback() {
       if (state.isPlaying) return;
       state.isPlaying = true;
@@ -6221,6 +6494,9 @@
       const song = getCurrentSong();
       const audioEl = document.getElementById('hiddenAudioPlayer');
 
+      if (state.ytSyncEnabled && extractYouTubeVideoId(song.youtubeUrl || '')) {
+        syncYouTubeToBar(state.currentBarIndex, true);
+      }
       const isBeatOnlyStart = (song.autoSync.audioMixMode === 'beat_only');
       if (audioEl) audioEl.muted = isBeatOnlyStart;
       if (!isBeatOnlyStart && (song.sourceType === 'local_audio' || song.previewUrl) && audioEl && audioEl.src) {
@@ -8645,6 +8921,62 @@
 
       const btnStopBatch = document.getElementById('btnStopBatchHydration');
       if (btnStopBatch) btnStopBatch.addEventListener('click', () => { batchHydrationAbort = true; });
+
+
+      // Stage YouTube Vocal Sync Controls
+      const btnToggleYt = document.getElementById('btnToggleStageYouTube');
+      if (btnToggleYt) {
+        btnToggleYt.addEventListener('click', () => {
+          state.ytSyncEnabled = !state.ytSyncEnabled;
+          updateStageYouTubeUi();
+          if (state.ytSyncEnabled) {
+            stopVocalHumVoice(false);
+            const curSong = getCurrentSong();
+            const vid = extractYouTubeVideoId(curSong.youtubeUrl || '');
+            if (vid) {
+              loadYouTubeIframeApiAndCue(vid);
+              showToast('YouTube Vocal Sync ON — press ▶ PLAY to sync with the real singer!', 'success');
+            } else {
+              autoFindYouTubeForSong(curSong, false);
+            }
+          } else {
+            pauseYouTubeIfActive();
+            showToast('YouTube Vocal Sync OFF', 'info');
+          }
+        });
+      }
+
+      const btnSaveYt = document.getElementById('btnSaveStageYtUrl');
+      if (btnSaveYt) {
+        btnSaveYt.addEventListener('click', async () => {
+          const urlIn = document.getElementById('inputStageYtUrl');
+          const rawUrl = (urlIn ? urlIn.value : '').trim();
+          const vid = extractYouTubeVideoId(rawUrl);
+          if (!vid) {
+            showToast('Please paste a valid YouTube link (e.g. https://youtu.be/...).', 'warn');
+            return;
+          }
+          const song = getCurrentSong();
+          song.youtubeUrl = `https://youtu.be/${vid}`;
+          await saveSongsToIndexedDB();
+          updateStageYouTubeUi();
+          loadYouTubeIframeApiAndCue(vid);
+          showToast(`Saved YouTube link for "${song.title}"!`, 'success');
+        });
+      }
+
+      const btnAutoYt = document.getElementById('btnAutoFindStageYt');
+      if (btnAutoYt) {
+        btnAutoYt.addEventListener('click', () => autoFindYouTubeForSong(getCurrentSong(), false));
+      }
+      const btnFindYt = document.getElementById('btnFindSongOnYouTube');
+      if (btnFindYt) {
+        btnFindYt.addEventListener('click', () => {
+          const song = getCurrentSong();
+          const q = encodeURIComponent(`${song.title} ${song.artist || ''}`.trim());
+          window.open(`https://www.youtube.com/results?search_query=${q}`, '_blank', 'noopener,noreferrer');
+        });
+      }
 
       const btnStageAutoFill = document.getElementById('btnStageAutoFillLyrics');
       if (btnStageAutoFill) {
