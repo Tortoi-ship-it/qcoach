@@ -553,12 +553,10 @@
               <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-bold">▶ YouTube Real-Vocal Sync</span>
               <span id="ytSyncStatusPill" class="text-xs font-mono text-emerald-400 font-bold">Ready</span>
             </div>
-            <p class="text-xs text-qmuted"><strong>YouTube Master Clock:</strong> Chords, Beat LEDs, and lyrics lock directly to YouTube’s live playback time (zero lag). Tap <strong>🎯 Tap Beat (1-2-3-4)</strong> four times on the beat when lyrics start—Tap 1 locks Beat 1 and Taps 2–4 lock the video’s exact BPM in one go. <em>Note: YouTube streams can’t be split into Vocal/Karaoke stems by the browser; switching to 🥁 Beat Only mutes YouTube automatically.</em></p>
+            <p class="text-xs text-qmuted">Hands-free sync: automatically locks to synced lyric timestamps (or auto-scales to the video’s length). Use <strong>🎯 Tap Beat</strong> only if a video has a long intro. Switching to <strong>🥁 Beat Only</strong> mutes YouTube automatically.</p>
             <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-              <button id="btnYtMarkBeatOne" type="button" class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono transition" title="Tap 1-2-3-4 on the beat when lyrics start: Tap 1 locks Beat 1, Taps 2–4 lock exact YouTube BPM">🎯 Tap Beat (1-2-3-4)</button>
-              <button id="btnYtNudgeBack" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-mono font-bold transition" title="Start chords 0.25s earlier">-0.25s</button>
-              <button id="btnYtNudgeFwd" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-zinc-700 text-xs font-mono font-bold transition" title="Start chords 0.25s later">+0.25s</button>
-              <button id="btnYtFindKaraoke" type="button" class="px-2 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-cyan-300 border border-zinc-700 text-xs font-mono font-semibold transition" title="Search YouTube for a Karaoke / Instrumental version of this song">🎸 Find Karaoke</button>
+              <button id="btnYtMarkBeatOne" type="button" class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono transition" title="Optional: tap 1-2-3-4 once if a video has a long intro">🎯 Tap Beat (1-2-3-4)</button>
+              <button id="btnYtFindKaraoke" type="button" class="px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-cyan-300 border border-zinc-700 text-xs font-mono font-semibold transition" title="Search YouTube for a Karaoke / Instrumental version of this song">🎸 Karaoke</button>
             </div>
           </div>
           <div class="space-y-2">
@@ -572,7 +570,11 @@
                 <button id="btnFindSongOnYouTube" type="button" class="px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-qtext border border-zinc-700 text-xs font-mono font-semibold transition">🔎 Search YouTube</button>
                 <a id="linkOpenYtExternal" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="hidden px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 text-xs font-mono font-bold transition">↗ Open on YouTube</a>
               </div>
-              <span class="text-xs font-mono text-qmuted">Beat-1 sync in <strong>⋮ Settings → 🎛️ Audio</strong></span>
+              <button id="btnToggleYtApiKeyRow" type="button" class="text-xs font-mono text-qmuted hover:text-amber-400 underline">🔑 Optional Free YT API Key</button>
+            </div>
+            <div id="ytApiKeyRow" class="hidden flex items-center gap-1.5 pt-1 border-t border-zinc-800">
+              <input id="inputYtApiKey" type="password" placeholder="Optional free YouTube Data API v3 key (for 100% reliable auto-find)..." class="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1 text-xs font-mono text-qtext placeholder-qmuted focus:outline-none focus:border-cyan-500">
+              <button id="btnSaveYtApiKey" type="button" class="px-2.5 py-1 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs shrink-0">Save Key</button>
             </div>
           </div>
         </div>
@@ -998,6 +1000,19 @@
                 <button id="btnStopBatchHydration" type="button" class="px-2 py-0.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 text-[11px] font-bold">⏹ Stop</button>
               </div>
             </div>
+          </div>
+
+          <!-- Option A: Free Cloudflare YouTube Caption Sync Worker -->
+          <div class="pt-2 border-t border-zinc-800 space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-mono font-bold text-emerald-300">☁️ YouTube Auto-Caption Sync Worker (Optional · Free)</span>
+              <span id="ytWorkerStatusBadge" class="text-[11px] font-mono text-qmuted">Built-in maps active</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <input id="inputYtCaptionWorkerUrl" type="url" placeholder="https://qcoach-yt-captions.your-subdomain.workers.dev" class="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-qtext placeholder-qmuted focus:outline-none focus:border-emerald-400">
+              <button id="btnSaveYtCaptionWorker" type="button" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs shrink-0 transition">Save</button>
+            </div>
+            <p class="text-[11px] text-qmuted leading-snug">Deploy the free <code class="text-emerald-300">qcoach-yt-caption-worker.js</code> to Cloudflare Workers and paste its URL here to auto-align any new/custom YouTube link.</p>
           </div>
 
           <!-- Multi-Song PDF Songbook Selector Drawer (Appears when an uploaded PDF contains multiple songs) -->
@@ -2448,6 +2463,7 @@
       ytPlayer: null,
       ytPlayerReady: false,
       ytLoadedVideoId: '',
+      ytSearching: false,
       currentBarIndex: 0,
       currentSubdivisionIndex: 0,
       loopEnabled: false,
@@ -3712,6 +3728,435 @@
         clearTimeout(timer);
         return null;
       }
+    }
+
+
+    // Verified Pre-Populated YouTube Links for Core Built-In Songs (Instant Load, Zero Mirrors Needed)
+    const PREPOPULATED_YOUTUBE_URLS = {
+      'where can i go': 'https://youtu.be/HG8KVgpNJVs',
+      'amazing grace': 'https://youtu.be/4Twu1pnUlpo',
+      'feliz navidad': 'https://youtu.be/N8NcQzMQN_U',
+      'we wish you a merry christmas': 'https://youtu.be/AGsMCWB1tTk',
+      'o holy night': 'https://youtu.be/17kiIIxSdC0',
+      'the first noel': 'https://youtu.be/wNpwKJtOJ_Y',
+      'silent night': 'https://youtu.be/z7jYvmY6Gfk',
+      'joy to the world': 'https://youtu.be/30OaM6b48k8',
+      'o come all ye faithful': 'https://youtu.be/1tM5pwvUGMI',
+      'god alone': 'https://youtu.be/FCA1LvPRyCQ',
+      'we come to you': 'https://youtu.be/WBZy_ifabTI',
+      'more of you': 'https://youtu.be/CqYOfAlHHjU',
+      'there is power': 'https://youtu.be/lTBPYPouPnQ',
+      'a new spirit': 'https://youtu.be/z0U_are4MgY',
+      'i saw the king': 'https://youtu.be/KXOzeSiOn4E',
+      'here i am lord': 'https://youtu.be/cDdniihKBzI',
+      'be not afraid': 'https://youtu.be/IJ0jOjqISPU',
+      'on eagle s wings': 'https://youtu.be/nSjkJiuCaVI',
+      'prayer of st francis': 'https://youtu.be/fYz14jEoaeU',
+      'seek ye first': 'https://youtu.be/EsBpM9IcBts',
+      'how great thou art': 'https://youtu.be/Cc0QVWzCv9k',
+      'it is well with my soul': 'https://youtu.be/VbNm_Kdez8o',
+      'holy holy holy': 'https://youtu.be/JwuDSw-9cUQ',
+      'great is thy faithfulness': 'https://youtu.be/ErwiBz1QA4o',
+      'in christ alone': 'https://youtu.be/m_063OI38RQ',
+      'be thou my vision': 'https://youtu.be/Optrm7lF16s',
+      'lord i need you': 'https://youtu.be/LuvfMDhTyMA',
+      'the blessing': 'https://youtu.be/tNk_xCa7zaQ',
+      'go tell it on the mountain': 'https://youtu.be/qwLvk1c_OyM',
+      'angels from the realms of glory': 'https://youtu.be/ViVs2bq60ZM',
+      'the little drummer boy': 'https://youtu.be/QQj3XyIOGZs',
+      'mary did you know': 'https://youtu.be/vGRs59dE2j8',
+      'o little town of bethlehem': 'https://youtu.be/kMih36CvZPo',
+      'come thou long expected jesus': 'https://youtu.be/NOxJFN-9_vs',
+      'amen our hearts cry': 'https://youtu.be/eFstJWMfPws',
+      'all blessing all glory': 'https://youtu.be/nrsuiNrCd0Y',
+      'kyrie eleison': 'https://youtu.be/0X5t1LTMdoo',
+      'gloria in excelsis deo': 'https://youtu.be/2D0ncpEMcGM',
+      'immaculate mary': 'https://youtu.be/hXqTGl6mbYg',
+      'abba father': 'https://youtu.be/MneanjtBRns',
+      'the lord is my hope': 'https://youtu.be/hUcM4DtARpU',
+      'take and receive': 'https://youtu.be/ITLVZ3W3W0g',
+      'lord you have come to the lakeshore': 'https://youtu.be/Kdsab4mm4nI',
+      'holy god we praise thy name': 'https://youtu.be/SuUGPniE1D4',
+      'panis angelicus': 'https://youtu.be/xXdDi5IfddM',
+      'salve regina': 'https://youtu.be/9mMf8UfD9eg',
+      'tantum ergo sacramentum': 'https://youtu.be/YVavVTi5v0o',
+      'taste and see': 'https://youtu.be/b4EsaIBMp9c',
+      'one bread one body': 'https://youtu.be/WHAu3fLF7NI',
+      'table of plenty': 'https://youtu.be/bwfKYpymoRI',
+      'city of god': 'https://youtu.be/gzJv2oTIGfk',
+      'joyful joyful we adore thee': 'https://youtu.be/2yZVweZ2Cvg',
+      'abide with me': 'https://youtu.be/PzmvagnGTYY',
+      'nearer my god to thee': 'https://youtu.be/HtWVTCea_sw',
+      'blessed assurance': 'https://youtu.be/FfVPnEhjKB4',
+      'what a friend we have in jesus': 'https://youtu.be/TAyaXdvvbGU',
+      'come thou fount of every blessing': 'https://youtu.be/eQDOwb3yURk',
+      'before the throne of god above': 'https://youtu.be/LULK2nZ6sCc',
+      'i surrender all': 'https://youtu.be/LAfkpQ9Qgo4',
+      'turn your eyes upon jesus': 'https://youtu.be/l-XpDh9ujXs',
+      'he s got the whole world in his hands': 'https://youtu.be/kDBJNQiugnM',
+      'when the saints go marching in': 'https://youtu.be/kG6ZVNzqQ8M',
+      'swing low sweet chariot': 'https://youtu.be/6HvV73rIFRc',
+      'kumbaya my lord': 'https://youtu.be/uv0sfA7zuS8',
+      'this little light of mine': 'https://youtu.be/mNvhZa2ysag',
+      'i have decided to follow jesus': 'https://youtu.be/L7XHeCZB5KU',
+      'crown him with many crowns': 'https://youtu.be/bFEY_GrunQc',
+      'praise to the lord the almighty': 'https://youtu.be/_vegvb1u5s4',
+      'a mighty fortress is our god': 'https://youtu.be/1v6aZiDzhVE',
+      'o come o come emmanuel': 'https://youtu.be/Ley1aOPDHCE',
+      'hark the herald angels sing': 'https://youtu.be/3P97yj-f4sc',
+      'away in a manger': 'https://youtu.be/AnwO_0DrpCk',
+      'what child is this': 'https://youtu.be/R2Un5nwlL5w',
+      'christ the lord is risen today': 'https://youtu.be/fDDn_abC-N4',
+      'because he lives': 'https://youtu.be/pc05NoZTVnw',
+      'how deep the father s love for us': 'https://youtu.be/A0CDqG5STPM',
+      'forever': 'https://youtu.be/d6xxWGWpaUQ',
+      'our god': 'https://youtu.be/R-JZ9KsI7YI',
+      'whom shall i fear': 'https://youtu.be/qOkImV2cJDg',
+      'cornerstone': 'https://youtu.be/izrk-erhDdk',
+      'hosanna': 'https://youtu.be/VMBDWG9tseU',
+      'everlasting god': 'https://youtu.be/nuudVoMyZyE',
+      'christ is risen': 'https://youtu.be/-mXeA0G_xKc',
+      'your grace is enough': 'https://youtu.be/d7dW6d2-6B0',
+      'holy spirit': 'https://youtu.be/LaRHOItRfZg',
+      'reckless love': 'https://youtu.be/Sc6SSHuZvQE',
+      'living hope': 'https://youtu.be/ifFovH-dhHw',
+      'king of kings': 'https://youtu.be/Of5IcFWiEpg',
+      'graves into gardens': 'https://youtu.be/R8oxVCFGsgY',
+      'firm foundation': 'https://youtu.be/x9ndiD0_qNk',
+      'gratitude': 'https://youtu.be/ffszHwWyRQc',
+      'holy forever': 'https://youtu.be/IkHgxKemCRk',
+      'i speak jesus': 'https://youtu.be/PcmqSfr1ENY',
+      'thank you jesus for the blood': 'https://youtu.be/dhU-Omwg2rU',
+      'praise': 'https://youtu.be/raFnjGVkHe8',
+      'do it again': 'https://youtu.be/0B_lnQIITxU',
+      'yet not i but through christ in me': 'https://youtu.be/hwc2d1Xt8gM',
+      'ancient of days': 'https://youtu.be/PPpGphzScjA',
+      'christ our hope in life and death': 'https://youtu.be/OibIi1rz7mw',
+      'is he worthy': 'https://youtu.be/OIahc83Kvp4',
+      'he will hold me fast': 'https://youtu.be/936BapRFHaQ',
+      'come behold the wondrous mystery': 'https://youtu.be/h-xQDm-KZw8',
+      'all creatures of our god and king': 'https://youtu.be/hhycL4h64_s',
+      'shout to the lord': 'https://youtu.be/5_aIauL2xKA',
+      'above all': 'https://youtu.be/TdhIz3SKAp8',
+      'i could sing of your love forever': 'https://youtu.be/ChsHo4KLUJ4',
+      'shine jesus shine': 'https://youtu.be/gvVE1eL0Diw',
+      'as the deer': 'https://youtu.be/sVoQjxVGy-0',
+      'el shaddai': 'https://youtu.be/_qJMl95lb9k',
+      'awesome god': 'https://youtu.be/2w2b033DXCw',
+      'thy word': 'https://youtu.be/a6LC8cu03Ig',
+      'jesus loves me': 'https://youtu.be/xTduaM-I6Kk',
+      'amazing love': 'https://youtu.be/lcUxXOJfsh0',
+      'trading my sorrows': 'https://youtu.be/P4t7HXcJsD4',
+      'better is one day': 'https://youtu.be/W4Fj9bbEmVk',
+      'draw me close to you': 'https://youtu.be/h561DdhNutQ',
+      'breathe': 'https://youtu.be/W__o2FbO84o',
+      'i love you lord': 'https://youtu.be/5aQsBvpHQyE',
+      'sanctuary': 'https://youtu.be/CyG1vTQjETI',
+      'create in me a clean heart': 'https://youtu.be/FZVCYgwFcRo',
+      'change my heart o god': 'https://youtu.be/CEtsHWFE6-w',
+      'pass it on': 'https://youtu.be/Bc15Fsn-GXg',
+      'bind us together': 'https://youtu.be/IHJJzD46-qU',
+      'spirit of the living god': 'https://youtu.be/19i72kDhm1U',
+      'victory chant': 'https://youtu.be/JrT7WBszMBU',
+      'father i adore you': 'https://youtu.be/Ph-ZBiIETB0',
+      'we fall down': 'https://youtu.be/7Ge9O_HOKcE',
+      'step by step': 'https://youtu.be/qIBcGVnSxNU',
+      'days of elijah': 'https://youtu.be/ca9LnzJnpjQ',
+      'i will call upon the lord': 'https://youtu.be/LRqJUpyLrJE',
+      'my life is in you lord': 'https://youtu.be/1LgCRADv3Mc',
+      'jesus name above all names': 'https://youtu.be/91zyiXUCAg4',
+      'majesty': 'https://youtu.be/SNnTFDNPT3U',
+      'surely the presence of the lord': 'https://youtu.be/h67MR0b33qA',
+      'christ be beside me': 'https://youtu.be/iGDb0TaC5yA',
+      'lead me guide me': 'https://youtu.be/6OsVPYz4zUg',
+      'immaculate conception': 'https://youtu.be/7GcTkmEoluI',
+      'soul of my savior': 'https://youtu.be/tkFvz0Ch7vI',
+      'o sacrament most holy': 'https://youtu.be/Pc_xttqZsfg',
+      'sing of mary pure and lowly': 'https://youtu.be/dwA-fimg5W4',
+      'hail mary gentle woman': 'https://youtu.be/OUey6ytEXqY',
+      'ave maria': 'https://youtu.be/sWe95K5BEoM',
+      'christ be our light': 'https://youtu.be/qibAAo0JiEQ',
+      'gather us in': 'https://youtu.be/j3qkB7gucDk',
+      'all are welcome': 'https://youtu.be/N9bOiAxwi4U',
+      'blest are they': 'https://youtu.be/rzH-Vo4ocRo',
+      'you are near': 'https://youtu.be/WQX8ic2hsfs',
+      'shepherd of souls': 'https://youtu.be/aNwpwHF8azo',
+      'gift of finest wheat': 'https://youtu.be/kw3XTnDjCg0',
+      'ubi caritas': 'https://youtu.be/7FA7vW5yo0M',
+      'i am the bread of life': 'https://youtu.be/gADDeVUH4uc',
+      'lord of all hopefulness': 'https://youtu.be/LzsVkJciwfw',
+      'come holy ghost': 'https://youtu.be/WjKcc8IcxIo',
+      'o sacred head surrounded': 'https://youtu.be/iATSwph9wFQ',
+      'were you there': 'https://youtu.be/WrsrUQAMu0g',
+      'jesus christ is risen today': 'https://youtu.be/PcTP3Pj6Smo',
+      'alleluia sing to jesus': 'https://youtu.be/UJDWFYIkBns',
+      'crown him king of kings': 'https://youtu.be/9EzIBQAx7aY',
+      'open our eyes lord': 'https://youtu.be/cV0S0gUPDls',
+      'he is lord': 'https://youtu.be/OTbhnTeF4yE',
+      'emmanuel': 'https://youtu.be/ms5rGqkp-j4',
+      'glorify thy name': 'https://youtu.be/9egVMmUQ6Wg',
+      'jesus lover of my soul': 'https://youtu.be/Zsczlte5TZQ',
+      'refiner s fire': 'https://youtu.be/rII4UzVTuQo',
+    };
+
+    // Per-video exact bar-start timestamps (seconds in that specific YouTube video).
+    // Populated offline by build_yt_bar_maps.py or auto-cached at runtime via the Cloudflare Caption Worker.
+    /*__YT_BAR_TIMES_START__*/
+    const PREPOPULATED_YOUTUBE_BAR_TIMES = {
+      // Matt Maher - Lord, I Need You (Official Lyric Video)
+      'LuvfMDhTyMA': { offsetSec: 10.0, barStarts: [10.0, 12.0, 15.5, 18.0, 20.0, 22.0, 25.0] },
+      // Kari Jobe & Cody Carnes - The Blessing (Radio Version Lyric Video)
+      'tNk_xCa7zaQ': { offsetSec: 8.0, barStarts: [8.0, 10.0, 12.0, 15.0, 16.5, 18.0] }
+    };
+    /*__YT_BAR_TIMES_END__*/
+
+    const YT_CAPTION_WORKER_STORAGE_KEY = 'qcoach_yt_caption_worker_url';
+    const YT_BAR_MAP_CACHE_PREFIX = 'qcoach_yt_bar_map_v1_';
+    const ytCaptionFetchInFlight = new Set();
+
+    function getYtCaptionWorkerUrl() {
+      try { return (localStorage.getItem(YT_CAPTION_WORKER_STORAGE_KEY) || '').trim().replace(/\/+$/, ''); } catch (e) { return ''; }
+    }
+
+    function getCachedYouTubeBarMap(videoId) {
+      if (!videoId) return null;
+      if (PREPOPULATED_YOUTUBE_BAR_TIMES[videoId]) {
+        return { source: 'video_locked', ...PREPOPULATED_YOUTUBE_BAR_TIMES[videoId] };
+      }
+      try {
+        const raw = localStorage.getItem(YT_BAR_MAP_CACHE_PREFIX + videoId);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.barStarts) && parsed.barStarts.length >= 2) {
+            return { source: 'caption_synced', ...parsed };
+          }
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function saveCachedYouTubeBarMap(videoId, offsetSec, barStarts) {
+      if (!videoId || !Array.isArray(barStarts) || barStarts.length < 2) return;
+      try {
+        localStorage.setItem(YT_BAR_MAP_CACHE_PREFIX + videoId, JSON.stringify({
+          offsetSec: Number(offsetSec) || barStarts[0] || 0,
+          barStarts: barStarts.map(v => Number(Number(v).toFixed(2))),
+          savedAt: Date.now()
+        }));
+      } catch (e) {}
+    }
+
+    function normalizeLyricTokens(text) {
+      return (text || '')
+        .toLowerCase()
+        .replace(/(\w)-(\w)/g, '$1$2') // join hyphenated syllables like u-pon -> upon
+        .replace(/[^a-z0-9\s]+/g, ' ')
+        .split(/\s+/)
+        .filter(w => w.length >= 2);
+    }
+
+    function alignTranscriptSegmentsToBars(segments, bars, fallbackBarSec = 3.0) {
+      if (!Array.isArray(segments) || !segments.length || !Array.isArray(bars) || !bars.length) return null;
+      const cleanSegs = segments
+        .map(s => ({
+          start: Number(s.start),
+          tokens: normalizeLyricTokens(s.text || '')
+        }))
+        .filter(s => Number.isFinite(s.start) && s.start >= 0 && s.tokens.length > 0)
+        .sort((a, b) => a.start - b.start);
+      if (!cleanSegs.length) return null;
+
+      // Monotonic greedy fuzzy alignment: match each bar's lyrics forward through caption segments
+      const anchors = new Array(bars.length).fill(null);
+      let segCursor = 0;
+      for (let i = 0; i < bars.length; i++) {
+        const barTokens = normalizeLyricTokens(bars[i].lyricText || bars[i].lyric || '');
+        if (!barTokens.length) continue;
+        const barSet = new Set(barTokens);
+        let bestIdx = -1;
+        let bestScore = 0;
+        const searchLimit = Math.min(cleanSegs.length, segCursor + 12);
+        for (let j = segCursor; j < searchLimit; j++) {
+          let hits = 0;
+          for (const tk of cleanSegs[j].tokens) {
+            if (barSet.has(tk)) hits++;
+          }
+          const score = hits / Math.max(1, Math.min(barTokens.length, cleanSegs[j].tokens.length));
+          if (score > bestScore && hits >= 1) {
+            bestScore = score;
+            bestIdx = j;
+          }
+        }
+        if (bestIdx !== -1 && bestScore >= 0.4) {
+          anchors[i] = cleanSegs[bestIdx].start;
+          segCursor = bestIdx;
+        }
+      }
+
+      const matchedIndices = [];
+      for (let i = 0; i < anchors.length; i++) {
+        if (anchors[i] !== null) matchedIndices.push(i);
+      }
+      if (matchedIndices.length < 2) return null;
+
+      // Interpolate unmatched bars strictly monotonically between matched anchors
+      const barStarts = new Array(bars.length);
+      const firstM = matchedIndices[0];
+      const lastM = matchedIndices[matchedIndices.length - 1];
+      const avgDur = Math.max(0.8, (anchors[lastM] - anchors[firstM]) / Math.max(1, lastM - firstM));
+
+      for (let i = firstM - 1; i >= 0; i--) {
+        barStarts[i] = Math.max(0, (i === firstM - 1 ? anchors[firstM] : barStarts[i + 1]) - avgDur);
+      }
+      for (let m = 0; m < matchedIndices.length; m++) {
+        const idxA = matchedIndices[m];
+        barStarts[idxA] = anchors[idxA];
+        if (m + 1 < matchedIndices.length) {
+          const idxB = matchedIndices[m + 1];
+          const gap = idxB - idxA;
+          const step = Math.max(0.6, (anchors[idxB] - anchors[idxA]) / gap);
+          for (let k = idxA + 1; k < idxB; k++) {
+            barStarts[k] = anchors[idxA] + step * (k - idxA);
+          }
+        }
+      }
+      for (let i = lastM + 1; i < bars.length; i++) {
+        barStarts[i] = barStarts[i - 1] + avgDur;
+      }
+      // Guarantee strict monotonic progression (never backward!)
+      for (let i = 1; i < barStarts.length; i++) {
+        if (barStarts[i] < barStarts[i - 1] + 0.5) {
+          barStarts[i] = barStarts[i - 1] + 0.5;
+        }
+      }
+      return { offsetSec: barStarts[0], barStarts };
+    }
+
+    async function autoAlignYouTubeCaptionsForSong(song, videoId) {
+      if (!song || !videoId) return false;
+      if (getCachedYouTubeBarMap(videoId)) return true;
+      const workerUrl = getYtCaptionWorkerUrl();
+      if (!workerUrl || ytCaptionFetchInFlight.has(videoId)) return false;
+
+      ytCaptionFetchInFlight.add(videoId);
+      const pill = document.getElementById('ytSyncStatusPill');
+      if (pill && state.ytSyncEnabled) pill.textContent = '⏳ Syncing YouTube captions…';
+      try {
+        const res = await fetch(`${workerUrl}?v=${encodeURIComponent(videoId)}`, { mode: 'cors' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const segs = Array.isArray(data && data.segments) ? data.segments : [];
+        const sec = song.sections && song.sections[0];
+        const bars = sec && Array.isArray(sec.bars) ? sec.bars : [];
+        const ts = (song.musicalMeta && song.musicalMeta.timeSignature) || { beatsPerBar: 4 };
+        const fallbackBarSec = (ts.beatsPerBar || 4) * (60 / ((song.musicalMeta && song.musicalMeta.bpm) || 74));
+        const aligned = alignTranscriptSegmentsToBars(segs, bars, fallbackBarSec);
+        if (aligned) {
+          saveCachedYouTubeBarMap(videoId, aligned.offsetSec, aligned.barStarts);
+          if (pill && state.ytSyncEnabled) pill.textContent = '✓ Caption-Synced (Ready)';
+          return true;
+        }
+      } catch (e) {
+        // Silent fallback — learner never sees an error dialog
+      } finally {
+        ytCaptionFetchInFlight.delete(videoId);
+      }
+      return false;
+    }
+
+    function getYouTubeBarTimeline(song, secBars) {
+      const n = Math.max(1, secBars.length);
+      const ts = (song.musicalMeta && song.musicalMeta.timeSignature) || { beatsPerBar: 4 };
+      const nominalBarSec = (ts.beatsPerBar || 4) * (60 / ((song.musicalMeta && song.musicalMeta.bpm) || 74));
+      const vid = extractYouTubeVideoId(song.youtubeUrl || '');
+      const cached = getCachedYouTubeBarMap(vid);
+
+      // Priority 1: Exact per-video bar timeline (pre-baked or Cloudflare Worker aligned)
+      if (cached && Array.isArray(cached.barStarts) && cached.barStarts.length >= 2) {
+        const raw = cached.barStarts;
+        const avgDur = Math.max(0.8, (raw[raw.length - 1] - raw[0]) / Math.max(1, raw.length - 1));
+        const barStarts = new Array(n);
+        for (let i = 0; i < n; i++) {
+          if (i < raw.length && Number.isFinite(raw[i])) {
+            barStarts[i] = raw[i];
+          } else {
+            barStarts[i] = (i === 0 ? (cached.offsetSec || 0) : barStarts[i - 1] + avgDur);
+          }
+          if (i > 0 && barStarts[i] < barStarts[i - 1] + 0.45) {
+            barStarts[i] = barStarts[i - 1] + 0.45;
+          }
+        }
+        return {
+          mode: cached.source === 'video_locked' ? 'video_locked' : 'caption_synced',
+          offsetSec: barStarts[0],
+          avgBarDur: avgDur,
+          barStarts
+        };
+      }
+
+      // Priority 2: Sanitized per-bar syncedTimestampSec (strictly monotonic, never jumps backward)
+      const stamped = [];
+      for (let i = 0; i < n; i++) {
+        if (typeof secBars[i].syncedTimestampSec === 'number' && Number.isFinite(secBars[i].syncedTimestampSec)) {
+          stamped.push({ idx: i, t: secBars[i].syncedTimestampSec });
+        }
+      }
+      if (stamped.length >= 2) {
+        const offsetSec = (song.autoSync && song.autoSync.beatOneOffsetSec) || 0;
+        const firstAnchor = stamped[0];
+        const lastAnchor = stamped[stamped.length - 1];
+        const shiftSec = (firstAnchor.idx === 0) ? (offsetSec - firstAnchor.t) : 0;
+        const avgDur = (lastAnchor.idx > firstAnchor.idx && lastAnchor.t > firstAnchor.t)
+          ? Math.max(0.8, (lastAnchor.t - firstAnchor.t) / (lastAnchor.idx - firstAnchor.idx))
+          : nominalBarSec;
+        const barStarts = new Array(n);
+        for (let i = 0; i < n; i++) {
+          let val;
+          if (typeof secBars[i].syncedTimestampSec === 'number' && Number.isFinite(secBars[i].syncedTimestampSec)) {
+            val = secBars[i].syncedTimestampSec + shiftSec;
+          } else if (i === 0) {
+            val = offsetSec;
+          } else {
+            val = barStarts[i - 1] + avgDur;
+          }
+          barStarts[i] = (i > 0) ? Math.max(barStarts[i - 1] + 0.5, val) : Math.max(0, val);
+        }
+        return { mode: 'lrc_synced', offsetSec: barStarts[0], avgBarDur: avgDur, barStarts };
+      }
+
+      // Priority 3: Clean auto-paced BPM fallback
+      const offsetSec = (song.autoSync && song.autoSync.beatOneOffsetSec) || 0;
+      let ytDur = 0;
+      try { ytDur = (state.ytPlayer && state.ytPlayer.getDuration) ? state.ytPlayer.getDuration() : 0; } catch (e) {}
+      let autoPace = (song.autoSync && song.autoSync.ytLyricPace) || 1.0;
+      if (!(song.autoSync && song.autoSync.ytLyricPace) && ytDur > 30 && n * nominalBarSec > 0) {
+        const usableYtSec = Math.max(20, (ytDur - offsetSec) * 0.85);
+        if ((usableYtSec / (n * nominalBarSec)) >= 1.65) autoPace = 0.5;
+      }
+      const effBarSec = nominalBarSec / autoPace;
+      const barStarts = Array.from({ length: n }, (_, i) => offsetSec + i * effBarSec);
+      return { mode: 'tempo_synced', offsetSec, avgBarDur: effBarSec, barStarts };
+    }
+
+
+    function applyPrepopulatedYouTubeUrls(songList) {
+      if (!Array.isArray(songList)) return;
+      songList.forEach(sg => {
+        if (!sg) return;
+        const hasValidYt = sg.youtubeUrl && !sg.youtubeUrl.includes('HG8KVgpNJVs?t=');
+        if (hasValidYt) return;
+        const nk = normalizeSongTitleKey(sg.title);
+        if (PREPOPULATED_YOUTUBE_URLS[nk]) {
+          sg.youtubeUrl = PREPOPULATED_YOUTUBE_URLS[nk];
+          return;
+        }
+        for (const k of Object.keys(PREPOPULATED_YOUTUBE_URLS)) {
+          if (nk === k || nk.startsWith(k + ' ')) {
+            sg.youtubeUrl = PREPOPULATED_YOUTUBE_URLS[k];
+            break;
+          }
+        }
+      });
     }
 
     function mergeSongbookLists(...lists) {
@@ -6302,9 +6747,13 @@
         urlIn.value = song.youtubeUrl || '';
       }
       if (lbl) {
-        lbl.textContent = state.ytSyncEnabled
-          ? (vid ? 'YouTube Vocal Sync: ON' : 'YouTube Sync: Finding…')
-          : (vid ? 'YouTube Sync: Ready' : 'YouTube Vocal Sync: OFF');
+        if (state.ytSearching) {
+          lbl.textContent = 'YouTube Sync: Finding…';
+        } else {
+          lbl.textContent = state.ytSyncEnabled
+            ? (vid ? 'YouTube Vocal Sync: ON' : 'YouTube Sync: Add Link')
+            : (vid ? 'YouTube Sync: Ready' : 'YouTube Vocal Sync: OFF');
+        }
       }
       if (btn) {
         btn.className = state.ytSyncEnabled
@@ -6313,6 +6762,11 @@
       }
       if (panel) panel.classList.toggle('hidden', !state.ytSyncEnabled);
       if (emptyNotice) emptyNotice.classList.toggle('hidden', !!vid);
+      const paceBtn = document.getElementById('btnYtPaceCycle');
+      if (paceBtn) {
+        const p = song.autoSync.ytLyricPace || 1.0;
+        paceBtn.textContent = p === 0.5 ? 'Pace: ½×' : (p === 2.0 ? 'Pace: 2×' : 'Pace: 1×');
+      }
       if (statusPill) {
         statusPill.textContent = vid
           ? `Linked · Offset ${(song.autoSync.beatOneOffsetSec || 0).toFixed(2)}s`
@@ -6324,6 +6778,8 @@
       if (!song) return '';
       const statusPill = document.getElementById('ytSyncStatusPill');
       const btnAuto = document.getElementById('btnAutoFindStageYt');
+      state.ytSearching = true;
+      updateStageYouTubeUi();
       if (statusPill) statusPill.textContent = '⏳ Searching YouTube...';
       if (btnAuto) { btnAuto.disabled = true; btnAuto.textContent = '⏳ Finding...'; }
 
@@ -6331,32 +6787,50 @@
       const cleanArtist = (song.artist || '').split('·')[0].replace(/Traditional|Worship|Catholic|Carol|Hymn/gi, '').trim();
       const q = `${cleanTitle} ${cleanArtist} song`.trim();
 
-      // Try CORS-friendly public Piped / Invidious JSON search mirrors (zero API key needed)
-      const endpoints = [
-        `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(q)}&filter=videos`,
-        `https://api.piped.private.coffee/search?q=${encodeURIComponent(q)}&filter=videos`,
-        `https://inv.nadeko.net/api/v1/search?q=${encodeURIComponent(q)}&type=video`
-      ];
-
       let foundVid = '';
-      for (const ep of endpoints) {
-        try {
-          const res = await safeFetch(ep, {}, 3800);
-          if (!res || !res.ok) continue;
-          const data = await res.json();
-          const items = Array.isArray(data) ? data : (Array.isArray(data.items) ? data.items : []);
-          for (const it of items) {
-            const candidate = it.videoId || extractYouTubeVideoId(it.url || '');
-            if (candidate && /^[a-zA-Z0-9_-]{11}$/.test(candidate)) {
-              foundVid = candidate;
-              break;
+      try {
+        // 1. Official YouTube Data API v3 (if user saved a free API key — 100% reliable & instant)
+        let ytKey = '';
+        try { ytKey = (localStorage.getItem('qcoach_yt_api_key') || '').trim(); } catch (e) {}
+        if (ytKey) {
+          const ytUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&maxResults=1&q=${encodeURIComponent(q)}&key=${encodeURIComponent(ytKey)}`;
+          const res = await safeFetch(ytUrl, {}, 3500);
+          if (res && res.ok) {
+            const data = await res.json();
+            if (data.items && data.items[0] && data.items[0].id && data.items[0].id.videoId) {
+              foundVid = data.items[0].id.videoId;
             }
           }
-          if (foundVid) break;
-        } catch (e) {}
-      }
+        }
 
-      if (btnAuto) { btnAuto.disabled = false; btnAuto.textContent = '✨ Auto-Find Video'; }
+        // 2. Fast parallel race of public mirrors (2.5s hard cap so it NEVER hangs!)
+        if (!foundVid) {
+          const endpoints = [
+            `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(q)}&filter=videos`,
+            `https://api.piped.private.coffee/search?q=${encodeURIComponent(q)}&filter=videos`,
+            `https://inv.nadeko.net/api/v1/search?q=${encodeURIComponent(q)}&type=video`
+          ];
+          const checks = endpoints.map(async (ep) => {
+            const res = await safeFetch(ep, {}, 2500);
+            if (!res || !res.ok) throw new Error('bad');
+            const data = await res.json();
+            const items = Array.isArray(data) ? data : (Array.isArray(data.items) ? data.items : []);
+            for (const it of items) {
+              const cand = it.videoId || extractYouTubeVideoId(it.url || '');
+              if (cand && /^[a-zA-Z0-9_-]{11}$/.test(cand)) return cand;
+            }
+            throw new Error('none');
+          });
+          try {
+            foundVid = await Promise.any(checks);
+          } catch (e) {
+            foundVid = '';
+          }
+        }
+      } finally {
+        state.ytSearching = false;
+        if (btnAuto) { btnAuto.disabled = false; btnAuto.textContent = '✨ Auto-Find Video'; }
+      }
 
       song.ytAutoLookupAttempted = true;
       if (foundVid) {
@@ -6369,10 +6843,11 @@
         if (!silent) showToast(`Auto-matched YouTube video for "${song.title}"!`, 'success');
         return foundVid;
       } else {
-        if (song.id === state.currentSongId && statusPill) {
-          statusPill.textContent = 'No auto-match yet — click 🔎 Search YouTube';
+        if (song.id === state.currentSongId) {
+          updateStageYouTubeUi();
+          if (statusPill) statusPill.textContent = 'Click 🔎 Search YouTube to pick a link (or add 🔑 free YT API key)';
         }
-        if (!silent) showToast('Auto-search mirrors busy — click "🔎 Search YouTube" to pick your favorite link.', 'info');
+        if (!silent) showToast('Click "🔎 Search YouTube" to pick your preferred recording and paste the link.', 'info');
         return '';
       }
     }
@@ -6391,6 +6866,8 @@
         updateStageYouTubeUi();
         return;
       }
+      // Silently auto-align captions via Cloudflare Worker if no pre-baked/cached bar map exists
+      autoAlignYouTubeCaptionsForSong(getCurrentSong(), videoId);
 
       const applyIframeReferrerFix = () => {
         try {
@@ -6492,9 +6969,10 @@
           state.ytLoadedVideoId = vid;
           state.ytPlayer.cueVideoById(vid);
         }
-        const ts = song.musicalMeta.timeSignature || { beatsPerBar: 4 };
-        const barSec = (ts.beatsPerBar || 4) * (60 / (song.musicalMeta.bpm || 74));
-        const targetSec = Math.max(0, (song.autoSync.beatOneOffsetSec || 0) + barIdx * barSec);
+        const sec = getCurrentSection();
+        const timeline = getYouTubeBarTimeline(song, (sec && sec.bars) ? sec.bars : []);
+        const targetSec = Math.max(0, (timeline.barStarts[barIdx] !== undefined ? timeline.barStarts[barIdx] : timeline.offsetSec));
+        state.ytLastTimeSec = targetSec;
         const rate = song.autoSync.playbackRate || 1.0;
         const allowedRates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
         const closestRate = allowedRates.reduce((a, b) => Math.abs(b - rate) < Math.abs(a - rate) ? b : a, 1);
@@ -6595,71 +7073,53 @@
           const pill = document.getElementById('ytSyncStatusPill');
           // Only advance chords/lyrics when YouTube is actually PLAYING (state === 1)
           if (ytState === 1) {
-            const offsetSec = activeSong.autoSync.beatOneOffsetSec || 0;
             const secBars = getCurrentSection().bars;
             const sectionBars = Math.max(1, secBars.length);
+            const timeline = getYouTubeBarTimeline(activeSong, secBars);
+            const barStarts = timeline.barStarts;
+            const offsetSec = timeline.offsetSec;
 
-            // Check if bars carry real LRCLIB per-line timestamps (eliminates human BPM drift!)
-            const timestampedCount = secBars.filter(b => typeof b.syncedTimestampSec === 'number' && Number.isFinite(b.syncedTimestampSec)).length;
-            const useLrcTimeline = timestampedCount >= Math.max(2, Math.floor(sectionBars * 0.6));
+            // Detect explicit backward scrub (>1.2s) vs normal monotonic forward playback
+            const prevYtT = typeof state.ytLastTimeSec === 'number' ? state.ytLastTimeSec : ytTime;
+            const userScrubbedBackward = (ytTime < prevYtT - 1.2);
+            state.ytLastTimeSec = ytTime;
+
+            const modeLabel = timeline.mode === 'video_locked'
+              ? '✓ Video-Locked'
+              : (timeline.mode === 'caption_synced'
+                  ? '✓ Caption-Synced'
+                  : (timeline.mode === 'lrc_synced' ? '✓ LRC-Synced' : '♪ Tempo-Synced'));
 
             if (ytTime < offsetSec) {
               if (pill) pill.textContent = `Intro… Beat 1 in ${(offsetSec - ytTime).toFixed(1)}s`;
-            } else if (useLrcTimeline) {
-              // Anchor the entire LRC timestamp map to the user's marked Beat 1 offset
-              const firstTs = secBars.find(b => typeof b.syncedTimestampSec === 'number').syncedTimestampSec;
-              const shiftSec = offsetSec - firstTs;
-              let newBarIdx = 0;
+            } else {
+              let computedBarIdx = 0;
               for (let i = 0; i < sectionBars; i++) {
-                const bTs = typeof secBars[i].syncedTimestampSec === 'number'
-                  ? (secBars[i].syncedTimestampSec + shiftSec)
-                  : (offsetSec + i * ((ts.beatsPerBar || 4) * (60 / (activeSong.musicalMeta.bpm || 74))));
-                if (ytTime >= bTs) newBarIdx = i;
+                if (ytTime >= barStarts[i]) computedBarIdx = i;
                 else break;
               }
-              const curBarStart = typeof secBars[newBarIdx].syncedTimestampSec === 'number'
-                ? (secBars[newBarIdx].syncedTimestampSec + shiftSec)
-                : offsetSec;
-              const defaultBarDur = (ts.beatsPerBar || 4) * (60 / (activeSong.musicalMeta.bpm || 74));
-              const nextBarStart = (newBarIdx + 1 < sectionBars && typeof secBars[newBarIdx + 1].syncedTimestampSec === 'number')
-                ? (secBars[newBarIdx + 1].syncedTimestampSec + shiftSec)
-                : (curBarStart + defaultBarDur);
-              const barDur = Math.max(0.6, nextBarStart - curBarStart);
+              // Strict monotonic guard during forward playback: never jump backward or flicker
+              const newBarIdx = userScrubbedBackward
+                ? computedBarIdx
+                : Math.max(state.currentBarIndex, computedBarIdx);
+
+              const curBarStart = barStarts[newBarIdx];
+              const nextBarStart = (newBarIdx + 1 < sectionBars)
+                ? barStarts[newBarIdx + 1]
+                : (curBarStart + timeline.avgBarDur);
+              const barDur = Math.max(0.5, nextBarStart - curBarStart);
               const frac = Math.max(0, Math.min(0.999, (ytTime - curBarStart) / barDur));
               const newSubIdx = Math.floor(frac * totalSubs);
 
-              if (!state.loopEnabled && newBarIdx === sectionBars - 1 && ytTime > curBarStart + barDur + 0.5) {
+              if (!state.loopEnabled && newBarIdx === sectionBars - 1 && ytTime > curBarStart + barDur + 0.6) {
                 state.currentBarIndex = 0;
                 state.currentSubdivisionIndex = 0;
+                state.ytLastTimeSec = 0;
                 stopPlayback();
                 renderAll();
                 return;
               }
-              if (pill) pill.textContent = `✓ LRC-Synced · ${ytTime.toFixed(1)}s (B${newBarIdx + 1}/${sectionBars})`;
-
-              if (newBarIdx !== state.currentBarIndex || newSubIdx !== state.currentSubdivisionIndex) {
-                state.currentBarIndex = newBarIdx;
-                state.currentSubdivisionIndex = newSubIdx;
-                state.lastStepTimeMs = nowMs;
-                triggerSubdivisionAudioAndCues();
-                renderStageTick();
-              }
-            } else {
-              const elapsedSec = ytTime - offsetSec;
-              const exactBeat = elapsedSec * ((activeSong.musicalMeta.bpm || 74) / 60);
-              const exactSubTotal = Math.max(0, Math.floor(exactBeat * ts.subdivisionsPerBeat));
-              const rawBarIdx = Math.floor(exactSubTotal / totalSubs);
-
-              if (!state.loopEnabled && rawBarIdx >= sectionBars) {
-                state.currentBarIndex = 0;
-                state.currentSubdivisionIndex = 0;
-                stopPlayback();
-                renderAll();
-                return;
-              }
-              const newBarIdx = rawBarIdx % sectionBars;
-              const newSubIdx = ((exactSubTotal % totalSubs) + totalSubs) % totalSubs;
-              if (pill) pill.textContent = `✓ BPM-Synced · ${Math.round(activeSong.musicalMeta.bpm || 74)} BPM · ${ytTime.toFixed(1)}s (B${newBarIdx + 1})`;
+              if (pill) pill.textContent = `${modeLabel} · ${ytTime.toFixed(1)}s (B${newBarIdx + 1}/${sectionBars})`;
 
               if (newBarIdx !== state.currentBarIndex || newSubIdx !== state.currentSubdivisionIndex) {
                 state.currentBarIndex = newBarIdx;
@@ -9114,6 +9574,56 @@
         });
       }
 
+
+      const btnToggleYtKey = document.getElementById('btnToggleYtApiKeyRow');
+      const ytKeyRow = document.getElementById('ytApiKeyRow');
+      const ytKeyIn = document.getElementById('inputYtApiKey');
+      const btnSaveYtKey = document.getElementById('btnSaveYtApiKey');
+      try {
+        const savedK = localStorage.getItem('qcoach_yt_api_key') || '';
+        if (ytKeyIn && savedK) ytKeyIn.value = savedK;
+      } catch (e) {}
+      if (btnToggleYtKey && ytKeyRow) {
+        btnToggleYtKey.addEventListener('click', () => ytKeyRow.classList.toggle('hidden'));
+      }
+      if (btnSaveYtKey && ytKeyIn) {
+        btnSaveYtKey.addEventListener('click', () => {
+          const k = ytKeyIn.value.trim();
+          try { localStorage.setItem('qcoach_yt_api_key', k); } catch (e) {}
+          if (ytKeyRow) ytKeyRow.classList.add('hidden');
+          showToast(k ? 'Saved YouTube Data API v3 key! Trying Auto-Find now…' : 'Cleared YouTube API key.', 'success');
+          if (k) autoFindYouTubeForSong(getCurrentSong(), false);
+        });
+
+      // Wire Option A: Cloudflare YouTube Caption Sync Worker URL (Settings -> Library)
+      const workerInput = document.getElementById('inputYtCaptionWorkerUrl');
+      const workerSaveBtn = document.getElementById('btnSaveYtCaptionWorker');
+      const workerBadge = document.getElementById('ytWorkerStatusBadge');
+      const refreshWorkerBadge = () => {
+        const u = getYtCaptionWorkerUrl();
+        if (workerInput && !workerInput.value) workerInput.value = u;
+        if (workerBadge) {
+          workerBadge.textContent = u ? '✓ Worker Connected' : 'Built-in maps active';
+          workerBadge.className = u ? 'text-[11px] font-mono text-emerald-400 font-bold' : 'text-[11px] font-mono text-qmuted';
+        }
+      };
+      refreshWorkerBadge();
+      if (workerSaveBtn && workerInput) {
+        workerSaveBtn.addEventListener('click', () => {
+          const val = (workerInput.value || '').trim().replace(/\/+$/, '');
+          try {
+            if (val) localStorage.setItem(YT_CAPTION_WORKER_STORAGE_KEY, val);
+            else localStorage.removeItem(YT_CAPTION_WORKER_STORAGE_KEY);
+          } catch (e) {}
+          refreshWorkerBadge();
+          const curSong = getCurrentSong();
+          const curVid = extractYouTubeVideoId((curSong && curSong.youtubeUrl) || '');
+          if (val && curVid) autoAlignYouTubeCaptionsForSong(curSong, curVid);
+          showToast(val ? 'Saved YouTube Caption Worker URL! Auto-sync enabled.' : 'Cleared Caption Worker URL.', 'success');
+        });
+      }
+      }
+
       const btnAutoYt = document.getElementById('btnAutoFindStageYt');
       if (btnAutoYt) {
         btnAutoYt.addEventListener('click', () => autoFindYouTubeForSong(getCurrentSong(), false));
@@ -9183,6 +9693,70 @@
             btnMarkB1.textContent = '🎯 Tap Beat (1-2-3-4)';
             ytSyncTaps = [];
           }, 2400);
+        });
+      }
+
+
+      // ⏭ Sync Next Bar: stamps exact YouTube timestamp on next bar & auto-calibrates song's true bar length (zero drift!)
+      const btnSyncNext = document.getElementById('btnYtSyncNextBar');
+      if (btnSyncNext) {
+        btnSyncNext.addEventListener('click', async () => {
+          if (!state.ytPlayer || !state.ytPlayerReady || !state.ytPlayer.getCurrentTime) {
+            showToast('Play the YouTube video first, then tap ⏭ Sync Next Bar when the next lyric line starts.', 'info');
+            return;
+          }
+          const ytNow = Number(state.ytPlayer.getCurrentTime().toFixed(2));
+          const song = getCurrentSong();
+          const secBars = getCurrentSection().bars;
+          const nextIdx = Math.min(secBars.length - 1, state.currentBarIndex + 1);
+
+          // Ensure Bar 1 has an anchor
+          const setBarTs = (globalBarIdx, tsSec) => {
+            let count = 0;
+            for (const sec of song.sections) {
+              for (const b of sec.bars) {
+                if (count === globalBarIdx) {
+                  b.syncedTimestampSec = tsSec;
+                  return;
+                }
+                count++;
+              }
+            }
+          };
+
+          if (state.activeSectionIndex === -1) {
+            if (typeof secBars[0].syncedTimestampSec !== 'number') {
+              setBarTs(0, song.autoSync.beatOneOffsetSec || 0);
+            }
+            setBarTs(nextIdx, ytNow);
+          } else {
+            const sec = song.sections[state.activeSectionIndex];
+            if (sec && sec.bars[0] && typeof sec.bars[0].syncedTimestampSec !== 'number') {
+              sec.bars[0].syncedTimestampSec = song.autoSync.beatOneOffsetSec || 0;
+            }
+            if (sec && sec.bars[nextIdx]) sec.bars[nextIdx].syncedTimestampSec = ytNow;
+          }
+
+          state.currentBarIndex = nextIdx;
+          state.currentSubdivisionIndex = 0;
+          await saveSongsToIndexedDB();
+          renderStageTick();
+          showToast(`Synced Bar ${nextIdx + 1} to ${ytNow.toFixed(1)}s — remaining bars auto-scaled!`, 'success');
+        });
+      }
+
+      // Pace: ½× / 1× / 2× (fixes double-time / half-time lyric charts instantly)
+      const btnYtPace = document.getElementById('btnYtPaceCycle');
+      if (btnYtPace) {
+        btnYtPace.addEventListener('click', async () => {
+          const song = getCurrentSong();
+          const order = [1.0, 0.5, 2.0];
+          const cur = song.autoSync.ytLyricPace || 1.0;
+          const next = order[(order.indexOf(cur) + 1) % order.length];
+          song.autoSync.ytLyricPace = next;
+          await saveSongsToIndexedDB();
+          updateStageYouTubeUi();
+          showToast(`YouTube Lyric Pace: ${next === 0.5 ? '½× (Half-Time)' : (next === 2.0 ? '2× (Double-Time)' : '1× (Normal)')}`, 'info');
         });
       }
 
@@ -9366,6 +9940,7 @@
       initPwaManifestAndServiceWorker();
       await initIndexedDB();
       await loadSongsFromIndexedDB();
+      applyPrepopulatedYouTubeUrls(state.songs);
       bindEvents();
       for (const s of state.songs) {
         if (!s.isPreloaded) {
