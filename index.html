@@ -6495,14 +6495,29 @@
         const isBeatOnly = (song.autoSync.audioMixMode === 'beat_only');
         if (isBeatOnly && state.ytPlayer.mute) state.ytPlayer.mute();
         else if (!isBeatOnly && state.ytPlayer.unMute) state.ytPlayer.unMute();
-        if (shouldPlay) state.ytPlayer.playVideo();
+        if (shouldPlay) {
+          state.ytPlayer.playVideo();
+          sendYtIframeCommand('playVideo');
+        }
+      } catch (e) {}
+    }
+
+    function sendYtIframeCommand(func, args = []) {
+      try {
+        const ifr = (state.ytPlayer && state.ytPlayer.getIframe)
+          ? state.ytPlayer.getIframe()
+          : document.querySelector('#ytStagePlayerMount iframe, iframe#ytStagePlayerMount');
+        if (ifr && ifr.contentWindow) {
+          ifr.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), '*');
+        }
       } catch (e) {}
     }
 
     function pauseYouTubeIfActive() {
-      if (state.ytPlayer && state.ytPlayerReady) {
+      if (state.ytPlayer && typeof state.ytPlayer.pauseVideo === 'function') {
         try { state.ytPlayer.pauseVideo(); } catch (e) {}
       }
+      sendYtIframeCommand('pauseVideo');
     }
 
     function beginImmediatePlayback(fromYouTubePlayer = false) {
@@ -6573,13 +6588,58 @@
           // Only advance chords/lyrics when YouTube is actually PLAYING (state === 1)
           if (ytState === 1) {
             const offsetSec = activeSong.autoSync.beatOneOffsetSec || 0;
+            const secBars = getCurrentSection().bars;
+            const sectionBars = Math.max(1, secBars.length);
+
+            // Check if bars carry real LRCLIB per-line timestamps (eliminates human BPM drift!)
+            const timestampedCount = secBars.filter(b => typeof b.syncedTimestampSec === 'number' && Number.isFinite(b.syncedTimestampSec)).length;
+            const useLrcTimeline = timestampedCount >= Math.max(2, Math.floor(sectionBars * 0.6));
+
             if (ytTime < offsetSec) {
               if (pill) pill.textContent = `Intro… Beat 1 in ${(offsetSec - ytTime).toFixed(1)}s`;
+            } else if (useLrcTimeline) {
+              // Anchor the entire LRC timestamp map to the user's marked Beat 1 offset
+              const firstTs = secBars.find(b => typeof b.syncedTimestampSec === 'number').syncedTimestampSec;
+              const shiftSec = offsetSec - firstTs;
+              let newBarIdx = 0;
+              for (let i = 0; i < sectionBars; i++) {
+                const bTs = typeof secBars[i].syncedTimestampSec === 'number'
+                  ? (secBars[i].syncedTimestampSec + shiftSec)
+                  : (offsetSec + i * ((ts.beatsPerBar || 4) * (60 / (activeSong.musicalMeta.bpm || 74))));
+                if (ytTime >= bTs) newBarIdx = i;
+                else break;
+              }
+              const curBarStart = typeof secBars[newBarIdx].syncedTimestampSec === 'number'
+                ? (secBars[newBarIdx].syncedTimestampSec + shiftSec)
+                : offsetSec;
+              const defaultBarDur = (ts.beatsPerBar || 4) * (60 / (activeSong.musicalMeta.bpm || 74));
+              const nextBarStart = (newBarIdx + 1 < sectionBars && typeof secBars[newBarIdx + 1].syncedTimestampSec === 'number')
+                ? (secBars[newBarIdx + 1].syncedTimestampSec + shiftSec)
+                : (curBarStart + defaultBarDur);
+              const barDur = Math.max(0.6, nextBarStart - curBarStart);
+              const frac = Math.max(0, Math.min(0.999, (ytTime - curBarStart) / barDur));
+              const newSubIdx = Math.floor(frac * totalSubs);
+
+              if (!state.loopEnabled && newBarIdx === sectionBars - 1 && ytTime > curBarStart + barDur + 0.5) {
+                state.currentBarIndex = 0;
+                state.currentSubdivisionIndex = 0;
+                stopPlayback();
+                renderAll();
+                return;
+              }
+              if (pill) pill.textContent = `✓ LRC-Synced · ${ytTime.toFixed(1)}s (B${newBarIdx + 1}/${sectionBars})`;
+
+              if (newBarIdx !== state.currentBarIndex || newSubIdx !== state.currentSubdivisionIndex) {
+                state.currentBarIndex = newBarIdx;
+                state.currentSubdivisionIndex = newSubIdx;
+                state.lastStepTimeMs = nowMs;
+                triggerSubdivisionAudioAndCues();
+                renderStageTick();
+              }
             } else {
               const elapsedSec = ytTime - offsetSec;
               const exactBeat = elapsedSec * ((activeSong.musicalMeta.bpm || 74) / 60);
               const exactSubTotal = Math.max(0, Math.floor(exactBeat * ts.subdivisionsPerBeat));
-              const sectionBars = Math.max(1, getCurrentSection().bars.length);
               const rawBarIdx = Math.floor(exactSubTotal / totalSubs);
 
               if (!state.loopEnabled && rawBarIdx >= sectionBars) {
@@ -6591,7 +6651,7 @@
               }
               const newBarIdx = rawBarIdx % sectionBars;
               const newSubIdx = ((exactSubTotal % totalSubs) + totalSubs) % totalSubs;
-              if (pill) pill.textContent = `✓ Locked · ${Math.round(activeSong.musicalMeta.bpm || 74)} BPM · ${ytTime.toFixed(1)}s (B${newBarIdx + 1})`;
+              if (pill) pill.textContent = `✓ BPM-Synced · ${Math.round(activeSong.musicalMeta.bpm || 74)} BPM · ${ytTime.toFixed(1)}s (B${newBarIdx + 1})`;
 
               if (newBarIdx !== state.currentBarIndex || newSubIdx !== state.currentSubdivisionIndex) {
                 state.currentBarIndex = newBarIdx;
@@ -8815,7 +8875,11 @@
       });
 
       document.getElementById('btnPlayPause').addEventListener('click', () => {
-        if (state.isPlaying || state.isCountingDown) stopPlayback();
+        let ytCurrentlyPlaying = false;
+        try {
+          ytCurrentlyPlaying = state.ytSyncEnabled && state.ytPlayer && state.ytPlayer.getPlayerState && state.ytPlayer.getPlayerState() === 1;
+        } catch (e) {}
+        if (state.isPlaying || state.isCountingDown || ytCurrentlyPlaying) stopPlayback();
         else startPlayback();
       });
       const btnCancelCd = document.getElementById('btnCancelCountdown');
