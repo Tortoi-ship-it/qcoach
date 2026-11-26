@@ -9012,27 +9012,182 @@
       showToast('Exported .qcoach.json bundle!', 'success');
     }
 
+    function hydrateCustomPackMapsFromSongs(songList) {
+      if (!Array.isArray(songList)) return;
+      songList.forEach(sg => {
+        if (!sg || !sg.title) return;
+        const nk = normalizeSongTitleKey(sg.title);
+        if (!nk) return;
+        if (sg.customStrums && typeof PREPOPULATED_SONG_STRUMS !== 'undefined') {
+          const cs = sg.customStrums;
+          if (cs.b && cs.i && Array.isArray(cs.e) && cs.e.length >= 1) {
+            PREPOPULATED_SONG_STRUMS[nk] = { b: cs.b, i: cs.i, e: cs.e.slice(0, 3) };
+          }
+        }
+        if (sg.customYtTrack && sg.customYtTrack.videoId && Array.isArray(sg.customYtTrack.lines) && sg.customYtTrack.lines.length >= 4) {
+          const yt = sg.customYtTrack;
+          const url = yt.youtubeUrl || `https://youtu.be/${yt.videoId}`;
+          if (!sg.youtubeUrl) sg.youtubeUrl = url;
+          if (typeof PREPOPULATED_YOUTUBE_URLS !== 'undefined') {
+            PREPOPULATED_YOUTUBE_URLS[nk] = url;
+          }
+          if (typeof PREPOPULATED_YOUTUBE_TRACKS !== 'undefined') {
+            PREPOPULATED_YOUTUBE_TRACKS[yt.videoId] = {
+              dur: Number(yt.dur) || 0,
+              source: yt.source || 'json_pack',
+              verified: yt.verified !== false,
+              videoTitle: yt.videoTitle || sg.title,
+              lines: yt.lines
+            };
+          }
+        }
+      });
+    }
+
+    function expandImportedSongPackItem(raw, idx) {
+      if (!raw || typeof raw !== 'object' || !raw.title) return null;
+      // Already a full QCoach song object (legacy backup)
+      if (Array.isArray(raw.sections) && raw.sections.length > 0 && raw.musicalMeta && raw.musicalMeta.timeSignature) {
+        return raw;
+      }
+      const title = String(raw.title).trim();
+      const artist = String(raw.artist || 'Imported Song Pack').trim();
+      const category = String(raw.category || raw.cat || 'Imported Song Pack').trim();
+      const mm = raw.musicalMeta || {};
+      const meter = String(mm.meter || raw.meter || '4/4');
+      const meterParts = meter.split('/');
+      const beatsPerBar = Number(meterParts[0]) || 4;
+      const beatUnit = Number(meterParts[1]) || 4;
+      const subsPerBeat = beatsPerBar === 6 ? 1 : 2;
+      const bpm = Number(mm.bpm || raw.bpm) || 76;
+      const chords = Array.isArray(mm.chords || raw.chords) && (mm.chords || raw.chords).length > 0
+        ? (mm.chords || raw.chords)
+        : ['C', 'G', 'Am', 'F'];
+      const key = String(mm.key || raw.key || (chords[0] === 'Am' ? 'Am' : 'C'));
+      const isMinorKey = (key === 'Am' || key === 'Em' || key === 'Dm' || chords[0] === 'Am');
+      const id = String(raw.id || ('pack-' + normalizeSongTitleKey(title).replace(/\s+/g, '-') + '-' + idx));
+
+      // Support offlineLines as array of chunk-arrays OR array of plain lyric strings
+      const rawLines = raw.offlineLines || raw.lines || [];
+      const offlineChunkLines = rawLines.map(ln => {
+        if (Array.isArray(ln)) return ln.map(x => String(x || ''));
+        const words = String(ln || '').trim().split(/\s+/).filter(Boolean);
+        const maxChunks = beatsPerBar === 3 || beatsPerBar === 6 ? 3 : 4;
+        const count = Math.max(1, Math.min(words.length, maxChunks));
+        const chunks = [];
+        for (let i = 0; i < count; i++) {
+          const s = Math.floor((i * words.length) / count);
+          const e = Math.floor(((i + 1) * words.length) / count);
+          chunks.push(words.slice(s, e).join(' '));
+        }
+        return chunks;
+      }).filter(arr => arr.length > 0);
+
+      const fallbackOffline = offlineChunkLines.length > 0
+        ? offlineChunkLines
+        : [[title]];
+
+      // Resolve default strum pattern from strums.b or meter
+      const palCode = raw.strums && raw.strums.b;
+      const palEntry = (palCode && typeof PREPOPULATED_STRUM_PALETTE !== 'undefined' && PREPOPULATED_STRUM_PALETTE[palCode])
+        ? PREPOPULATED_STRUM_PALETTE[palCode]
+        : null;
+      const defaultSlots = palEntry
+        ? palEntry.p.slice()
+        : (beatsPerBar === 3 ? ['D','-','D','U','D','U'] : (beatsPerBar === 6 ? ['D','-','D','U','D','U'] : ['D','-','D','U','-','U','D','U']));
+      const defaultLabel = palEntry ? palEntry.l : (beatsPerBar === 3 ? 'Waltz Groove' : (beatsPerBar === 6 ? '6/8 Rolling' : 'Island Groove'));
+
+      const yt = raw.youtubeSync && raw.youtubeSync.videoId ? raw.youtubeSync : null;
+      const ytUrl = (yt && (yt.youtubeUrl || `https://youtu.be/${yt.videoId}`)) || raw.youtubeUrl || '';
+
+      return {
+        id,
+        isPreloaded: true,
+        isImportedPackSong: true,
+        arrangementVersion: QCOACH_ARRANGEMENT_VERSION,
+        lyricsHydrated: false,
+        title,
+        artist,
+        sourceType: 'youtube',
+        mediaFormat: category,
+        youtubeUrl: ytUrl,
+        youtubeUrlCustom: !!ytUrl,
+        hasAudioBlob: false,
+        customStrums: raw.strums || null,
+        customYtTrack: yt || null,
+        autoSync: { beatOneOffsetSec: 0.40, detectionConfidence: 0.96, playbackRate: 1.0, audioMixMode: 'beat_only' },
+        musicalMeta: {
+          originalKey: key,
+          activeKey: 'C',
+          transposeSemitones: 0,
+          bpm,
+          timeSignature: { beatsPerBar, beatUnit, subdivisionsPerBeat: subsPerBeat },
+          strumPattern: defaultSlots,
+          strumPatternLabel: defaultLabel,
+          playingStyle: defaultLabel,
+          difficultyMode: 'beginner'
+        },
+        sections: buildFourSectionArrangement(id, chords, fallbackOffline, beatsPerBar, isMinorKey),
+        masteryStats: { totalPracticeMinutes: 0, loopsCompleted: 0, maxCleanBpm: bpm, lastPracticedIso: new Date().toISOString() }
+      };
+    }
+
     function importPortableQCoachJson(file) {
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
           const data = JSON.parse(e.target.result);
-          const importedSongs = Array.isArray(data) ? data : (Array.isArray(data.songs) ? data.songs : null);
-          if (!importedSongs || importedSongs.length === 0) {
-            showToast('Invalid .qcoach.json file.', 'warn');
+          const rawSongs = Array.isArray(data) ? data : (Array.isArray(data.songs) ? data.songs : null);
+          if (!rawSongs || rawSongs.length === 0) {
+            showToast('Invalid QCoach JSON file (no songs array found).', 'warn');
             return;
           }
-          state.songs = importedSongs;
+
+          const expanded = rawSongs.map((item, idx) => expandImportedSongPackItem(item, idx)).filter(Boolean);
+          if (expanded.length === 0) {
+            showToast('No valid songs found in JSON file.', 'warn');
+            return;
+          }
+
+          if (data && data.replaceAll === true) {
+            state.songs = expanded;
+          } else {
+            // Merge additively by normalized title key (preserving existing built-in & user songs)
+            const byKey = new Map();
+            state.songs.forEach((sg, idx) => byKey.set(normalizeSongTitleKey(sg.title), idx));
+            let added = 0;
+            let updated = 0;
+            expanded.forEach(sg => {
+              const nk = normalizeSongTitleKey(sg.title);
+              if (byKey.has(nk)) {
+                state.songs[byKey.get(nk)] = sg;
+                updated++;
+              } else {
+                byKey.set(nk, state.songs.length);
+                state.songs.push(sg);
+                added++;
+              }
+            });
+            hydrateCustomPackMapsFromSongs(state.songs);
+            await saveSongsToIndexedDB();
+            renderAll();
+            const packLbl = (data && data.packName) ? ` from "${data.packName}"` : '';
+            showToast(`Imported ${added} new & updated ${updated} song(s)${packLbl} (Total: ${state.songs.length})!`, 'success');
+            return;
+          }
+
+          hydrateCustomPackMapsFromSongs(state.songs);
           state.currentSongId = state.songs[0].id;
           state.activeSectionIndex = -1;
           state.currentBarIndex = 0;
           state.currentSubdivisionIndex = 0;
-          saveSongsToIndexedDB();
+          await saveSongsToIndexedDB();
           renderAll();
-          showToast(`Restored ${importedSongs.length} songs!`, 'success');
+          showToast(`Restored ${expanded.length} songs!`, 'success');
         } catch (err) {
-          showToast('Could not parse .qcoach.json bundle.', 'warn');
+          console.error('JSON import error:', err);
+          showToast('Could not parse QCoach JSON file.', 'warn');
         }
       };
       reader.readAsText(file);
@@ -10440,6 +10595,7 @@
       initPwaManifestAndServiceWorker();
       await initIndexedDB();
       await loadSongsFromIndexedDB();
+      hydrateCustomPackMapsFromSongs(state.songs);
       applyPrepopulatedYouTubeUrls(state.songs);
       bindEvents();
       for (const s of state.songs) {
