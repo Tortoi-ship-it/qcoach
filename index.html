@@ -239,7 +239,57 @@
     html[data-theme="light"] #tunerGaugeSvg circle[fill="#F4F4F5"] {
       fill: #1E293B;
     }
-    html[data-theme="light"] ::-webkit-scrollbar-track {
+    /* v3.0 Real-Time Chord & Strum Listening Stage Feedback (High Contrast in Light & Dark Themes) */
+    #nowChordCard.listen-hit {
+      border-color: #10B981 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.32), 0 6px 20px rgba(16, 185, 129, 0.18) !important;
+    }
+    #nowChordCard.listen-miss {
+      border-color: #F43F5E !important;
+      box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.28), 0 6px 18px rgba(244, 63, 94, 0.14) !important;
+    }
+    #listenFeedbackPill.fb-hit {
+      background: rgba(16, 185, 129, 0.22) !important;
+      border-color: #10B981 !important;
+      color: #6EE7B7 !important;
+    }
+    #listenFeedbackPill.fb-miss {
+      background: rgba(244, 63, 94, 0.20) !important;
+      border-color: #FB7185 !important;
+      color: #FDA4AF !important;
+    }
+    #listenFeedbackPill.fb-idle {
+      background: rgba(24, 24, 27, 0.85) !important;
+      border-color: #3F3F46 !important;
+      color: #D4D4D8 !important;
+    }
+    html[data-theme="light"] #listenFeedbackPill.fb-hit {
+      background: #D1FAE5 !important;
+      border-color: #059669 !important;
+      color: #065F46 !important;
+    }
+    html[data-theme="light"] #listenFeedbackPill.fb-miss {
+      background: #FFE4E6 !important;
+      border-color: #E11D48 !important;
+      color: #9F1239 !important;
+    }
+    html[data-theme="light"] #listenFeedbackPill.fb-idle {
+      background: #F1F5F9 !important;
+      border-color: #94A3B8 !important;
+      color: #1E293B !important;
+    }
+    html[data-theme="light"] #listenScorePill {
+      background: #D1FAE5 !important;
+      border-color: #059669 !important;
+      color: #065F46 !important;
+    }
+    html[data-theme="light"] #btnToggleStageListen.listen-active {
+      background: #D1FAE5 !important;
+      border-color: #059669 !important;
+      color: #065F46 !important;
+    }
+
+        html[data-theme="light"] ::-webkit-scrollbar-track {
       background: #F1F5F9;
     }
     html[data-theme="light"] ::-webkit-scrollbar-thumb {
@@ -395,7 +445,10 @@
               <button id="btnAuditionNowChord" type="button" class="mt-1 px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition inline-flex items-center gap-1">
                 <span id="btnAuditionNowLabel">🔊 Strum C</span>
               </button>
-              <div id="listenFeedbackPill" class="hidden mt-1 px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-700 text-[11px] font-mono font-bold text-zinc-300 truncate max-w-[165px]">🎙️ Strum C…</div>
+              <div id="listenFeedbackPill" class="hidden mt-1.5 px-2.5 py-1 rounded-lg border text-xs font-mono font-extrabold max-w-[195px] space-y-1 fb-idle">
+                <div id="listenFeedbackText" class="truncate">🎙️ Strum C…</div>
+                <div class="w-full h-1 rounded-full bg-black/20 overflow-hidden"><div id="listenMicLevelBar" class="h-full bg-emerald-500 transition-all duration-75" style="width: 0%;"></div></div>
+              </div>
             </div>
 
             <!-- Vertical 4-String G-C-E-A Fretboard SVG (Sized to fit phone screen alongside Pitch Meter) -->
@@ -6954,6 +7007,7 @@
       renderTopHeaderAndStickyBar();
       renderFretboardStage();
       renderTeleprompterAndContour();
+      if (typeof updateListenStageUi === 'function') updateListenStageUi();
     }
 
     function renderAll() {
@@ -7752,23 +7806,22 @@
       const btn = document.getElementById('btnToggleStageListen');
       const lbl = document.getElementById('stageListenBtnLabel');
       const fb = document.getElementById('listenFeedbackPill');
+      const fbText = document.getElementById('listenFeedbackText');
       const scorePill = document.getElementById('listenScorePill');
       const card = document.getElementById('nowChordCard');
 
       if (btn && lbl) {
         lbl.textContent = state.listenEnabled ? 'Listen: ON' : 'Listen: OFF';
+        btn.classList.toggle('listen-active', !!state.listenEnabled);
         btn.className = state.listenEnabled
-          ? 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400 text-xs font-mono font-bold text-emerald-300 transition shadow-sm'
+          ? 'listen-active inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400 text-xs font-mono font-bold text-emerald-300 transition shadow-sm'
           : 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-emerald-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm';
       }
 
       if (!state.listenEnabled) {
         if (fb) fb.classList.add('hidden');
         if (scorePill) scorePill.classList.add('hidden');
-        if (card) {
-          card.classList.remove('border-emerald-400', 'ring-2', 'ring-emerald-400/40', 'border-rose-400', 'ring-rose-400/30');
-          card.classList.add('border-amber-500/90');
-        }
+        if (card) card.classList.remove('listen-hit', 'listen-miss');
         return;
       }
 
@@ -7776,32 +7829,29 @@
       const sec = getCurrentSection();
       const curBar = (sec && sec.bars && sec.bars[state.currentBarIndex]) || null;
       const expectedChord = curBar ? getBarActiveChord(curBar, song) : 'C';
+      const nowMs = performance.now();
+      const activeCue = nowMs < state.listenHoldUntilMs && state.listenLastFeedback;
 
       if (fb) {
-        fb.classList.remove('hidden');
-        const nowMs = performance.now();
-        const activeCue = nowMs < state.listenHoldUntilMs && state.listenLastFeedback;
+        fb.classList.remove('hidden', 'fb-hit', 'fb-miss', 'fb-idle');
         if (activeCue && state.listenLastStatus === 'hit') {
-          fb.textContent = state.listenLastFeedback;
-          fb.className = 'mt-1 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-400/60 text-[11px] font-mono font-bold text-emerald-300 truncate max-w-[175px]';
+          fb.classList.add('fb-hit');
+          if (fbText) fbText.textContent = state.listenLastFeedback;
         } else if (activeCue && state.listenLastStatus === 'miss') {
-          fb.textContent = state.listenLastFeedback;
-          fb.className = 'mt-1 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-400/60 text-[11px] font-mono font-bold text-amber-300 truncate max-w-[175px]';
+          fb.classList.add('fb-miss');
+          if (fbText) fbText.textContent = state.listenLastFeedback;
         } else {
-          fb.textContent = `🎙️ Strum ${expectedChord}…`;
-          fb.className = 'mt-1 px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-700 text-[11px] font-mono font-bold text-zinc-400 truncate max-w-[175px]';
+          fb.classList.add('fb-idle');
+          if (fbText) fbText.textContent = `🎙️ Strum ${expectedChord}…`;
         }
       }
 
       if (card) {
-        const nowMs = performance.now();
-        card.classList.remove('border-amber-500/90', 'border-emerald-400', 'ring-2', 'ring-emerald-400/40', 'border-rose-400', 'ring-rose-400/30');
-        if (nowMs < state.listenHoldUntilMs && state.listenLastStatus === 'hit') {
-          card.classList.add('border-emerald-400', 'ring-2', 'ring-emerald-400/40');
-        } else if (nowMs < state.listenHoldUntilMs && state.listenLastStatus === 'miss') {
-          card.classList.add('border-rose-400', 'ring-2', 'ring-rose-400/30');
-        } else {
-          card.classList.add('border-amber-500/90');
+        card.classList.remove('listen-hit', 'listen-miss');
+        if (activeCue && state.listenLastStatus === 'hit') {
+          card.classList.add('listen-hit');
+        } else if (activeCue && state.listenLastStatus === 'miss') {
+          card.classList.add('listen-miss');
         }
       }
 
@@ -7849,18 +7899,25 @@
       analyser.getFloatTimeDomainData(listenEngine.timeData);
       analyser.getByteFrequencyData(listenEngine.freqData);
 
-      // 1. Compute RMS for strum onset detection
+      // 1. Compute RMS for live mic meter & strum onset detection
       let sumSq = 0;
       const td = listenEngine.timeData;
       for (let i = 0; i < td.length; i++) sumSq += td[i] * td[i];
       const rms = Math.sqrt(sumSq / td.length);
       const nowMs = performance.now();
 
-      const isStrumOnset = rms > 0.022 && rms > listenEngine.prevRms * 1.32 && (nowMs - listenEngine.lastOnsetMs) > 150;
+      // Update live mic level meter bar so user immediately sees mic input
+      const lvlBar = document.getElementById('listenMicLevelBar');
+      if (lvlBar) {
+        const pct = Math.min(100, Math.round(Math.min(1, rms / 0.08) * 100));
+        lvlBar.style.width = pct + '%';
+      }
+
+      const isStrumOnset = rms > 0.008 && rms > listenEngine.prevRms * 1.24 && (nowMs - listenEngine.lastOnsetMs) > 140;
       listenEngine.prevRms = rms * 0.65 + listenEngine.prevRms * 0.35;
 
-      // 2. If sustained ukulele energy or fresh strum onset, evaluate 12-bin chromagram (196 Hz - 1400 Hz)
-      if (isStrumOnset || (rms > 0.028 && (nowMs - listenEngine.lastOnsetMs) > 220)) {
+      // 2. Evaluate 12-bin chromagram (190 Hz - 1420 Hz) on strum onset or sustained ukulele ring
+      if (isStrumOnset || (rms > 0.010 && (nowMs - listenEngine.lastOnsetMs) > 180)) {
         const sr = listenEngine.ctx.sampleRate || 44100;
         const binHz = sr / analyser.fftSize;
         const minBin = Math.max(1, Math.floor(190 / binHz));
@@ -7870,18 +7927,17 @@
         let totalEnergy = 0;
         for (let b = minBin; b <= maxBin; b++) {
           const mag = listenEngine.freqData[b] / 255;
-          if (mag < 0.08) continue;
+          if (mag < 0.03) continue;
           const freq = b * binHz;
           const midi = 69 + 12 * Math.log2(freq / 440);
           const pc = ((Math.round(midi) % 12) + 12) % 12;
-          // Emphasize ukulele fundamental register (196-750 Hz) slightly over upper harmonics
           const regWeight = freq <= 750 ? 1.25 : 0.75;
           const e = mag * mag * regWeight;
           chroma[pc] += e;
           totalEnergy += e;
         }
 
-        if (totalEnergy > 0.05) {
+        if (totalEnergy > 0.006) {
           let norm = 0;
           for (let i = 0; i < 12; i++) norm += chroma[i] * chroma[i];
           norm = Math.sqrt(norm) || 1;
@@ -7893,7 +7949,6 @@
           const curBar = bars[state.currentBarIndex] || bars[0];
           const expectedChord = curBar ? getBarActiveChord(curBar, song) : 'C';
 
-          // Build candidate pool: expected chord + unique chords in this song + core ukulele chords
           const candSet = new Set([expectedChord, 'C', 'G', 'F', 'Am', 'Dm', 'Em', 'D', 'A', 'G7', 'D7', 'A7', 'Bb']);
           bars.forEach(b => candSet.add(getBarActiveChord(b, song)));
 
@@ -7911,13 +7966,11 @@
             }
           }
 
-          // Skill-calibrated accuracy thresholds
           const mode = getEffectiveDifficultyMode();
-          const minThresh = mode === 'beginner' ? 0.60 : (mode === 'intermediate' ? 0.65 : 0.70);
-          const margin = mode === 'beginner' ? 0.07 : (mode === 'intermediate' ? 0.045 : 0.025);
+          const minThresh = mode === 'beginner' ? 0.56 : (mode === 'intermediate' ? 0.62 : 0.67);
+          const margin = mode === 'beginner' ? 0.08 : (mode === 'intermediate' ? 0.05 : 0.03);
           const isHit = expScore >= minThresh && (bestChord === expectedChord || (bestScore - expScore) <= margin);
 
-          // Rhythm timing check on fresh strum onset during playback
           let timingTag = '';
           if (isStrumOnset) {
             listenEngine.lastOnsetMs = nowMs;
@@ -7928,7 +7981,7 @@
               const subMs = (60000 / Math.max(40, effBpm)) / Math.max(1, ts.subdivisionsPerBeat || 2);
               const deltaMs = nowMs - state.lastStepTimeMs;
               const distToBeat = Math.min(Math.abs(deltaMs), Math.abs(deltaMs - subMs));
-              if (distToBeat <= 110) {
+              if (distToBeat <= 115) {
                 listenEngine.onBeatCount++;
                 timingTag = ' · On Beat';
               } else if (deltaMs < subMs * 0.5) {
@@ -7939,20 +7992,22 @@
             }
           }
 
+          const prevBarResult = state.listenBarResults[state.currentBarIndex];
           if (isHit) {
             state.listenLastStatus = 'hit';
             state.listenLastFeedback = `✓ ${expectedChord}${timingTag}`;
-            state.listenHoldUntilMs = nowMs + 950;
-            if (state.isPlaying) {
-              state.listenBarResults[state.currentBarIndex] = 'hit';
-            }
-          } else if (isStrumOnset && bestScore >= 0.66 && bestChord !== expectedChord) {
+            state.listenHoldUntilMs = nowMs + 1100;
+            state.listenBarResults[state.currentBarIndex] = 'hit';
+          } else if (isStrumOnset && bestScore >= 0.62 && bestChord !== expectedChord) {
             state.listenLastStatus = 'miss';
             state.listenLastFeedback = `Heard ${bestChord} → ${expectedChord}`;
-            state.listenHoldUntilMs = nowMs + 900;
-            if (state.isPlaying && state.listenBarResults[state.currentBarIndex] !== 'hit') {
+            state.listenHoldUntilMs = nowMs + 1000;
+            if (state.listenBarResults[state.currentBarIndex] !== 'hit') {
               state.listenBarResults[state.currentBarIndex] = 'miss';
             }
+          }
+          if (state.listenBarResults[state.currentBarIndex] !== prevBarResult) {
+            renderTeleprompterAndContour();
           }
           updateListenStageUi();
         }
@@ -7966,8 +8021,11 @@
 
     async function startChordListener() {
       if (state.listenEnabled && listenEngine.analyser) return;
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast('Microphone API unavailable here — open QCoach on your HTTPS GitHub Pages URL.', 'warn');
+        return;
+      }
       try {
-        // Release tuner mic if running so there is zero audio conflict
         if (typeof stopTunerMicrophone === 'function') {
           try { stopTunerMicrophone(); } catch (e) {}
         }
@@ -7976,10 +8034,13 @@
         });
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const ctx = new AudioCtx();
+        if (ctx.state === 'suspended') {
+          await ctx.resume();
+        }
         const source = ctx.createMediaStreamSource(stream);
         const analyser = ctx.createAnalyser();
         analyser.fftSize = 4096;
-        analyser.smoothingTimeConstant = 0.55;
+        analyser.smoothingTimeConstant = 0.50;
         source.connect(analyser);
 
         listenEngine.ctx = ctx;
@@ -7996,11 +8057,17 @@
         renderAll();
         listenEngine.rafId = requestAnimationFrame(chordListenLoop);
         const ytTip = state.ytSyncEnabled ? ' (tip: use headphones with YouTube Sync!)' : '';
-        showToast(`🎙️ Real-Time Chord Listening ON${ytTip}`, 'success');
+        showToast(`🎙️ Real-Time Chord Listening ON — strum now!${ytTip}`, 'success');
       } catch (err) {
         state.listenEnabled = false;
         updateListenStageUi();
-        showToast('Microphone permission is required for Real-Time Chord Listening.', 'warn');
+        const isIframeBlock = (err && (err.name === 'NotAllowedError' || err.name === 'SecurityError'));
+        showToast(
+          isIframeBlock
+            ? 'Mic permission denied or blocked in preview — allow mic or test on your GitHub Pages link.'
+            : `Could not start microphone: ${err && err.message ? err.message : 'unknown error'}`,
+          'warn'
+        );
       }
     }
 
