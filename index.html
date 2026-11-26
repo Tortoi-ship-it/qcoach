@@ -395,6 +395,7 @@
               <button id="btnAuditionNowChord" type="button" class="mt-1 px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition inline-flex items-center gap-1">
                 <span id="btnAuditionNowLabel">🔊 Strum C</span>
               </button>
+              <div id="listenFeedbackPill" class="hidden mt-1 px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-700 text-[11px] font-mono font-bold text-zinc-300 truncate max-w-[165px]">🎙️ Strum C…</div>
             </div>
 
             <!-- Vertical 4-String G-C-E-A Fretboard SVG (Sized to fit phone screen alongside Pitch Meter) -->
@@ -430,6 +431,7 @@
           <div class="rounded-lg bg-[#121212] border border-amber-500/30 px-2 py-1.5 space-y-1">
             <div class="flex items-center justify-between">
               <span id="activeSectionBadge" class="text-xs font-mono text-cyan-400 font-bold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 truncate">Full Song (Chorus 1) · Bar 1/12</span>
+              <span id="listenScorePill" class="hidden text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shrink-0">🎙️ Listening…</span>
             </div>
             <div id="barProgressionStrip" class="grid grid-cols-8 gap-1"><button type="button" class="py-0.5 px-1 rounded-lg bg-amber-500 text-black font-black text-xs sm:text-xs font-mono border border-amber-300 shadow"><div class="text-xs opacity-75">B1</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B2</div><div class="truncate">G</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B3</div><div class="truncate">Am</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B4</div><div class="truncate">F</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B5</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B6</div><div class="truncate">G</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B7</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B8</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B9</div><div class="truncate">Am</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B10</div><div class="truncate">F</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B11</div><div class="truncate">C</div></button><button type="button" class="py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]"><div class="text-xs opacity-75">B12</div><div class="truncate">G</div></button></div>
           </div>
@@ -522,10 +524,16 @@
 
       <!-- Bottom Stage Utility Row: YouTube Vocal Sync (Left) + Auto-Fill Dot (Right) -->
       <div class="flex flex-wrap items-center justify-between gap-2 px-1 pt-0.5">
-        <button id="btnToggleStageYouTube" type="button" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-red-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm" title="Play &amp; sync the real YouTube recording with your chords, Beat LEDs, and lyrics">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button id="btnToggleStageYouTube" type="button" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-red-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm" title="Play &amp; sync the real YouTube recording with your chords, Beat LEDs, and lyrics">
           <span class="text-red-400">▶</span>
           <span id="stageYouTubeBtnLabel">YouTube Vocal Sync: OFF</span>
         </button>
+          <button id="btnToggleStageListen" type="button" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-emerald-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm" title="Real-Time Chord &amp; Strum Listening — uses your mic to score chord accuracy &amp; rhythm live (100% offline)">
+            <span id="stageListenDot" class="text-emerald-400">🎙️</span>
+            <span id="stageListenBtnLabel">Listen: OFF</span>
+          </button>
+        </div>
 
         <div class="flex items-center gap-2">
           <button id="btnStageGoogleLyrics" type="button" class="hidden px-2 py-0.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-mono font-bold transition" title="Search official lyrics on Google and paste into Songsheet Editor">
@@ -893,7 +901,7 @@
           <div class="flex items-center gap-2">
             <span class="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold">⋮</span>
             <div>
-              <h2 class="text-base font-extrabold text-qtext">QCoach v2.2 Settings &amp; Configuration</h2>
+              <h2 class="text-base font-extrabold text-qtext">QCoach v3.0 Settings &amp; Configuration</h2>
               <p class="text-xs text-qmuted">Coaching mode, song loader, audio mixer, and cloud sync</p>
             </div>
           </div>
@@ -1873,7 +1881,7 @@
     ];
 
     // =========================================================================
-    // QCoach v2.2 Harmonic Melody Tab Engine, Pattern Catalog & 175-Song Builder
+    // QCoach v3.0 Harmonic Melody Tab Engine, Pattern Catalog & 175-Song Builder
     // =========================================================================
     const QCOACH_ARRANGEMENT_VERSION = 2;
 
@@ -2511,6 +2519,11 @@
       countdownTimerId: null,
       countdownEnabled: true,
       ytSyncEnabled: false,
+      listenEnabled: false,
+      listenBarResults: {},
+      listenLastFeedback: '',
+      listenLastStatus: 'idle', // 'idle' | 'hit' | 'miss'
+      listenHoldUntilMs: 0,
       difficultyMode: (() => {
         try {
           const saved = localStorage.getItem('qcoach_skill_level');
@@ -6610,7 +6623,11 @@
         btn.className = isCur
           ? 'py-0.5 px-1 rounded-lg bg-amber-500 text-black font-black text-xs sm:text-xs font-mono border border-amber-300 shadow'
           : 'py-0.5 px-1 rounded-lg bg-[#121212] hover:bg-zinc-800 text-qtext font-semibold text-xs sm:text-xs font-mono border border-[#2C2C2E]';
-        btn.innerHTML = `<div class="text-xs opacity-75">B${idx + 1}</div><div class="truncate">${splitLabel}</div>`;
+        const barRes = state.listenEnabled ? state.listenBarResults[idx] : null;
+        const resDot = barRes === 'hit'
+          ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 ml-0.5 align-middle"></span>'
+          : (barRes === 'miss' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 ml-0.5 align-middle"></span>' : '');
+        btn.innerHTML = `<div class="text-xs opacity-75">B${idx + 1}${resDot}</div><div class="truncate">${splitLabel}</div>`;
         btn.addEventListener('click', () => {
           state.currentBarIndex = idx;
           state.currentSubdivisionIndex = 0;
@@ -6946,6 +6963,7 @@
       renderSettingsAndBottomDock();
       renderSongbook();
       updateStageYouTubeUi();
+      if (typeof updateListenStageUi === 'function') updateListenStageUi();
     }
 
     function maybeSpeakCoachCue(text, subKey) {
@@ -7591,6 +7609,7 @@
               const newSubIdx = ((musicalSubTotal % totalSubs) + totalSubs) % totalSubs;
 
               if (!state.loopEnabled && newBarIdx === sectionBars - 1 && ytTime > curBarStart + barDur + 0.6) {
+                showListenPassSummaryIfReady();
                 state.currentBarIndex = 0;
                 state.currentSubdivisionIndex = 0;
                 state.ytLastTimeSec = 0;
@@ -7643,6 +7662,366 @@
       }
 
       state.rafId = requestAnimationFrame(tickLoop);
+    }
+
+    // =========================================================================
+    // v3.0 REAL-TIME CHORD & STRUM LISTENING ENGINE (100% Offline Web Audio)
+    // =========================================================================
+    const listenEngine = {
+      ctx: null,
+      stream: null,
+      source: null,
+      analyser: null,
+      rafId: null,
+      freqData: null,
+      timeData: null,
+      prevRms: 0,
+      lastOnsetMs: 0,
+      onsetCount: 0,
+      onBeatCount: 0
+    };
+
+    const CHORD_PC_ROOTS = {
+      'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3, 'E': 4, 'F': 5,
+      'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11
+    };
+
+    function getChordPitchClassTemplate(chordName) {
+      const vec = new Float32Array(12);
+      if (!chordName) return vec;
+      const base = String(chordName).split('/')[0].trim();
+      const m = base.match(/^([A-G][#b]?)(.*)$/);
+      if (!m) return vec;
+      const root = CHORD_PC_ROOTS[m[1]];
+      if (root === undefined) return vec;
+      const q = (m[2] || '').toLowerCase();
+
+      let intervals = [0, 4, 7]; // major
+      let weights = [1.2, 1.0, 0.95];
+      if (q === 'm' || q === 'min') {
+        intervals = [0, 3, 7];
+      } else if (q === '7') {
+        intervals = [0, 4, 7, 10]; weights = [1.2, 1.0, 0.9, 0.75];
+      } else if (q === 'm7' || q === 'min7') {
+        intervals = [0, 3, 7, 10]; weights = [1.2, 1.0, 0.9, 0.75];
+      } else if (q === 'maj7') {
+        intervals = [0, 4, 7, 11]; weights = [1.2, 1.0, 0.9, 0.75];
+      } else if (q === '6') {
+        intervals = [0, 4, 7, 9]; weights = [1.2, 1.0, 0.9, 0.7];
+      } else if (q === 'm6') {
+        intervals = [0, 3, 7, 9]; weights = [1.2, 1.0, 0.9, 0.7];
+      } else if (q === 'sus4') {
+        intervals = [0, 5, 7];
+      } else if (q === 'sus2') {
+        intervals = [0, 2, 7];
+      } else if (q === 'dim' || q === 'dim7') {
+        intervals = [0, 3, 6];
+      } else if (q === 'aug') {
+        intervals = [0, 4, 8];
+      } else if (q === 'add9') {
+        intervals = [0, 4, 7, 2]; weights = [1.2, 1.0, 0.9, 0.65];
+      }
+
+      intervals.forEach((iv, i) => {
+        vec[(root + iv) % 12] = weights[i] || 0.8;
+      });
+      let norm = 0;
+      for (let i = 0; i < 12; i++) norm += vec[i] * vec[i];
+      norm = Math.sqrt(norm) || 1;
+      for (let i = 0; i < 12; i++) vec[i] /= norm;
+      return vec;
+    }
+
+    function computeChromaCosine(chroma, template) {
+      let dot = 0;
+      for (let i = 0; i < 12; i++) dot += chroma[i] * template[i];
+      return dot;
+    }
+
+    function resetListenSessionScores() {
+      state.listenBarResults = {};
+      state.listenLastFeedback = '';
+      state.listenLastStatus = 'idle';
+      state.listenHoldUntilMs = 0;
+      listenEngine.onsetCount = 0;
+      listenEngine.onBeatCount = 0;
+      updateListenStageUi();
+    }
+
+    function updateListenStageUi() {
+      const btn = document.getElementById('btnToggleStageListen');
+      const lbl = document.getElementById('stageListenBtnLabel');
+      const fb = document.getElementById('listenFeedbackPill');
+      const scorePill = document.getElementById('listenScorePill');
+      const card = document.getElementById('nowChordCard');
+
+      if (btn && lbl) {
+        lbl.textContent = state.listenEnabled ? 'Listen: ON' : 'Listen: OFF';
+        btn.className = state.listenEnabled
+          ? 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400 text-xs font-mono font-bold text-emerald-300 transition shadow-sm'
+          : 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1C1C1E] hover:bg-zinc-800 border border-[#2C2C2E] hover:border-emerald-500/50 text-xs font-mono font-bold text-qmuted hover:text-qtext transition shadow-sm';
+      }
+
+      if (!state.listenEnabled) {
+        if (fb) fb.classList.add('hidden');
+        if (scorePill) scorePill.classList.add('hidden');
+        if (card) {
+          card.classList.remove('border-emerald-400', 'ring-2', 'ring-emerald-400/40', 'border-rose-400', 'ring-rose-400/30');
+          card.classList.add('border-amber-500/90');
+        }
+        return;
+      }
+
+      const song = getCurrentSong();
+      const sec = getCurrentSection();
+      const curBar = (sec && sec.bars && sec.bars[state.currentBarIndex]) || null;
+      const expectedChord = curBar ? getBarActiveChord(curBar, song) : 'C';
+
+      if (fb) {
+        fb.classList.remove('hidden');
+        const nowMs = performance.now();
+        const activeCue = nowMs < state.listenHoldUntilMs && state.listenLastFeedback;
+        if (activeCue && state.listenLastStatus === 'hit') {
+          fb.textContent = state.listenLastFeedback;
+          fb.className = 'mt-1 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-400/60 text-[11px] font-mono font-bold text-emerald-300 truncate max-w-[175px]';
+        } else if (activeCue && state.listenLastStatus === 'miss') {
+          fb.textContent = state.listenLastFeedback;
+          fb.className = 'mt-1 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-400/60 text-[11px] font-mono font-bold text-amber-300 truncate max-w-[175px]';
+        } else {
+          fb.textContent = `🎙️ Strum ${expectedChord}…`;
+          fb.className = 'mt-1 px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-700 text-[11px] font-mono font-bold text-zinc-400 truncate max-w-[175px]';
+        }
+      }
+
+      if (card) {
+        const nowMs = performance.now();
+        card.classList.remove('border-amber-500/90', 'border-emerald-400', 'ring-2', 'ring-emerald-400/40', 'border-rose-400', 'ring-rose-400/30');
+        if (nowMs < state.listenHoldUntilMs && state.listenLastStatus === 'hit') {
+          card.classList.add('border-emerald-400', 'ring-2', 'ring-emerald-400/40');
+        } else if (nowMs < state.listenHoldUntilMs && state.listenLastStatus === 'miss') {
+          card.classList.add('border-rose-400', 'ring-2', 'ring-rose-400/30');
+        } else {
+          card.classList.add('border-amber-500/90');
+        }
+      }
+
+      if (scorePill) {
+        scorePill.classList.remove('hidden');
+        const vals = Object.values(state.listenBarResults);
+        if (vals.length === 0) {
+          scorePill.textContent = '🎙️ Listening…';
+        } else {
+          const hits = vals.filter(v => v === 'hit').length;
+          const pct = Math.round((hits / vals.length) * 100);
+          scorePill.textContent = `🎙️ ${pct}% · ${hits}/${vals.length}`;
+        }
+      }
+    }
+
+    function showListenPassSummaryIfReady() {
+      if (!state.listenEnabled) return;
+      const vals = Object.values(state.listenBarResults);
+      if (vals.length < 3) return;
+      const hits = vals.filter(v => v === 'hit').length;
+      const chordPct = Math.round((hits / vals.length) * 100);
+      const rhythmPct = listenEngine.onsetCount > 0
+        ? Math.round((listenEngine.onBeatCount / listenEngine.onsetCount) * 100)
+        : chordPct;
+      const finalPct = Math.round(chordPct * 0.75 + rhythmPct * 0.25);
+      const stars = finalPct >= 85 ? '⭐⭐⭐' : (finalPct >= 65 ? '⭐⭐' : '⭐');
+
+      const song = getCurrentSong();
+      let bestNote = '';
+      if (song && song.masteryStats) {
+        const prevBest = Number(song.masteryStats.bestListenScore) || 0;
+        if (finalPct > prevBest) {
+          song.masteryStats.bestListenScore = finalPct;
+          bestNote = ' · New Best!';
+          saveSongsToIndexedDB();
+        }
+      }
+      showToast(`${stars} ${finalPct}% Accuracy (${hits}/${vals.length} bars · ${rhythmPct}% On-Beat)${bestNote}`, finalPct >= 65 ? 'success' : 'info');
+    }
+
+    function chordListenLoop() {
+      if (!state.listenEnabled || !listenEngine.analyser) return;
+      const analyser = listenEngine.analyser;
+      analyser.getFloatTimeDomainData(listenEngine.timeData);
+      analyser.getByteFrequencyData(listenEngine.freqData);
+
+      // 1. Compute RMS for strum onset detection
+      let sumSq = 0;
+      const td = listenEngine.timeData;
+      for (let i = 0; i < td.length; i++) sumSq += td[i] * td[i];
+      const rms = Math.sqrt(sumSq / td.length);
+      const nowMs = performance.now();
+
+      const isStrumOnset = rms > 0.022 && rms > listenEngine.prevRms * 1.32 && (nowMs - listenEngine.lastOnsetMs) > 150;
+      listenEngine.prevRms = rms * 0.65 + listenEngine.prevRms * 0.35;
+
+      // 2. If sustained ukulele energy or fresh strum onset, evaluate 12-bin chromagram (196 Hz - 1400 Hz)
+      if (isStrumOnset || (rms > 0.028 && (nowMs - listenEngine.lastOnsetMs) > 220)) {
+        const sr = listenEngine.ctx.sampleRate || 44100;
+        const binHz = sr / analyser.fftSize;
+        const minBin = Math.max(1, Math.floor(190 / binHz));
+        const maxBin = Math.min(listenEngine.freqData.length - 1, Math.ceil(1420 / binHz));
+
+        const chroma = new Float32Array(12);
+        let totalEnergy = 0;
+        for (let b = minBin; b <= maxBin; b++) {
+          const mag = listenEngine.freqData[b] / 255;
+          if (mag < 0.08) continue;
+          const freq = b * binHz;
+          const midi = 69 + 12 * Math.log2(freq / 440);
+          const pc = ((Math.round(midi) % 12) + 12) % 12;
+          // Emphasize ukulele fundamental register (196-750 Hz) slightly over upper harmonics
+          const regWeight = freq <= 750 ? 1.25 : 0.75;
+          const e = mag * mag * regWeight;
+          chroma[pc] += e;
+          totalEnergy += e;
+        }
+
+        if (totalEnergy > 0.05) {
+          let norm = 0;
+          for (let i = 0; i < 12; i++) norm += chroma[i] * chroma[i];
+          norm = Math.sqrt(norm) || 1;
+          for (let i = 0; i < 12; i++) chroma[i] /= norm;
+
+          const song = getCurrentSong();
+          const sec = getCurrentSection();
+          const bars = (sec && sec.bars) || [];
+          const curBar = bars[state.currentBarIndex] || bars[0];
+          const expectedChord = curBar ? getBarActiveChord(curBar, song) : 'C';
+
+          // Build candidate pool: expected chord + unique chords in this song + core ukulele chords
+          const candSet = new Set([expectedChord, 'C', 'G', 'F', 'Am', 'Dm', 'Em', 'D', 'A', 'G7', 'D7', 'A7', 'Bb']);
+          bars.forEach(b => candSet.add(getBarActiveChord(b, song)));
+
+          const expTpl = getChordPitchClassTemplate(expectedChord);
+          const expScore = computeChromaCosine(chroma, expTpl);
+
+          let bestChord = expectedChord;
+          let bestScore = expScore;
+          for (const ch of candSet) {
+            if (ch === expectedChord) continue;
+            const sc = computeChromaCosine(chroma, getChordPitchClassTemplate(ch));
+            if (sc > bestScore) {
+              bestScore = sc;
+              bestChord = ch;
+            }
+          }
+
+          // Skill-calibrated accuracy thresholds
+          const mode = getEffectiveDifficultyMode();
+          const minThresh = mode === 'beginner' ? 0.60 : (mode === 'intermediate' ? 0.65 : 0.70);
+          const margin = mode === 'beginner' ? 0.07 : (mode === 'intermediate' ? 0.045 : 0.025);
+          const isHit = expScore >= minThresh && (bestChord === expectedChord || (bestScore - expScore) <= margin);
+
+          // Rhythm timing check on fresh strum onset during playback
+          let timingTag = '';
+          if (isStrumOnset) {
+            listenEngine.lastOnsetMs = nowMs;
+            if (state.isPlaying && state.lastStepTimeMs) {
+              listenEngine.onsetCount++;
+              const ts = (song && song.musicalMeta && song.musicalMeta.timeSignature) || { beatsPerBar: 4, subdivisionsPerBeat: 2 };
+              const effBpm = ((song && song.musicalMeta && song.musicalMeta.bpm) || 76) * ((song && song.autoSync && song.autoSync.playbackRate) || 1.0);
+              const subMs = (60000 / Math.max(40, effBpm)) / Math.max(1, ts.subdivisionsPerBeat || 2);
+              const deltaMs = nowMs - state.lastStepTimeMs;
+              const distToBeat = Math.min(Math.abs(deltaMs), Math.abs(deltaMs - subMs));
+              if (distToBeat <= 110) {
+                listenEngine.onBeatCount++;
+                timingTag = ' · On Beat';
+              } else if (deltaMs < subMs * 0.5) {
+                timingTag = ' · Late';
+              } else {
+                timingTag = ' · Early';
+              }
+            }
+          }
+
+          if (isHit) {
+            state.listenLastStatus = 'hit';
+            state.listenLastFeedback = `✓ ${expectedChord}${timingTag}`;
+            state.listenHoldUntilMs = nowMs + 950;
+            if (state.isPlaying) {
+              state.listenBarResults[state.currentBarIndex] = 'hit';
+            }
+          } else if (isStrumOnset && bestScore >= 0.66 && bestChord !== expectedChord) {
+            state.listenLastStatus = 'miss';
+            state.listenLastFeedback = `Heard ${bestChord} → ${expectedChord}`;
+            state.listenHoldUntilMs = nowMs + 900;
+            if (state.isPlaying && state.listenBarResults[state.currentBarIndex] !== 'hit') {
+              state.listenBarResults[state.currentBarIndex] = 'miss';
+            }
+          }
+          updateListenStageUi();
+        }
+      } else if (state.listenHoldUntilMs && nowMs >= state.listenHoldUntilMs && state.listenLastStatus !== 'idle') {
+        state.listenLastStatus = 'idle';
+        updateListenStageUi();
+      }
+
+      listenEngine.rafId = requestAnimationFrame(chordListenLoop);
+    }
+
+    async function startChordListener() {
+      if (state.listenEnabled && listenEngine.analyser) return;
+      try {
+        // Release tuner mic if running so there is zero audio conflict
+        if (typeof stopTunerMicrophone === 'function') {
+          try { stopTunerMicrophone(); } catch (e) {}
+        }
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+        });
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const source = ctx.createMediaStreamSource(stream);
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 4096;
+        analyser.smoothingTimeConstant = 0.55;
+        source.connect(analyser);
+
+        listenEngine.ctx = ctx;
+        listenEngine.stream = stream;
+        listenEngine.source = source;
+        listenEngine.analyser = analyser;
+        listenEngine.freqData = new Uint8Array(analyser.frequencyBinCount);
+        listenEngine.timeData = new Float32Array(analyser.fftSize);
+        listenEngine.prevRms = 0;
+        listenEngine.lastOnsetMs = 0;
+
+        state.listenEnabled = true;
+        resetListenSessionScores();
+        renderAll();
+        listenEngine.rafId = requestAnimationFrame(chordListenLoop);
+        const ytTip = state.ytSyncEnabled ? ' (tip: use headphones with YouTube Sync!)' : '';
+        showToast(`🎙️ Real-Time Chord Listening ON${ytTip}`, 'success');
+      } catch (err) {
+        state.listenEnabled = false;
+        updateListenStageUi();
+        showToast('Microphone permission is required for Real-Time Chord Listening.', 'warn');
+      }
+    }
+
+    function stopChordListener(silent = false) {
+      if (listenEngine.rafId) {
+        cancelAnimationFrame(listenEngine.rafId);
+        listenEngine.rafId = null;
+      }
+      if (listenEngine.stream) {
+        try { listenEngine.stream.getTracks().forEach(t => t.stop()); } catch (e) {}
+        listenEngine.stream = null;
+      }
+      if (listenEngine.ctx) {
+        try { listenEngine.ctx.close(); } catch (e) {}
+        listenEngine.ctx = null;
+      }
+      listenEngine.source = null;
+      listenEngine.analyser = null;
+      state.listenEnabled = false;
+      updateListenStageUi();
+      if (!silent) showToast('🎙️ Chord Listening OFF', 'info');
     }
 
     function stopPlayback() {
@@ -7956,7 +8335,7 @@
           gotHardwareMic = true;
         } catch (err1) {
           try {
-            const stream2 = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const stream2 = await (state.listenEnabled && stopChordListener(true), navigator.mediaDevices.getUserMedia({ audio: true }));
             const src2 = ctx.createMediaStreamSource(stream2);
             src2.connect(inputBus);
             state.tunerStream = stream2;
@@ -10177,7 +10556,20 @@
       if (btnStopBatch) btnStopBatch.addEventListener('click', () => { batchHydrationAbort = true; });
 
 
-      // Stage YouTube Vocal Sync Controls
+      // Stage Real-Time Chord & Strum Listening Toggle (v3.0)
+      const btnToggleListen = document.getElementById('btnToggleStageListen');
+      if (btnToggleListen) {
+        btnToggleListen.addEventListener('click', () => {
+          if (state.listenEnabled) {
+            stopChordListener(false);
+            renderAll();
+          } else {
+            startChordListener();
+          }
+        });
+      }
+
+            // Stage YouTube Vocal Sync Controls
       const btnToggleYt = document.getElementById('btnToggleStageYouTube');
       if (btnToggleYt) {
         btnToggleYt.addEventListener('click', () => {
